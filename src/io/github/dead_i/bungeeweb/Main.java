@@ -2,6 +2,7 @@ package io.github.dead_i.bungeeweb;
 
 import net.md_5.bungee.api.plugin.Plugin;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.log.Log;
 
 public class Main extends Plugin {
     public static Server server;
@@ -10,6 +11,7 @@ public class Main extends Plugin {
         // Setup the server
         server = new Server(8080);
         server.setHandler(new WebHandler(this));
+        server.setStopAtShutdown(true);
 
         // Start listening
         try {

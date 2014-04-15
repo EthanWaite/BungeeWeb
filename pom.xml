@@ -64,10 +64,7 @@
             <resource>
                 <targetPath>.</targetPath>
                 <directory>resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>plugin.yml</include>
-                </includes>
+                <filtering>false</filtering>
             </resource>
         </resources>
     </build>
