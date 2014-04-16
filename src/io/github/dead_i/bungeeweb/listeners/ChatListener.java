@@ -1,6 +1,6 @@
 package io.github.dead_i.bungeeweb.listeners;
 
-import io.github.dead_i.bungeeweb.Main;
+import io.github.dead_i.bungeeweb.BungeeWeb;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -13,6 +13,6 @@ public class ChatListener implements Listener {
         ProxiedPlayer p = (ProxiedPlayer) event.getSender();
         int type = 1;
         if (msg.startsWith("/")) type = 2;
-        Main.log((ProxiedPlayer) event.getSender(), type, msg);
+        BungeeWeb.log((ProxiedPlayer) event.getSender(), type, msg);
     }
 }

@@ -16,7 +16,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Main extends Plugin {
+public class BungeeWeb extends Plugin {
     private static Server server;
     private static Configuration config;
     private static Connection db;
