@@ -40,7 +40,7 @@ public class BungeeWeb extends Plugin {
         // Connect to the database and create tables
         try {
             db = DriverManager.getConnection("jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
-            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `user` varchar(32) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
         } catch (SQLException e) {
             getLogger().severe("Unable to connect to the database.");
             e.printStackTrace();
@@ -79,11 +79,12 @@ public class BungeeWeb extends Plugin {
 
     public static void log(ProxiedPlayer player, int type, String content) {
         try {
-            PreparedStatement st = db.prepareStatement("INSERT INTO `" + config.getString("database.prefix") + "log` (`time`, `type`, `user`, `content`) VALUES(?, ?, ?, ?)");
+            PreparedStatement st = db.prepareStatement("INSERT INTO `" + config.getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
             st.setLong(1, System.currentTimeMillis() / 1000);
             st.setInt(2, type);
             st.setString(3, player.getUniqueId().toString());
-            st.setString(4, content);
+            st.setString(4, player.getName());
+            st.setString(5, content);
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
