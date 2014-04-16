@@ -9,6 +9,6 @@ import net.md_5.bungee.event.EventHandler;
 public class ServerKickListener implements Listener {
     @EventHandler
     public void onServerKick(ServerKickEvent event) {
-        BungeeWeb.log(event.getPlayer(), 5, event.getPlayer().getServer().getInfo().getName() + ": " + BaseComponent.toPlainText(event.getKickReasonComponent()))
+        BungeeWeb.log(event.getPlayer(), 5, event.getPlayer().getServer().getInfo().getName() + ": " + BaseComponent.toPlainText(event.getKickReasonComponent()));
     }
 }
