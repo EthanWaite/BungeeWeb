@@ -1,6 +1,7 @@
 package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -12,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Main extends Plugin {
@@ -69,5 +71,23 @@ public class Main extends Plugin {
 
     public static Connection getDatabase() {
         return db;
+    }
+
+    public static void log(ProxiedPlayer player, int type) {
+        log(player, type, "");
+    }
+
+    public static void log(ProxiedPlayer player, int type, String content) {
+        try {
+            PreparedStatement st = db.prepareStatement("INSERT INTO `" + config.getString("database.prefix") + "log` (`time`, `type`, `user`, `content`) VALUES(?, ?, ?, ?)");
+            st.setLong(1, System.currentTimeMillis() / 1000);
+            st.setInt(2, type);
+            st.setString(3, player.getUniqueId().toString());
+            st.setString(4, content);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
