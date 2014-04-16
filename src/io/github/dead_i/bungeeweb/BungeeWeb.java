@@ -1,6 +1,7 @@
 package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
+import io.github.dead_i.bungeeweb.listeners.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -59,6 +60,13 @@ public class BungeeWeb extends Plugin {
             getLogger().warning("Unable to bind web server to port.");
             e.printStackTrace();
         }
+
+        // Register listeners
+        getProxy().getPluginManager().registerListener(this, new ChatListener());
+        getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener());
+        getProxy().getPluginManager().registerListener(this, new PostLoginListener());
+        getProxy().getPluginManager().registerListener(this, new ServerConnectedListener());
+        getProxy().getPluginManager().registerListener(this, new ServerKickListener());
     }
 
     public static Server getServer() {
