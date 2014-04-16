@@ -1,6 +1,7 @@
 package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -13,8 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Main extends Plugin {
-    public static Server server;
-    public static Configuration config;
+    private static Server server;
+    private static Configuration config;
 
     public void onEnable() {
         // Get configuration
@@ -30,7 +31,6 @@ public class Main extends Plugin {
             e.printStackTrace();
         }
 
-
         // Setup the server
         server = new Server(8080);
         server.setHandler(new WebHandler(this));
@@ -44,5 +44,13 @@ public class Main extends Plugin {
             getLogger().warning("Unable to bind web server to port.");
             e.printStackTrace();
         }
+    }
+
+    public static Server getServer() {
+        return server;
+    }
+
+    public static Configuration getConfig() {
+        return config;
     }
 }

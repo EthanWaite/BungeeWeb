@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class WebHandler extends AbstractHandler {
-    Plugin plugin;
+    private Plugin plugin;
 
     public WebHandler(Plugin plugin) {
         this.plugin = plugin;
