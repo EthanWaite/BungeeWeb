@@ -12,10 +12,14 @@ import org.eclipse.jetty.util.log.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Main extends Plugin {
     private static Server server;
     private static Configuration config;
+    private static Connection db;
 
     public void onEnable() {
         // Get configuration
@@ -33,8 +37,16 @@ public class Main extends Plugin {
             e.printStackTrace();
         }
 
+        // Connect to the database
+        try {
+            db = DriverManager.getConnection("jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
+        } catch (SQLException e) {
+            getLogger().severe("Unable to connect to the database.");
+            e.printStackTrace();
+        }
+
         // Setup the server
-        server = new Server(8080);
+        server = new Server(config.getInt("server.port"));
         server.setHandler(new WebHandler(this));
         server.setStopAtShutdown(true);
 
@@ -54,5 +66,9 @@ public class Main extends Plugin {
 
     public static Configuration getConfig() {
         return config;
+    }
+
+    public static Connection getDatabase() {
+        return db;
     }
 }

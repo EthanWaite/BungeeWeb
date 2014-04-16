@@ -1,0 +1,14 @@
+# BungeeWeb Configuration File
+
+# Server settings
+server:
+  port: 8080
+
+# MySQL details
+database:
+  host: 127.0.0.1
+  port: 3306
+  user: bungeeweb
+  pass: password
+  db: bungeeweb
+  prefix: bungeeweb_
