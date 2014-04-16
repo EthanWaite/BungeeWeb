@@ -1,13 +1,11 @@
 package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.util.log.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,7 +38,7 @@ public class Main extends Plugin {
         // Connect to the database and create tables
         try {
             db = DriverManager.getConnection("jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
-            db.createStatement().executeQuery("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `type` int(2) NOT NULL, `user` varchar(32) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
+            db.createStatement().executeQuery("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `user` varchar(32) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
         } catch (SQLException e) {
             getLogger().severe("Unable to connect to the database.");
             e.printStackTrace();
