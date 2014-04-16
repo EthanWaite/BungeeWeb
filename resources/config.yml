@@ -4,6 +4,16 @@
 server:
   port: 8080
 
+# Logged items
+log:
+  chat: true
+  command: true
+  join: true
+  quit: true
+  kick: true
+  serverchange: true
+  namechange: true
+
 # MySQL details
 database:
   host: 127.0.0.1
