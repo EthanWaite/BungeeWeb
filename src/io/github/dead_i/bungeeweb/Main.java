@@ -40,7 +40,7 @@ public class Main extends Plugin {
         // Connect to the database and create tables
         try {
             db = DriverManager.getConnection("jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
-            db.createStatement().executeQuery("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `type` int(1) NOT NULL, `user` varchar(32) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
+            db.createStatement().executeQuery("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `type` int(2) NOT NULL, `user` varchar(32) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
         } catch (SQLException e) {
             getLogger().severe("Unable to connect to the database.");
             e.printStackTrace();
