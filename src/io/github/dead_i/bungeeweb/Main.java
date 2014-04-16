@@ -25,6 +25,8 @@ public class Main extends Plugin {
             if (!configFile.exists()) {
                 configFile.createNewFile();
                 ByteStreams.copy(getResourceAsStream("config.yml"), new FileOutputStream(configFile));
+                getLogger().warning("A new configuration file has been created. Please edit config.yml and restart BungeeCord.");
+                return;
             }
             config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configFile);
         } catch (IOException e) {
