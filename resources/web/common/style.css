@@ -2,10 +2,15 @@
 
 body {
 	background-color:#333;
+	margin:0px;
 }
 
 body, input {
 	font-family:Lato, Trebuchet MS, Arial, sans-serif;
+}
+
+body > div {
+	overflow:hidden;
 }
 
 .login .main {
@@ -21,6 +26,7 @@ body, input {
 	font-weight:300;
 	text-align:center;
 	padding:8px 8px 12px 8px;
+	color:#000;
 	margin:0px;
 }
 
@@ -42,4 +48,89 @@ body, input {
 
 .login .center {
 	text-align:center;
+}
+
+h1 {
+	font-size:48px;
+	font-weight:300;
+	color:#fff;
+}
+
+h1 span {
+	font-size:24px;
+	color:#ccc;
+}
+
+ul {
+	border:solid 6px rgba(0, 0, 0, 0.7);
+	background-color:#fff;
+	color:#000;
+}
+
+ul li {
+	list-style-type:none;
+	border-bottom:solid 1px #ccc;
+	padding:6px;
+	margin-left:-40px;
+}
+
+.container {
+	width:90%;
+	margin:0px auto;
+}
+
+.navbar {
+	background-color:#222;
+	border-bottom:solid 1px #111;
+	font-weight:300;
+	color:#fff;
+	overflow:hidden;
+}
+
+.navbar h1 {
+	font-size:24px;
+	font-weight:300;
+	float:left;
+}
+
+.navbar .right {
+	border-right:solid 1px #111;
+	float:right;
+}
+
+.navbar .right a, .navbar .right a:link, .navbar .right a:visited {
+	display:inline-block;
+	border-left:solid 1px #111;
+	padding:21px 12px;
+	opacity:0.6;
+}
+
+.navbar .right a.active {
+	opacity:1;
+}
+
+.navbar img {
+	float:left;
+	margin:-2px 8px 0px 0px;
+}
+
+.half {
+	width:50%;
+	float:left;
+}
+
+.inner {
+	margin:0px 16px;
+}
+
+.half:first-child .inner {
+	margin-left:0px;
+}
+
+.half:last-child .inner {
+	margin-right:0px;
+}
+
+.gr {
+	color:#aaa;
 }
