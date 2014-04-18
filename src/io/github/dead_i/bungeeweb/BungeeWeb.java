@@ -8,10 +8,13 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.security.Password;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -44,7 +47,7 @@ public class BungeeWeb extends Plugin {
             db = DriverManager.getConnection("jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
 
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
-            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(8) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(16) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
 
             ResultSet rs = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + config.getString("database.prefix") + "users`");
             while (rs.next()) {
@@ -56,6 +59,7 @@ public class BungeeWeb extends Plugin {
             getLogger().severe("Unable to connect to the database.");
             e.printStackTrace();
         }
+
         // Setup the server
         server = new Server(config.getInt("server.port"));
         server.setHandler(new WebHandler(this));
@@ -107,5 +111,15 @@ public class BungeeWeb extends Plugin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String encrypt(String pass) {
+        return Password.MD5.digest(pass).split(":")[1];
+    }
+
+    public static String salt() {
+        byte[] salt = new byte[16];
+        new SecureRandom().nextBytes(salt);
+        return DatatypeConverter.printBase64Binary(salt);
     }
 }
