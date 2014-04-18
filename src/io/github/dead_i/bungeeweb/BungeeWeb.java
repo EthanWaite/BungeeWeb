@@ -50,10 +50,11 @@ public class BungeeWeb extends Plugin {
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(16) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
 
             ResultSet rs = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + config.getString("database.prefix") + "users`");
-            while (rs.next()) {
-                if (rs.getInt(1) == 0) {
-                    //TODO
-                }
+            while (rs.next()) if (rs.getInt(1) == 0) {
+                String salt = salt();
+                db.createStatement().executeUpdate("INSERT INTO `" + config.getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES('admin', '" + encrypt("admin" + salt) + "', '" + salt + "', 3)");
+                getLogger().warning("A new admin account has been created.");
+                getLogger().warning("Both the username and password is 'admin'. Please change the password after first logging in.");
             }
         } catch (SQLException e) {
             getLogger().severe("Unable to connect to the database.");
@@ -120,6 +121,6 @@ public class BungeeWeb extends Plugin {
     public static String salt() {
         byte[] salt = new byte[16];
         new SecureRandom().nextBytes(salt);
-        return DatatypeConverter.printBase64Binary(salt);
+        return DatatypeConverter.printBase64Binary(salt).substring(0, 16);
     }
 }
