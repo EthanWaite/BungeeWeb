@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BungeeWeb extends Plugin {
@@ -41,13 +42,20 @@ public class BungeeWeb extends Plugin {
         // Connect to the database and create tables
         try {
             db = DriverManager.getConnection("jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
+
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(8) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
+
+            ResultSet rs = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + config.getString("database.prefix") + "users`");
+            while (rs.next()) {
+                if (rs.getInt(1) == 0) {
+                    //TODO
+                }
+            }
         } catch (SQLException e) {
             getLogger().severe("Unable to connect to the database.");
             e.printStackTrace();
         }
-
         // Setup the server
         server = new Server(config.getInt("server.port"));
         server.setHandler(new WebHandler(this));
