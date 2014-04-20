@@ -8,6 +8,10 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.session.HashSessionIdManager;
+import org.eclipse.jetty.server.session.HashSessionManager;
+import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.util.security.Password;
 
 import javax.xml.bind.DatatypeConverter;
@@ -61,9 +65,16 @@ public class BungeeWeb extends Plugin {
             e.printStackTrace();
         }
 
+        // Setup the context
+        ContextHandler context = new ContextHandler("/");
+        SessionHandler sessions = new SessionHandler(new HashSessionManager());
+        sessions.setHandler(new WebHandler(this));
+        context.setHandler(sessions);
+
         // Setup the server
         server = new Server(config.getInt("server.port"));
-        server.setHandler(new WebHandler(this));
+        server.setSessionIdManager(new HashSessionIdManager());
+        server.setHandler(sessions);
         server.setStopAtShutdown(true);
 
         // Start listening

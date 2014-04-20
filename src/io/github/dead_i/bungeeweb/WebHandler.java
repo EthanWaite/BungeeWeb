@@ -34,6 +34,8 @@ public class WebHandler extends AbstractHandler {
         if (target.equals("/")) target = "/index.html";
         String[] path = target.split("/");
 
+        plugin.getLogger().info("Got request from ID " + req.getSession().getId());
+
         if (path.length > 2 && path[1].equalsIgnoreCase("api")) {
             baseReq.setHandled(true);
             if (path[2].equalsIgnoreCase("getplayer")) {
