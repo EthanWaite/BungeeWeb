@@ -30,6 +30,12 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.eclipse.jetty:jetty-*:jar:*</include>
+                                    <include>javax.servlet:javax.servlet-api:jar:*</include>
+                                </includes>
+                            </artifactSet>
                             <filters>
                                 <filter>
                                     <artifact>*</artifact>
