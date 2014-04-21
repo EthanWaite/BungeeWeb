@@ -80,6 +80,13 @@ public class WebHandler extends AbstractHandler {
                 }
                 res.getWriter().print(gson.toJson(out));
             }
+        }else if (path.length > 1 && path[1].equalsIgnoreCase("login")) {
+            if (req.getMethod().equals("POST") && checkLogin(req.getParameter("user"), req.getParameter("pass"))) {
+                req.getSession().setAttribute("user", req.getParameter("user"));
+                res.setHeader("Location", "/?invalid");
+            }else{
+                res.setHeader("Location", "/");
+            }
         }else{
             InputStream stream = plugin.getResourceAsStream("web" + target);
             if (stream != null) {
@@ -87,5 +94,19 @@ public class WebHandler extends AbstractHandler {
                 ByteStreams.copy(stream, res.getOutputStream());
             }
         }
+    }
+
+    public boolean checkLogin(String user, String pass) {
+        if (user == null || pass == null) return false;
+        try {
+            PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "users` WHERE `user`=?");
+            st.setString(1, user);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) if (rs.getString("pass").equals(BungeeWeb.encrypt(pass + rs.getString("salt")))) return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
     }
 }
