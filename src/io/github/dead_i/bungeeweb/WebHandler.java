@@ -27,7 +27,6 @@ public class WebHandler extends AbstractHandler {
 
     @Override
     public void handle(String target, Request baseReq, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        res.setContentType("text/html;charset=utf-8");
         res.setStatus(HttpServletResponse.SC_OK);
         plugin.getLogger().info("Serving " + target);
 
@@ -82,7 +81,7 @@ public class WebHandler extends AbstractHandler {
                 res.getWriter().print(gson.toJson(out));
             }
         }else{
-            InputStream stream = plugin.getResourceAsStream("web/" + path[1]);
+            InputStream stream = plugin.getResourceAsStream("web" + target);
             if (stream != null) {
                 baseReq.setHandled(true);
                 ByteStreams.copy(stream, res.getOutputStream());
