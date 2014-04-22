@@ -83,9 +83,10 @@ public class WebHandler extends AbstractHandler {
         }else if (path.length > 1 && path[1].equalsIgnoreCase("login")) {
             if (req.getMethod().equals("POST") && checkLogin(req.getParameter("user"), req.getParameter("pass"))) {
                 req.getSession().setAttribute("user", req.getParameter("user"));
-                res.setHeader("Location", "/?invalid");
+                req.getSession().setAttribute("group", req.getParameter("group"));
+                res.getWriter().print("{ \"status\": 1 }");
             }else{
-                res.setHeader("Location", "/");
+                res.getWriter().print("{ \"status\": 0 }");
             }
         }else{
             InputStream stream = plugin.getResourceAsStream("web" + target);
