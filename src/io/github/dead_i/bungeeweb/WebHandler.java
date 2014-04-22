@@ -1,7 +1,6 @@
 package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
-import com.google.gson.Gson;
 import io.github.dead_i.bungeeweb.api.GetPlayers;
 import io.github.dead_i.bungeeweb.api.ListServers;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -20,7 +19,6 @@ import java.util.HashMap;
 
 public class WebHandler extends AbstractHandler {
     private HashMap<String, APICommand> commands = new HashMap<String, APICommand>();
-    private Gson gson = new Gson();
     private Plugin plugin;
 
     public WebHandler(Plugin plugin) {

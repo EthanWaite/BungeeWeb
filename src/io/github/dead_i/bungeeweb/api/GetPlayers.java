@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GetPlayers extends APICommand {
-    private Plugin plugin;
     private Gson gson = new Gson();
 
     public GetPlayers() {
