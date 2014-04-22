@@ -88,6 +88,7 @@ public class WebHandler extends AbstractHandler {
             }else{
                 res.getWriter().print("{ \"status\": 0 }");
             }
+            baseReq.setHandled(true);
         }else{
             InputStream stream = plugin.getResourceAsStream("web" + target);
             if (stream != null) {
