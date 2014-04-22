@@ -7,43 +7,42 @@
 	
 	<body>
 		<noscript>This page requires JavaScript in order to function. Please enable JavaScript and try again.</noscript>
-		
-		<div class="client">
-			<header>
-				<div class="navbar">
-					<div class="container">
-						<h1>BungeeWeb</h1>
-						<div class="right">
-							<a class="active"><img src="images/dashboard.png" />Dashboard</a>
-							<a><img src="images/logs.png" />Logs</a>
-							<a><img src="images/players.png" />Players</a>
-							<a><img src="images/logout.png" />Logout</a>
-						</div>
+		<div class="errorbar">An internal error occurred when processing your request.</div>
+
+		<header>
+			<div class="navbar">
+				<div class="container">
+					<h1>BungeeWeb</h1>
+					<div class="right">
+						<a class="active"><img src="images/dashboard.png" />Dashboard</a>
+						<a><img src="images/logs.png" />Logs</a>
+						<a><img src="images/players.png" />Players</a>
+						<a><img src="images/logout.png" />Logout</a>
 					</div>
 				</div>
-			</header>
-			<div class="container">
-				<div id="dashboard">
-					<div class="half">
-						<div class="inner">
-							<h1>Servers <span>20 active servers</span></h1>
-							<ul>
-								<li>Hub</li>
-								<li>Survival</li>
-								<li>Creative</li>
-							</ul>
-						</div>
+			</div>
+		</header>
+		<div class="client">
+			<div data-page="home" class="container">
+				<div class="half">
+					<div class="inner">
+						<h1>Servers <span>20 active servers</span></h1>
+						<ul>
+							<li>Hub</li>
+							<li>Survival</li>
+							<li>Creative</li>
+						</ul>
 					</div>
-					<div class="half">
-						<div class="inner">
-							<h1>Latest Logs <span>100 players</span></h1>
-							<ul>
-								<li>Dead-i <span class="gr">(127.0.0.1)</span> joined the server.</li>
-								<li>Dead-i connected to Hub</li>
-								<li>Dead-i: Hi</li>
-								<li>Dead-i ran command /hub</li>
-							</ul>
-						</div>
+				</div>
+				<div class="half">
+					<div class="inner">
+						<h1>Latest Logs <span>100 players</span></h1>
+						<ul>
+							<li>Dead-i <span class="gr">(127.0.0.1)</span> joined the server.</li>
+							<li>Dead-i connected to Hub</li>
+							<li>Dead-i: Hi</li>
+							<li>Dead-i ran command /hub</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -53,6 +52,7 @@
 			<div class="main">
 				<h1>BungeeWeb</h1>
 				<form>
+					<div class="error">Unable to authenticate with the details provided.</div>
 					<label for="user">Username:</label>
 					<input type="text" id="user" />
 					
