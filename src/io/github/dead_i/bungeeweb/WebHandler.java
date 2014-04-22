@@ -2,6 +2,7 @@ package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -78,6 +79,10 @@ public class WebHandler extends AbstractHandler {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                res.getWriter().print(gson.toJson(out));
+            }else if (path[2].equalsIgnoreCase("listservers")) {
+                HashMap<String, Integer> out = new HashMap<String, Integer>();
+                for (ServerInfo info : plugin.getProxy().getServers().values()) out.put(info.getName(), info.getPlayers().size());
                 res.getWriter().print(gson.toJson(out));
             }
         }else if (path.length > 1 && path[1].equalsIgnoreCase("login")) {
