@@ -7,7 +7,7 @@
 $('.login form').submit(function(e) {
 	e.preventDefault();
 	$('.login .error').fadeOut(200);
-	$.post("index.html", $(this).serialize()).done(function(data) {
+	$.post('/login/', $(this).serialize()).done(function(data) {
 		try {
 			var json = JSON.parse(data);
 		} catch(e) {
