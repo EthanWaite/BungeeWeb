@@ -151,3 +151,10 @@ ul li {
 .gr {
 	color:#aaa;
 }
+
+.servers li .badge {
+	background-color:rgba(0, 0, 0, 0.2);
+	border-radius:12px;
+	padding:0px 7px 2px 7px;
+	float:right;
+}
