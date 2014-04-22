@@ -22,7 +22,7 @@ $('.login form').submit(function(e) {
 			});
 		}else{
 			$('.login .error').slideDown(500);
-		]
+		}
 	});
 });
 
