@@ -51,6 +51,10 @@ function loadDashboard() {
 function parse(data, cb) {
 	try {
 		var json = JSON.parse(data);
+		if ('error' in json) {
+			error(json.error);
+			return;
+		}
 		cb(json);
 	} catch(err) {
 		error();
