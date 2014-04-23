@@ -5,7 +5,7 @@
 
 // Login handler
 $('.login form').submit(function(e) {
-	e.preventDefault();	
+	e.preventDefault();
 	$('.login .error').fadeOut(200);
 	$.post('/login/', $(this).serialize()).done(function(data) {
 		parse(data, function(json) {

@@ -23,7 +23,7 @@ public class WebHandler extends AbstractHandler {
 
     public WebHandler(Plugin plugin) {
         this.plugin = plugin;
-        registerCommand(new GetPlayers());
+        registerCommand(new GetLogs());
         registerCommand(new ListServers());
     }
 

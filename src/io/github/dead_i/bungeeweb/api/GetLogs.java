@@ -14,11 +14,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GetPlayers extends APICommand {
+public class GetLogs extends APICommand {
     private Gson gson = new Gson();
 
-    public GetPlayers() {
-        super("getplayers");
+    public GetLogs() {
+        super("getlogs");
     }
 
     @Override
