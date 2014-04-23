@@ -93,6 +93,9 @@ function formatLog(log) {
 }
 
 // Error handler
-function error() {
-	$('.errorbar').slideDown(800).delay(4000).slideUp(800);
+function error(err) {
+	if (err === undefined) {
+		var err = 'An internal error occurred when processing your request.';
+	}
+	$('.errorbar').text(err).slideDown(800).delay(4000).slideUp(800);
 }
