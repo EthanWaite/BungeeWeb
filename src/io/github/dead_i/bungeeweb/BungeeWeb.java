@@ -134,4 +134,14 @@ public class BungeeWeb extends Plugin {
         new SecureRandom().nextBytes(salt);
         return DatatypeConverter.printBase64Binary(salt).substring(0, 16);
     }
+
+    public static boolean isNumber(String number) {
+        int o;
+        try {
+            o = Integer.parseInt(number);
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
+        return o > 0;
+    }
 }

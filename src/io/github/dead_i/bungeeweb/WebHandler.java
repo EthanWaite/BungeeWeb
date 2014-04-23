@@ -1,7 +1,7 @@
 package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
-import io.github.dead_i.bungeeweb.api.GetPlayers;
+import io.github.dead_i.bungeeweb.api.GetLogs;
 import io.github.dead_i.bungeeweb.api.ListServers;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.eclipse.jetty.server.Request;

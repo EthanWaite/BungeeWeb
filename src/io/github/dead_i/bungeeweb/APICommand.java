@@ -23,8 +23,14 @@ public abstract class APICommand {
         return name;
     }
 
-    public int getPermission() {
-        return permission;
+    public boolean hasPermission(HttpServletRequest req) {
+        return (Integer.parseInt(req.getParameter("group")) >= permission);
+    }
+
+    public boolean checkPermission(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        boolean has = hasPermission(req);
+        if (!has) res.getWriter().print("{ \"error\": \"You do not have permission to perform this action.\" }");
+        return has;
     }
 
     public abstract void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException;

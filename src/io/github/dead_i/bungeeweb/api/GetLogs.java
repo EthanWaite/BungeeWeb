@@ -18,37 +18,50 @@ public class GetLogs extends APICommand {
     private Gson gson = new Gson();
 
     public GetLogs() {
-        super("getlogs");
+        super("getlogs", 1);
     }
 
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException {
+        if (!checkPermission(req, res)) return;
         ArrayList<String> conditions = new ArrayList<String>();
+        ArrayList<Object> params = new ArrayList<Object>();
 
         String player = req.getParameter("uuid");
-        if (player == null) conditions.add("`uuid`=?");
-
-        String from = req.getParameter("time");
-        if (from != null) {
-            int time = 0;
-            try {
-                time = Integer.parseInt(from);
-            } catch (NumberFormatException ignored) {}
-            if (time != 0) conditions.add("`time`=?");
+        if (player != null) {
+            conditions.add("`uuid`=?");
+            params.add(player);
         }
 
-        String cond = "";
+        String from = req.getParameter("time");
+        if (from != null && BungeeWeb.isNumber(from)) {
+            conditions.add("`time`>?");
+            params.add(Integer.parseInt(from));
+        }
+
+        String qry = "SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "logs` ";
+
         if (conditions.size() > 0) {
-            cond = "WHERE ";
+            String cond = "WHERE ";
             for (String s : conditions) {
                 cond += s + " AND ";
             }
-            cond = cond.substring(0, cond.length() - 4);
+            qry += cond.substring(0, cond.length() - 4);
+        }
+
+        String limit = req.getParameter("limit");
+        if (limit != null && BungeeWeb.isNumber(limit)) {
+            qry += "LIMIT " + Math.floor(Integer.parseInt(limit));
         }
 
         ArrayList<Object> out = new ArrayList<Object>();
         try {
-            PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "logs` " + cond + "LIMIT 50");
+            PreparedStatement st = BungeeWeb.getDatabase().prepareStatement(qry);
+            int i = 0;
+            for (Object o : params) {
+                i++;
+                st.setObject(i, o);
+            }
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 HashMap<String, Object> record = new HashMap<String, Object>();
