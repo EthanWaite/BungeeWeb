@@ -19,6 +19,7 @@ public class ListServers extends APICommand {
 
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException {
+        if (!checkPermission(req, res)) return;
         HashMap<String, Integer> out = new HashMap<String, Integer>();
         for (ServerInfo info : plugin.getProxy().getServers().values()) out.put(info.getName(), info.getPlayers().size());
         res.getWriter().print(gson.toJson(out));
