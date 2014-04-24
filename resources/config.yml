@@ -13,6 +13,12 @@ log:
   kick: true
   serverchange: true
 
+# Graphed items
+stats:
+  playercount: true
+  maxplayers: true
+  activity: true
+
 # MySQL details
 database:
   host: 127.0.0.1
