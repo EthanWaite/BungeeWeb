@@ -39,7 +39,12 @@ public class WebHandler extends AbstractHandler {
 
         if (path.length > 2 && path[1].equalsIgnoreCase("api")) {
             if (commands.containsKey(path[2])) {
-                commands.get(path[2]).execute(plugin, req, res, path);
+                try {
+                    commands.get(path[2]).execute(plugin, req, res, path);
+                } catch (SQLException e) {
+                    plugin.getLogger().warning("A MySQL database error occurred.");
+                    e.printStackTrace();
+                }
                 baseReq.setHandled(true);
             }
         }else if (path.length > 1 && path[1].equalsIgnoreCase("login")) {

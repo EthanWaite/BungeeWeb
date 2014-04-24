@@ -2,7 +2,12 @@
 
 # Server settings
 server:
+
+  # Port to run the server on
   port: 8080
+
+  # Amount of time in milliseconds between status checks
+  statscheck: 5000
 
 # Logged items
 log:

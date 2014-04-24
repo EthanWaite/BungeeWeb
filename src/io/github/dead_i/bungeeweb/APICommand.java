@@ -5,6 +5,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public abstract class APICommand {
     private String name;
@@ -33,5 +34,5 @@ public abstract class APICommand {
         return has;
     }
 
-    public abstract void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException;
+    public abstract void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException, SQLException;
 }
