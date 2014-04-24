@@ -24,6 +24,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 public class BungeeWeb extends Plugin {
     private static Server server;
@@ -66,6 +67,17 @@ public class BungeeWeb extends Plugin {
             e.printStackTrace();
         }
 
+        // Register listeners
+        getProxy().getPluginManager().registerListener(this, new ChatListener());
+        getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener());
+        getProxy().getPluginManager().registerListener(this, new PostLoginListener());
+        getProxy().getPluginManager().registerListener(this, new ServerConnectedListener());
+        getProxy().getPluginManager().registerListener(this, new ServerKickListener());
+
+        // Graph loops
+        int inc = config.getInt("server.statscheck");
+        if (inc > 0) getProxy().getScheduler().schedule(this, new StatusCheck(this, inc), inc, TimeUnit.MILLISECONDS);
+
         // Setup the context
         ContextHandler context = new ContextHandler("/");
         SessionHandler sessions = new SessionHandler(new HashSessionManager());
@@ -85,13 +97,6 @@ public class BungeeWeb extends Plugin {
             getLogger().warning("Unable to bind web server to port.");
             e.printStackTrace();
         }
-
-        // Register listeners
-        getProxy().getPluginManager().registerListener(this, new ChatListener());
-        getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener());
-        getProxy().getPluginManager().registerListener(this, new PostLoginListener());
-        getProxy().getPluginManager().registerListener(this, new ServerConnectedListener());
-        getProxy().getPluginManager().registerListener(this, new ServerKickListener());
     }
 
     public static Server getServer() {
