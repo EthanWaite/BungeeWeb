@@ -81,7 +81,6 @@ public class BungeeWeb extends Plugin {
         // Start listening
         try {
             server.start();
-            server.join();
         } catch(Exception e) {
             getLogger().warning("Unable to bind web server to port.");
             e.printStackTrace();
