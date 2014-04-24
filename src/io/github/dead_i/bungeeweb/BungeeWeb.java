@@ -52,6 +52,7 @@ public class BungeeWeb extends Plugin {
 
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(16) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "stats` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `playercount` int(6) NOT NULL DEFAULT '', `maxplayers` int(6) NOT NULL DEFAULT '', `activity` int(12) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
 
             ResultSet rs = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + config.getString("database.prefix") + "users`");
             while (rs.next()) if (rs.getInt(1) == 0) {
