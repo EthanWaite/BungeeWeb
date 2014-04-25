@@ -48,9 +48,10 @@ public class WebHandler extends AbstractHandler {
                 baseReq.setHandled(true);
             }
         }else if (path.length > 1 && path[1].equalsIgnoreCase("login")) {
-            if (req.getMethod().equals("POST") && checkLogin(req.getParameter("user"), req.getParameter("pass"))) {
+            int group = getLogin(req.getParameter("user"), req.getParameter("pass"));
+            if (req.getMethod().equals("POST") && group != -1) {
                 req.getSession().setAttribute("user", req.getParameter("user"));
-                req.getSession().setAttribute("group", req.getParameter("group"));
+                req.getSession().setAttribute("group", group);
                 res.getWriter().print("{ \"status\": 1 }");
             }else{
                 res.getWriter().print("{ \"status\": 0 }");
@@ -69,17 +70,16 @@ public class WebHandler extends AbstractHandler {
         commands.put(command.getName().toLowerCase(), command);
     }
 
-    public boolean checkLogin(String user, String pass) {
-        if (user == null || pass == null) return false;
+    public int getLogin(String user, String pass) {
+        if (user == null || pass == null) return -1;
         try {
             PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "users` WHERE `user`=?");
             st.setString(1, user);
             ResultSet rs = st.executeQuery();
-            while (rs.next()) if (rs.getString("pass").equals(BungeeWeb.encrypt(pass + rs.getString("salt")))) return true;
+            while (rs.next()) if (rs.getString("pass").equals(BungeeWeb.encrypt(pass + rs.getString("salt")))) return rs.getInt("group");
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return false;
+        return -1;
     }
 }

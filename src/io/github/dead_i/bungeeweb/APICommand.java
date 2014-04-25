@@ -25,7 +25,8 @@ public abstract class APICommand {
     }
 
     public boolean hasPermission(HttpServletRequest req) {
-        return (Integer.parseInt(req.getParameter("group")) >= permission);
+        Integer group = (Integer) req.getSession().getAttribute("group");
+        return (group != null && group >= permission);
     }
 
     public boolean checkPermission(HttpServletRequest req, HttpServletResponse res) throws IOException {
