@@ -49,16 +49,26 @@ function loadDashboard() {
 	$.get('/api/getstats', function(data) {
 		parse(data, function(json) {
 			if (json.length == 0) return;
-			var playercount = [];
-			for (item in json) {
-				playercount.push([ item * 1000, json[item]['playercount'] ]);
+			var d1 = [];
+			var d2 = [];
+			var d3 = [];
+			for (i in json) {
+				var t = i * 1000;
+				var c = json[i];
+				graphPush(d1, t, c['playercount']);
+				graphPush(d2, t, c['maxplayers']);
+				graphPush(d3, t, c['activity']);
 			}
-			console.log(playercount);
-			$.plot('#dashboard .graph', [ playercount ], {
+			$.plot('#dashboard .graph', [ d1, d2, d3 ], {
 				xaxis: { mode: 'time' }
 			});
 		});
 	});
+}
+
+// Graph value handler
+function graphPush(a, t, v) {
+	if (v != -1) a.push([ t, v ]);
 }
 
 // JSON handler
