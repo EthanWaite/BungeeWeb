@@ -24,18 +24,21 @@
 		</header>
 		<div class="client">
 			<div id="dashboard" class="container">
-				<div class="half">
-					<div class="inner servers">
-						<h1>Servers <span></span></h1>
-						<ul></ul>
+				<div class="sect">
+					<div class="half">
+						<div class="inner servers">
+							<h1>Servers <span></span></h1>
+							<ul></ul>
+						</div>
+					</div>
+					<div class="half">
+						<div class="inner logs">
+							<h1>Latest Logs <span></span></h1>
+							<ul></ul>
+						</div>
 					</div>
 				</div>
-				<div class="half">
-					<div class="inner logs">
-						<h1>Latest Logs <span></span></h1>
-						<ul></ul>
-					</div>
-				</div>
+				<div class="graph"></div>
 			</div>
 		</div>
 		
@@ -56,6 +59,9 @@
 		</div>
 		
 		<script src="common/jquery.min.js"></script>
+		<script src="common/jquery.flot.min.js"></script>
+		<script src="common/jquery.flot.time.min.js"></script>
+		<script src="common/jquery.flot.resize.min.js"></script>
 		<script src="common/client.js"></script>
 	</body>
 </html>

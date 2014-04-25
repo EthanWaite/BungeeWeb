@@ -45,20 +45,35 @@ function loadDashboard() {
 			});
 		});
 	});
+	
+	$.get('/api/getstats', function(data) {
+		parse(data, function(json) {
+			if (json.length == 0) return;
+			var playercount = [];
+			for (item in json) {
+				playercount.push([ item * 1000, json[item]['playercount'] ]);
+			}
+			console.log(playercount);
+			$.plot('#dashboard .graph', [ playercount ], {
+				xaxis: { mode: 'time' }
+			});
+		});
+	});
 }
 
 // JSON handler
 function parse(data, cb) {
 	try {
-		var json = JSON.parse(data);
+		var json = $.parseJSON(data);
 		if ('error' in json) {
 			error(json.error);
 			return;
 		}
-		cb(json);
 	} catch(err) {
 		error();
+		return;
 	}
+	cb(json);
 }
 
 // Log handler

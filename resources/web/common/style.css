@@ -131,6 +131,10 @@ ul li {
 	margin:-2px 8px 0px 0px;
 }
 
+.sect {
+	overflow:hidden;
+}
+
 .half {
 	width:50%;
 	float:left;
@@ -150,6 +154,10 @@ ul li {
 
 .gr {
 	color:#aaa;
+}
+
+.graph {
+	height:460px;
 }
 
 .servers li .badge {
