@@ -39,7 +39,7 @@ public class GetLogs extends APICommand {
             params.add(Integer.parseInt(from));
         }
 
-        String qry = "SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "logs` ";
+        String qry = "SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "log` ";
 
         if (conditions.size() > 0) {
             String cond = "WHERE ";
@@ -51,7 +51,7 @@ public class GetLogs extends APICommand {
 
         String limit = req.getParameter("limit");
         if (limit != null && BungeeWeb.isNumber(limit)) {
-            qry += "LIMIT " + Math.floor(Integer.parseInt(limit));
+            qry += "LIMIT " + (int) Math.floor(Integer.parseInt(limit));
         }
 
         ArrayList<Object> out = new ArrayList<Object>();
