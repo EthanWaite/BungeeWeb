@@ -32,7 +32,7 @@ public class GetStats extends APICommand {
             return;
         }
 
-        ResultSet rs = BungeeWeb.getDatabase().createStatement().executeQuery("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "stats` LIMIT " + limit);
+        ResultSet rs = BungeeWeb.getDatabase().createStatement().executeQuery("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "stats` ORDER BY `id` DESC LIMIT " + limit);
 
         HashMap<Integer, Object> records = new HashMap<Integer, Object>();
         while (rs.next()) {

@@ -49,6 +49,8 @@ public class GetLogs extends APICommand {
             qry += cond.substring(0, cond.length() - 4);
         }
 
+        qry += "ORDER BY `id` DESC ";
+
         String limit = req.getParameter("limit");
         if (limit != null && BungeeWeb.isNumber(limit)) {
             qry += "LIMIT " + (int) Math.floor(Integer.parseInt(limit));
