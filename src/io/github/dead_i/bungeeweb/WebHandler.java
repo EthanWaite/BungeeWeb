@@ -1,8 +1,7 @@
 package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
-import io.github.dead_i.bungeeweb.api.GetLogs;
-import io.github.dead_i.bungeeweb.api.ListServers;
+import io.github.dead_i.bungeeweb.api.*;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -24,6 +23,7 @@ public class WebHandler extends AbstractHandler {
     public WebHandler(Plugin plugin) {
         this.plugin = plugin;
         registerCommand(new GetLogs());
+        registerCommand(new GetStats());
         registerCommand(new ListServers());
     }
 
