@@ -38,7 +38,7 @@ function loadDashboard() {
 			$.get('/api/getlogs?limit=5', function(data) {
 				parse(data, function(json) {
 					for (item in json) {
-						$('#dashboard .servers ul').append('<li>' + formatLog(json[item]) + '</li>');
+						$('#dashboard .logs ul').append('<li>' + formatLog(json[item]) + '</li>');
 					}
 					$('#dashboard .logs h1 span').text(players + ' players');
 				});
