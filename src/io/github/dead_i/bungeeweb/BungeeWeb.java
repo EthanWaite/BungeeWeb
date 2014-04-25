@@ -116,7 +116,7 @@ public class BungeeWeb extends Plugin {
             PreparedStatement st = db.prepareStatement("INSERT INTO `" + config.getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
             st.setLong(1, System.currentTimeMillis() / 1000);
             st.setInt(2, type);
-            st.setString(3, player.getUniqueId().toString());
+            st.setString(3, player.getUniqueId().toString().replace("-", ""));
             st.setString(4, player.getName());
             st.setString(5, content);
             st.executeUpdate();
