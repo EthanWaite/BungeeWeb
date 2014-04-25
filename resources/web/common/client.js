@@ -49,26 +49,37 @@ function loadDashboard() {
 	$.get('/api/getstats', function(data) {
 		parse(data, function(json) {
 			if (json.length == 0) return;
-			var d1 = [];
-			var d2 = [];
-			var d3 = [];
+			
+			var cat = { 'playercount': 'Player count', 'maxplayers': 'Player limit', 'activity': 'Logged items' };
+			
+			var res = [];
 			for (i in json) {
-				var t = i * 1000;
-				var c = json[i];
-				graphPush(d1, t, c['playercount']);
-				graphPush(d2, t, c['maxplayers']);
-				graphPush(d3, t, c['activity']);
+				var key = 0;
+				for (c in cat) {
+					if (res.length <= key) res.push([]);
+					var v = json[i][c];
+					if (v != -1) res[key].push([ i * 1000, v ]);
+					key++;
+				}
 			}
-			$.plot('#dashboard .graph', [ d1, d2, d3 ], {
+			
+			var key = 0;
+			var out = [];
+			for (c in cat) {
+				out.push({
+					legend: { show: true },
+					label: cat[c],
+					data: res[key],
+					lines: { show: true }
+				});
+				key++;
+			}
+			
+			$.plot('#dashboard .graph', out, {
 				xaxis: { mode: 'time' }
 			});
 		});
 	});
-}
-
-// Graph value handler
-function graphPush(a, t, v) {
-	if (v != -1) a.push([ t, v ]);
 }
 
 // JSON handler
