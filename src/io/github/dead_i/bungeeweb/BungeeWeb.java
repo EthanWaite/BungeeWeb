@@ -99,10 +99,6 @@ public class BungeeWeb extends Plugin {
         }
     }
 
-    public static Server getServer() {
-        return server;
-    }
-
     public static Configuration getConfig() {
         return config;
     }
