@@ -34,10 +34,6 @@ public class GetStats extends APICommand {
 
         ResultSet rs = BungeeWeb.getDatabase().createStatement().executeQuery("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "stats` LIMIT " + limit);
 
-        int inc = BungeeWeb.getConfig().getInt("server.statscheck");
-        int current = (int) (System.currentTimeMillis() / 1000);
-        current = current - (current % inc);
-
         HashMap<Integer, Object> records = new HashMap<Integer, Object>();
         while (rs.next()) {
             HashMap<String, Object> record = new HashMap<String, Object>();
@@ -47,11 +43,6 @@ public class GetStats extends APICommand {
             records.put(rs.getInt("time"), record);
         }
 
-        HashMap<Integer, Object> out = new HashMap<Integer, Object>();
-        for (int i = 0; i < limit; i++) {
-            if (records.containsKey(current)) out.put(current, out.get(current));
-        }
-
-        res.getWriter().print(gson.toJson(out));
+        res.getWriter().print(gson.toJson(records));
     }
 }
