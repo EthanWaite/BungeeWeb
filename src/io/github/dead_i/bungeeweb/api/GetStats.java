@@ -43,6 +43,10 @@ public class GetStats extends APICommand {
             records.put(rs.getInt("time"), record);
         }
 
-        res.getWriter().print(gson.toJson(records));
+        HashMap<String, Object> out = new HashMap<String, Object>();
+        out.put("increment", BungeeWeb.getConfig().getInt("server.statscheck"));
+        out.put("data", out);
+
+        res.getWriter().print(gson.toJson(out));
     }
 }

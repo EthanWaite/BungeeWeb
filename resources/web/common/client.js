@@ -64,16 +64,17 @@ function loadDashboard() {
 	
 	$.get('/api/getstats', function(data) {
 		parse(data, function(json) {
-			if (json.length == 0) return;
+			var entries = json.data;
+			if (entries.length == 0) return;
 			
 			var cat = { 'playercount': 'Player count', 'maxplayers': 'Player limit', 'activity': 'Logged items' };
 			
 			var res = [];
-			for (i in json) {
+			for (i in entries) {
 				var key = 0;
 				for (c in cat) {
 					if (res.length <= key) res.push([]);
-					var v = json[i][c];
+					var v = entries[i][c];
 					if (v != -1) res[key].push([ i * 1000, v ]);
 					key++;
 				}
