@@ -24,6 +24,7 @@ public class WebHandler extends AbstractHandler {
         this.plugin = plugin;
         registerCommand(new GetLogs());
         registerCommand(new GetStats());
+        registerCommand(new GetUUID());
         registerCommand(new ListServers());
     }
 
