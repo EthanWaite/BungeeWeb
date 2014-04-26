@@ -12,7 +12,7 @@ $('.login form').submit(function(e) {
 			if (json.status == 1) {
 				$('.login').fadeOut(1000, function() {
 					$('.navbar').slideDown(800);
-					$('#dashboard').fadeIn(1000);
+					$('#dashboard').addClass('active').fadeIn(1000);
 					loadDashboard();
 				});
 			}else{
@@ -22,8 +22,24 @@ $('.login form').submit(function(e) {
 	});
 });
 
+// Navigation handler
+$('.navbar .right a').click(function(e) {
+	$('.navbar .active').removeClass('active');
+	$(this).addClass('active');
+	
+	var href = $(this).attr('href');
+	switch(href.substring(1)) {
+		case 'dashboard': loadDashboard(); break;
+	}
+	$('.client > div.active').fadeOut(1000, function() {
+		$('.client > ' + href).fadeIn(1000);
+	});
+	e.preventDefault();
+});
+
 // Dashboard loader
 function loadDashboard() {
+	$('#dashboard ul').html('');
 	var players = 0;
 	$.get('/api/listservers', function(data) {
 		parse(data, function(json) {

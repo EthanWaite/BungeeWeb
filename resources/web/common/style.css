@@ -118,6 +118,8 @@ ul li {
 .navbar .right a, .navbar .right a:link, .navbar .right a:visited {
 	display:inline-block;
 	border-left:solid 1px #111;
+	text-decoration:none;
+	color:#fff;
 	padding:21px 12px;
 	opacity:0.6;
 }
