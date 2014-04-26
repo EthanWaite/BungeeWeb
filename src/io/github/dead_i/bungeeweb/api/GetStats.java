@@ -45,7 +45,7 @@ public class GetStats extends APICommand {
 
         HashMap<String, Object> out = new HashMap<String, Object>();
         out.put("increment", BungeeWeb.getConfig().getInt("server.statscheck"));
-        out.put("data", out);
+        out.put("data", records);
 
         res.getWriter().print(gson.toJson(out));
     }
