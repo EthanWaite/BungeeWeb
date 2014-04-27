@@ -70,12 +70,22 @@ function loadDashboard() {
 			var cat = { 'playercount': 'Player count', 'maxplayers': 'Player limit', 'activity': 'Logged items' };
 			
 			var res = [];
+			var last = 0;
 			for (i in entries) {
 				var key = 0;
 				for (c in cat) {
 					if (res.length <= key) res.push([]);
 					var v = entries[i][c];
-					if (v != -1) res[key].push([ i * 1000, v ]);
+					var t = i * 1000;
+					
+					if (last > 0 && ((t - last) > json.increment)) {
+						for (var n = last + json.increment; n < (t - json.increment); n = n + json.increment) {
+							res[key].push([ n, null ]);
+						}
+					}
+					
+					last = t;
+					if (v != -1) res[key].push([ t, v ]);
 					key++;
 				}
 			}

@@ -76,7 +76,7 @@ public class BungeeWeb extends Plugin {
 
         // Graph loops
         int inc = config.getInt("server.statscheck");
-        if (inc > 0) getProxy().getScheduler().schedule(this, new StatusCheck(this, inc), inc, TimeUnit.MILLISECONDS);
+        if (inc > 0) getProxy().getScheduler().schedule(this, new StatusCheck(this, inc), inc, inc, TimeUnit.MILLISECONDS);
 
         // Setup the context
         ContextHandler context = new ContextHandler("/");
