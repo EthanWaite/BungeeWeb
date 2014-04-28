@@ -51,7 +51,8 @@ function loadDashboard() {
 			}
 			$('#dashboard .servers h1 span').text(i + ' servers');
 			
-			$.get('/api/getlogs?limit=5', function(data) {
+			if (i < 5) i = 5;
+			$.get('/api/getlogs?limit=' + i, function(data) {
 				parse(data, function(json) {
 					for (item in json) {
 						$('#dashboard .logs ul').append('<li>' + formatLog(json[item]) + '</li>');
