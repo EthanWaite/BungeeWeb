@@ -59,7 +59,7 @@ ul li {
  * LOGIN STYLING
  */
 .login .main {
-	width:420px;
+	max-width:420px;
 	background-color:#fff;
 	border:solid 6px rgba(0, 0, 0, 0.7);
 	margin:120px auto 0px auto;
@@ -221,5 +221,9 @@ ul li {
 	
 	.navbar .right a {
 		padding:0px 12px 12px 0px;
+	}
+	
+	.login .main {
+		margin:12px;
 	}
  }
