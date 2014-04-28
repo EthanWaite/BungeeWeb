@@ -215,6 +215,14 @@ ul li {
  }
  
  @media screen and (max-width:400px) {
+	h1 {
+		font-size:36px;
+	}
+	
+	h1 span {
+		font-size:18px;
+	}
+	
 	.navbar h1, .navbar .right {
 		float:initial;
 	}
@@ -224,6 +232,7 @@ ul li {
 	}
 	
 	.login .main {
+		max-width:100%;
 		margin:12px;
 	}
  }
