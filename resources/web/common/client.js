@@ -2,6 +2,15 @@
  * BungeeWeb
  * https://github.com/Dead-i/BungeeWeb
  */
+ 
+// Load handler
+$(document).ready(function() {
+	$.get('/api/isloggedin', function(data) {
+		parse(data, function(json) {
+			if (json.result == 1) $('.login').hide(0, loadClient);
+		});
+	});
+});
 
 // Login handler
 $('.login form').submit(function(e) {
@@ -10,11 +19,7 @@ $('.login form').submit(function(e) {
 	$.post('/login/', $(this).serialize()).done(function(data) {
 		parse(data, function(json) {
 			if (json.status == 1) {
-				$('.login').fadeOut(1000, function() {
-					$('.navbar').slideDown(800);
-					$('#dashboard').addClass('active').fadeIn(1000);
-					loadDashboard();
-				});
+				$('.login').fadeOut(1000, loadClient);
 			}else{
 				$('.login .error').slideDown(500);
 			}
@@ -36,6 +41,13 @@ $('.navbar .right a').click(function(e) {
 	});
 	e.preventDefault();
 });
+
+// Initial client loader
+function loadClient() {
+	$('.navbar').slideDown(800);
+	$('#dashboard').addClass('active').fadeIn(1000);
+	loadDashboard();
+}
 
 // Dashboard loader
 function loadDashboard() {
