@@ -1,5 +1,8 @@
 @import url('http://fonts.googleapis.com/css?family=Lato:300,400');
 
+/**
+ * GENERAL STYLING
+ */
 body {
 	background-color:#333;
 	margin:0px;
@@ -13,6 +16,35 @@ body > div {
 	overflow:hidden;
 }
 
+h1 {
+	font-size:48px;
+	font-weight:300;
+	color:#fff;
+}
+
+h1 span {
+	font-size:24px;
+	color:#ccc;
+}
+
+ul {
+	border:solid 6px rgba(0, 0, 0, 0.7);
+	background-color:#fff;
+	color:#000;
+}
+
+ul li {
+	list-style-type:none;
+	border-bottom:solid 1px #ccc;
+	padding:6px;
+	margin-left:-40px;
+}
+
+.container {
+	width:90%;
+	margin:0px auto;
+}
+
 .navbar, .errorbar, .client > div {
 	display:none;
 }
@@ -23,6 +55,9 @@ body > div {
 	padding:6px 6px 9px 6px;
 }
 
+/**
+ * LOGIN STYLING
+ */
 .login .main {
 	width:420px;
 	background-color:#fff;
@@ -67,35 +102,9 @@ body > div {
 	text-align:center;
 }
 
-h1 {
-	font-size:48px;
-	font-weight:300;
-	color:#fff;
-}
-
-h1 span {
-	font-size:24px;
-	color:#ccc;
-}
-
-ul {
-	border:solid 6px rgba(0, 0, 0, 0.7);
-	background-color:#fff;
-	color:#000;
-}
-
-ul li {
-	list-style-type:none;
-	border-bottom:solid 1px #ccc;
-	padding:6px;
-	margin-left:-40px;
-}
-
-.container {
-	width:90%;
-	margin:0px auto;
-}
-
+/**
+ * HEADER STYLING
+ */
 .navbar {
 	background-color:#222;
 	border-bottom:solid 1px #111;
@@ -133,6 +142,9 @@ ul li {
 	margin:-2px 8px 0px 0px;
 }
 
+/**
+ * CONTENT STYLING
+ */
 .sect {
 	overflow:hidden;
 }
@@ -158,6 +170,9 @@ ul li {
 	color:#aaa;
 }
 
+/**
+ * DASHBOARD STYLING
+ */
 .graph {
 	height:460px;
 }
@@ -168,3 +183,43 @@ ul li {
 	padding:0px 7px 2px 7px;
 	float:right;
 }
+
+/**
+ * RESPONSIVE STYLING
+ */
+ @media screen and (max-width: 700px) {
+	.navbar .right {
+		border-right:none;
+	}
+	
+	.navbar .right a, .navbar .right a:link, .navbar .right a:visited {
+		border-left:none;
+	}
+	
+	.navbar .right span {
+		display:none;
+	}
+	
+	.navbar .right img {
+		padding-right:0px;
+	}
+	
+	.half {
+		width:100%;
+		float:initial;
+	}
+	
+	.half .inner {
+		margin:0px;
+	}
+ }
+ 
+ @media screen and (max-width:400px) {
+	.navbar h1, .navbar .right {
+		float:initial;
+	}
+	
+	.navbar .right a {
+		padding:0px 12px 12px 0px;
+	}
+ }
