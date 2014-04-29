@@ -16,10 +16,13 @@ body > div {
 	overflow:hidden;
 }
 
+h1, h2, h3, h4 {
+	color:#fff;
+}
+
 h1 {
 	font-size:48px;
 	font-weight:300;
-	color:#fff;
 }
 
 h1 span {
@@ -182,6 +185,78 @@ ul li {
 	border-radius:12px;
 	padding:0px 7px 2px 7px;
 	float:right;
+}
+
+/**
+ * PLAYER STYLING
+ */
+#players {
+	padding-top:24px;
+}
+
+#players .search {
+	text-align:center;
+}
+
+#players .search input {
+	font-size:24px;
+	padding:12px 12px 14px 12px;
+}
+
+#players .search input[type="text"] {
+	width:40%;
+	min-width:300px;
+	border:solid 2px #ccc;
+	border-radius:6px 0px 0px 6px;
+	-moz-border-radius:6px 0px 0px 6px;
+	-webkit-border-radius:6px 0px 0px 6px;
+}
+
+#players .search input[type="submit"] {
+	background-color:#5dba5d;
+	border:solid 2px #46a346;
+	border-radius:0px 6px 6px 0px;
+	-moz-border-radius:0px 6px 6px 0px;
+	-webkit-border-radius:0px 6px 6px 0px;
+	color:#fff;
+	transition:opacity .5s ease-out;
+	-moz-transition:opacity .5s ease-out;
+	-webkit-transition:opacity .5s ease-out;
+}
+
+#players .search input[type="submit"]:hover {
+	opacity:0.8;
+}
+
+#players .server {
+	width:33%;
+	overflow:hidden;
+	float:left;
+}
+
+#players h2 {
+	font-weight:300;
+	color:#fff;
+	margin-bottom:6px;
+}
+
+.playericon {
+	background-color:#000;
+	border:solid 2px #222;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	transition:opacity .5s ease-out;
+	-moz-transition:opacity .5s ease-out;
+	-webkit-transition:opacity .5s ease-out;
+}
+
+.playerlink {
+	cursor:pointer;
+}
+
+.playerlink .playericon:hover {
+	opacity:0.8;
 }
 
 /**
