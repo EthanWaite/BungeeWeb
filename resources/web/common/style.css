@@ -204,8 +204,8 @@ ul li {
 }
 
 #players .search input[type="text"] {
-	width:40%;
-	min-width:300px;
+	width:60%;
+	max-width:600px;
 	border:solid 2px #ccc;
 	border-radius:6px 0px 0px 6px;
 	-moz-border-radius:6px 0px 0px 6px;
@@ -226,6 +226,10 @@ ul li {
 
 #players .search input[type="submit"]:hover {
 	opacity:0.8;
+}
+
+#players .row {
+	overflow:hidden;
 }
 
 #players .server {
@@ -256,7 +260,7 @@ ul li {
 }
 
 .playerlink .playericon:hover {
-	opacity:0.8;
+	opacity:0.6;
 }
 
 /**
@@ -287,9 +291,18 @@ ul li {
 	.half .inner {
 		margin:0px;
 	}
+	
+	#players .server {
+		width:100%;
+		padding-bottom:12px;
+	}
+	
+	#players .search input[type="text"] {
+		width:60%;
+	}
  }
  
- @media screen and (max-width:400px) {
+ @media screen and (max-width:420px) {
 	h1 {
 		font-size:36px;
 	}
@@ -309,5 +322,9 @@ ul li {
 	.login .main {
 		max-width:100%;
 		margin:12px;
+	}
+	
+	#players .search input {
+		font-size:16px;
 	}
  }
