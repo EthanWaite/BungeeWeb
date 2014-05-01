@@ -106,6 +106,36 @@ ul li {
 }
 
 /**
+ * DIALOG STYLING
+ */
+.mask {
+	display:none;
+	position:absolute;
+	top:0px;
+	right:0px;
+	bottom:0px;
+	left:0px;
+	background-color:rgba(0, 0, 0, 0.9);
+}
+
+.dialog {
+	width:60%;
+	min-width:360px;
+	background-color:rgba(255, 255, 255, 0.9);
+	border-radius:12px 12px 0px 0px;
+	color:#000;
+	box-sizing:border-box;
+	padding:12px;
+	margin:32px auto 0px auto;
+}
+
+.dialog h1, .dialog h2, .dialog h3 {
+	font-weight:300;
+	color:#333;
+	margin:0px 0px 6px 0px;
+}
+
+/**
  * HEADER STYLING
  */
 .navbar {
@@ -326,5 +356,12 @@ ul li {
 	
 	#players .search input {
 		font-size:16px;
+	}
+	
+	.dialog {
+		width:100%;
+		border-top:solid 1px #ccc;
+		border-radius:0px;
+		margin-top:0px;
 	}
  }
