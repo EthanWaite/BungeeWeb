@@ -29,6 +29,7 @@ public class GetServers extends APICommand {
             int i = 0;
             for (ProxiedPlayer p : info.getPlayers()) {
                 players.add(p.getName());
+                i++;
                 if (i > 50) break;
             }
             out.put(info.getName(), players);

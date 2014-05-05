@@ -35,6 +35,7 @@ $('.navbar .right a').click(function(e) {
 	var href = $(this).attr('href');
 	switch(href.substring(1)) {
 		case 'dashboard': loadDashboard(); break;
+		case 'players': loadPlayers(); break;
 	}
 	$('.client > div.active').fadeOut(1000, function() {
 		$('.client > ' + href).fadeIn(1000);
@@ -118,6 +119,24 @@ function loadDashboard() {
 			$.plot('#dashboard .graph', out, {
 				xaxis: { mode: 'time' }
 			});
+		});
+	});
+}
+
+// Players overview loader
+function loadPlayers() {
+	$.get('/api/getservers', function(data) {
+		parse(data, function(json) {
+			var i = 0;
+			for (server in json) {
+				if (i % 3 == 0) $('#players').append('<div class="row"></div>');
+				$('#players .row').last().append('<div class="server"><h4>' + server + '</h4></div>');
+				for (p in json[server]) {
+					p = json[server][p];
+					$('#players .server').last().append('<a class="playerlink" data-player="' + p + '"><img src="https://minotar.net/avatar/' + p + '/32" title="' + p + '" class="playericon" />');
+				}
+				i++;
+			}
 		});
 	});
 }
