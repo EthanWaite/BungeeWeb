@@ -10,6 +10,7 @@ $(document).ready(function() {
 			if (json.result == 1) $('.login').hide(0, loadClient);
 		});
 	});
+	skinview.changeSkin('Notch');
 });
 
 // Login handler
