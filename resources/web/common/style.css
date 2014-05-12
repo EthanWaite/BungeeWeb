@@ -127,12 +127,18 @@ ul li {
 	box-sizing:border-box;
 	padding:12px;
 	margin:32px auto 0px auto;
+	overflow:hidden;
 }
 
 .dialog h1, .dialog h2, .dialog h3 {
 	font-weight:300;
 	color:#333;
 	margin:0px 0px 6px 0px;
+}
+
+.dialog #skinpreview {
+	float:right;
+	margin-top:-32px;
 }
 
 /**
