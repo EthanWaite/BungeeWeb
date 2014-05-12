@@ -44,6 +44,11 @@ $('.navbar .right a').click(function(e) {
 	e.preventDefault();
 });
 
+// Player link click handler
+$('.playerlink').click(function() {
+	showPlayer($(this).attr('data-player'));
+});
+
 // Initial client loader
 function loadClient() {
 	$('.navbar').slideDown(800);
@@ -132,14 +137,19 @@ function loadPlayers() {
 			for (server in json) {
 				if (i % 3 == 0) $('#players').append('<div class="row"></div>');
 				$('#players .row').last().append('<div class="server"><h4>' + server + '</h4></div>');
-				for (p in json[server]) {
-					p = json[server][p];
-					$('#players .server').last().append('<a class="playerlink" data-player="' + p + '"><img src="https://minotar.net/avatar/' + p + '/32" title="' + p + '" class="playericon" />');
+				for (uuid in json[server]) {
+					user = json[server][uuid];
+					$('#players .server').last().append('<a class="playerlink" data-player="' + uuid + '"><img src="https://minotar.net/avatar/' + user + '/32" title="' + user + '" class="playericon" />');
 				}
 				i++;
 			}
 		});
 	});
+}
+
+// Player dialog
+function showPlayer(uuid) {
+	//TODO
 }
 
 // JSON handler

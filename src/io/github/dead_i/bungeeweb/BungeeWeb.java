@@ -24,6 +24,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class BungeeWeb extends Plugin {
@@ -116,7 +117,7 @@ public class BungeeWeb extends Plugin {
             PreparedStatement st = db.prepareStatement("INSERT INTO `" + config.getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
             st.setLong(1, System.currentTimeMillis() / 1000);
             st.setInt(2, type);
-            st.setString(3, player.getUniqueId().toString().replace("-", ""));
+            st.setString(3, getUUID(player));
             st.setString(4, player.getName());
             st.setString(5, content);
             st.executeUpdate();
@@ -124,6 +125,10 @@ public class BungeeWeb extends Plugin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getUUID(ProxiedPlayer p) {
+        return p.getUniqueId().toString().replace("-", "");
     }
 
     public static String encrypt(String pass) {

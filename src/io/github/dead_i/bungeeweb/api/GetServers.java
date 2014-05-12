@@ -2,6 +2,7 @@ package io.github.dead_i.bungeeweb.api;
 
 import com.google.gson.Gson;
 import io.github.dead_i.bungeeweb.APICommand;
+import io.github.dead_i.bungeeweb.BungeeWeb;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -23,12 +24,12 @@ public class GetServers extends APICommand {
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException {
         if (!checkPermission(req, res)) return;
-        HashMap<String, Collection> out = new HashMap<String, Collection>();
+        HashMap<String, HashMap> out = new HashMap<String, HashMap>();
         for (ServerInfo info : plugin.getProxy().getServers().values()) {
-            ArrayList<String> players = new ArrayList<String>();
+            HashMap<String, String> players = new HashMap<String, String>();
             int i = 0;
             for (ProxiedPlayer p : info.getPlayers()) {
-                players.add(p.getName());
+                players.put(BungeeWeb.getUUID(p), p.getName());
                 i++;
                 if (i > 50) break;
             }
