@@ -534,7 +534,7 @@ var skinview = function(global, undefined) {
 	};
 	
 	skin.crossOrigin = 'anonymous';
-	skin.src = 'https://minotar.net/skin/' + $('#skinpreview').attr('data-player');
+	skin.src = 'https://minotar.net/skin/char';
 	
 	var handleFiles = function (files) {
 		if(files.length > 0) {
