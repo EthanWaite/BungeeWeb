@@ -198,7 +198,8 @@ function formatLog(log) {
 			var msg = '{CONTENT}';
 	}
 	
-	return msg.replace('{PLAYER}', log.username)
+	return msg.replace('{PLAYER}', '<a class="playerlink" data-player="{UUID}">' + log.username + '</a>')
+		.replace('{UUID}', log.uuid)
 		.replace('{CONTENT}', log.content);
 }
 
