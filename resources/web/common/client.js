@@ -74,7 +74,7 @@ function loadDashboard() {
 			$.get('/api/getlogs?limit=' + i, function(data) {
 				parse(data, function(json) {
 					for (item in json) {
-						$('#dashboard .logs ul').append('<li>' + formatLog(json[item]) + '</li>');
+						$('#dashboard .logs ul').append('<li>' + formatLog(json[item], true) + '</li>');
 					}
 					$('#dashboard .logs h1 span').text(players + ' players');
 				});
@@ -155,7 +155,7 @@ function showPlayer(uuid) {
 		parse(data, function(json) {
 			$('#playerinfo h1').text(json[0].username);
 			for (item in json) {
-				$('#playerinfo ul').append('<li>' + formatLog(json[item]) + '</li>');
+				$('#playerinfo ul').append('<li>' + formatLog(json[item], false) + '</li>');
 			}
 			$('#playerinfo').slideDown(2000);
 		});
@@ -178,7 +178,7 @@ function parse(data, cb) {
 }
 
 // Log handler
-function formatLog(log) {
+function formatLog(log, linked) {
 	switch(log.type) {
 		case 1:
 			var msg = '{PLAYER}: {CONTENT}';
@@ -208,7 +208,11 @@ function formatLog(log) {
 			var msg = '{CONTENT}';
 	}
 	
-	return msg.replace('{PLAYER}', '<a class="playerlink" data-player="{UUID}">' + log.username + '</a>')
+	if (linked) {
+		msg = msg.replace('{PLAYER}', '<a class="playerlink" data-player="{UUID}">{PLAYER}</a>');
+	}
+	
+	return msg.replace('{PLAYER}', log.username)
 		.replace('{UUID}', log.uuid)
 		.replace('{CONTENT}', log.content);
 }
