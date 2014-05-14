@@ -60,7 +60,9 @@ $('#players .search').submit(function(e) {
 
 // Dialog escape handler
 $('.mask').click(function() {
-	$(this).fadeOut(1000);
+	$(this).fadeOut(1000, function() {
+		$('body').css({ 'overflow': 'visible' });
+	});
 });
 $('.dialog').click(function(e) {
 	e.stopPropagation();
@@ -167,8 +169,9 @@ function loadPlayers() {
 
 // Player dialog
 function showPlayer(uuid) {
+	$('body').css({ 'overflow': 'hidden' });
 	$('#playerinfo').hide(0);
-	$('.mask').fadeIn(2000);
+	$('.mask').fadeIn(1000);
 	$.get('/api/getlogs?uuid=' + uuid + '&limit=15', function(data) {
 		parse(data, function(json) {
 			var user = json[0].username;
