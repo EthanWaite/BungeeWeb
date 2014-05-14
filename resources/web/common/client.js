@@ -48,6 +48,16 @@ $('.client').on('click', '.playerlink', function() {
 	showPlayer($(this).attr('data-player'));
 });
 
+// Player search handler
+$('#players .search').submit(function(e) {
+	$.get('/api/getuuid?username=' + $(this).find('input[name="player"]').val(), function(data) {
+		parse(data, function(json) {
+			if ("uuid" in json) showPlayer(json.uuid);
+		});
+	});
+	e.preventDefault();
+});
+
 // Dialog escape handler
 $('.mask').click(function() {
 	$(this).fadeOut(1000);
