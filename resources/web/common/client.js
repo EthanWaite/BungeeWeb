@@ -38,7 +38,7 @@ $('.navbar .right a').click(function(e) {
 		case 'players': loadPlayers(); break;
 	}
 	$('.client > div.active').fadeOut(1000, function() {
-		$('.client > ' + href).fadeIn(1000);
+		$('.client > ' + href).addClass('active').fadeIn(1000);
 	});
 	e.preventDefault();
 });
