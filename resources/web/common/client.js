@@ -154,6 +154,7 @@ function showPlayer(uuid) {
 	$.get('/api/getlogs?uuid=' + uuid + '&limit=15', function(data) {
 		parse(data, function(json) {
 			$('#playerinfo h1').text(json[0].username);
+			$('#playerinfo h4').text('UUID: ' + json[0].uuid);
 			for (item in json) {
 				$('#playerinfo ul').append('<li>' + formatLog(json[item], false) + '</li>');
 			}

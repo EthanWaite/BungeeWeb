@@ -131,10 +131,14 @@ ul li {
 	overflow:hidden;
 }
 
-.dialog h1, .dialog h2, .dialog h3 {
+.dialog h1, .dialog h2, .dialog h3, .dialog h4 {
 	font-weight:300;
 	color:#333;
 	margin:0px 0px 6px 0px;
+}
+
+.dialog h4 {
+	color:#aaa;
 }
 
 .dialog #skinpreview {
