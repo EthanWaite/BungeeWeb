@@ -10,7 +10,6 @@ $(document).ready(function() {
 			if (json.result == 1) $('.login').hide(0, loadClient);
 		});
 	});
-	skinview.changeSkin('Notch');
 });
 
 // Login handler
@@ -155,6 +154,7 @@ function showPlayer(uuid) {
 		parse(data, function(json) {
 			$('#playerinfo h1').text(json[0].username);
 			$('#playerinfo h4').text('UUID: ' + json[0].uuid);
+			skinview.changeSkin(json[0].username);
 			for (item in json) {
 				$('#playerinfo ul').append('<li>' + formatLog(json[item], false) + '</li>');
 			}
