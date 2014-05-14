@@ -170,11 +170,16 @@ function showPlayer(uuid) {
 	$('.mask').fadeIn(2000);
 	$.get('/api/getlogs?uuid=' + uuid + '&limit=15', function(data) {
 		parse(data, function(json) {
-			$('#playerinfo h1').text(json[0].username);
+			var user = json[0].username;
+			$('#playerinfo h1').text(user);
 			$('#playerinfo h4').text('UUID: ' + json[0].uuid);
-			skinview.changeSkin(json[0].username);
+			skinview.changeSkin(user);
 			for (item in json) {
 				$('#playerinfo ul').append('<li>' + formatLog(json[item], false) + '</li>');
+				if (json[item].username != user) {
+					$('#playerinfo ul').append('<li>' + json[item].username + ' is now known as ' + user + '</li>');
+					user = json[item].username;
+				}
 			}
 			$('#playerinfo').slideDown(2000);
 		});
