@@ -45,7 +45,7 @@ $('.navbar .right a').click(function(e) {
 });
 
 // Player link click handler
-$('.playerlink').click(function() {
+$('.client').on('click', '.playerlink', function() {
 	showPlayer($(this).attr('data-player'));
 });
 
@@ -149,7 +149,17 @@ function loadPlayers() {
 
 // Player dialog
 function showPlayer(uuid) {
-	//TODO
+	$('#playerinfo').hide(0);
+	$('.mask').fadeIn(2000);
+	$.get('/api/getlogs?uuid=' + uuid + '&limit=15', function(data) {
+		parse(data, function(json) {
+			$('#playerinfo h1').text(json[0].username);
+			for (item in json) {
+				$('#playerinfo ul').append('<li>' + formatLog(json[item]) + '</li>');
+			}
+			$('#playerinfo').slideDown(2000);
+		});
+	});
 }
 
 // JSON handler
