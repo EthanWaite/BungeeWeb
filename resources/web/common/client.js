@@ -48,6 +48,14 @@ $('.client').on('click', '.playerlink', function() {
 	showPlayer($(this).attr('data-player'));
 });
 
+// Dialog escape handler
+$('.mask').click(function() {
+	$(this).fadeOut(1000);
+});
+$('.dialog').click(function(e) {
+	e.stopPropagation();
+});
+
 // Initial client loader
 function loadClient() {
 	$('.navbar').slideDown(800);
