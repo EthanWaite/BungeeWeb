@@ -148,6 +148,7 @@ function loadDashboard() {
 
 // Players overview loader
 function loadPlayers() {
+	$('#players .row').remove();
 	$.get('/api/getservers', function(data) {
 		parse(data, function(json) {
 			var i = 0;
