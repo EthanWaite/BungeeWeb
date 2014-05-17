@@ -172,11 +172,12 @@ function showPlayer(uuid) {
 	$('body').css({ 'overflow': 'hidden' });
 	$('#playerinfo').hide(0);
 	$('.mask').fadeIn(1000);
-	$.get('/api/getlogs?uuid=' + uuid + '&limit=15', function(data) {
+	$.get('/api/getlogs?uuid=' + uuid + '&limit=30', function(data) {
 		parse(data, function(json) {
 			var user = json[0].username;
 			$('#playerinfo h1').text(user);
 			$('#playerinfo h4').text('UUID: ' + json[0].uuid);
+			$('#playerinfo ul').html('');
 			skinview.changeSkin(user);
 			for (item in json) {
 				$('#playerinfo ul').append('<li>' + formatLog(json[item], false) + '</li>');
