@@ -36,6 +36,7 @@ $('.navbar .right a').click(function(e) {
 	switch(href.substring(1)) {
 		case 'dashboard': loadDashboard(); break;
 		case 'players': loadPlayers(); break;
+		case 'logs': loadLogs(); break;
 	}
 	$('.client > div.active').fadeOut(1000, function() {
 		$('.client > ' + href).addClass('active').fadeIn(1000);
@@ -77,13 +78,13 @@ function loadClient() {
 
 // Dashboard loader
 function loadDashboard() {
-	$('#dashboard ul').html('');
+	$('#dashboard .log').html('');
 	var players = 0;
 	$.get('/api/listservers', function(data) {
 		parse(data, function(json) {
 			var i = 0;
 			for (server in json) {
-				$('#dashboard .servers ul').append('<li>' + server + '<span class="badge">' + json[server] + '</span></li>');
+				$('#dashboard .servers .log').append('<li>' + server + '<span class="badge">' + json[server] + '</span></li>');
 				players = players + json[server];
 				i++;
 			}
@@ -93,7 +94,7 @@ function loadDashboard() {
 			$.get('/api/getlogs?limit=' + i, function(data) {
 				parse(data, function(json) {
 					for (item in json) {
-						$('#dashboard .logs ul').append('<li>' + formatLog(json[item], true) + '</li>');
+						$('#dashboard .logs .log').append('<li>' + formatLog(json[item], true) + '</li>');
 					}
 					$('#dashboard .logs h1 span').text(players + ' players');
 				});
@@ -148,6 +149,19 @@ function loadDashboard() {
 	});
 }
 
+// Logs loader
+function loadLogs() {
+	$.get('/api/getlogs?limit=50', function(data) {
+		parse(data, function(json) {
+			for (item in json) {
+				var d = new Date(json[item]['time'] * 1000);
+				$('#logs .log').append('<li><div class="left">' + formatLog(json[item], true) + '</div> <div class="right">' + d.toLocaleString() + '</div></li>');
+			}
+			$('#logs .log').append('<li class="more">Show more</li>');
+		});
+	});
+}
+
 // Players overview loader
 function loadPlayers() {
 	$('#players .row').remove();
@@ -177,12 +191,12 @@ function showPlayer(uuid) {
 			var user = json[0].username;
 			$('#playerinfo h1').text(user);
 			$('#playerinfo h4').text('UUID: ' + json[0].uuid);
-			$('#playerinfo ul').html('');
+			$('#playerinfo .log').html('');
 			skinview.changeSkin(user);
 			for (item in json) {
-				$('#playerinfo ul').append('<li>' + formatLog(json[item], false) + '</li>');
+				$('#playerinfo .log').append('<li>' + formatLog(json[item], false) + '</li>');
 				if (json[item].username != user) {
-					$('#playerinfo ul').append('<li>' + json[item].username + ' is now known as ' + user + '</li>');
+					$('#playerinfo .log').append('<li>' + json[item].username + ' is now known as ' + user + '</li>');
 					user = json[item].username;
 				}
 			}

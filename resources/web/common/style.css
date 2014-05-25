@@ -30,17 +30,27 @@ h1 span {
 	color:#ccc;
 }
 
-ul {
+.log {
 	border:solid 6px rgba(0, 0, 0, 0.7);
 	background-color:#fff;
 	color:#000;
 }
 
-ul li {
+.log li {
 	list-style-type:none;
 	border-bottom:solid 1px #ccc;
 	padding:6px;
 	margin-left:-40px;
+	overflow:hidden;
+}
+
+.log li .left {
+	float:left;
+}
+
+.log li .right {
+	color:#ccc;
+	float:right;
 }
 
 .container {
