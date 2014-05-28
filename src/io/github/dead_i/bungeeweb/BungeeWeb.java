@@ -12,6 +12,7 @@ import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.session.HashSessionIdManager;
 import org.eclipse.jetty.server.session.HashSessionManager;
 import org.eclipse.jetty.server.session.SessionHandler;
+import org.eclipse.jetty.util.log.StdErrLog;
 import org.eclipse.jetty.util.security.Password;
 
 import javax.xml.bind.DatatypeConverter;
@@ -24,7 +25,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class BungeeWeb extends Plugin {
@@ -84,6 +85,11 @@ public class BungeeWeb extends Plugin {
         SessionHandler sessions = new SessionHandler(new HashSessionManager());
         sessions.setHandler(new WebHandler(this));
         context.setHandler(sessions);
+
+        // Setup logging
+        Properties p = new Properties();
+        p.setProperty("org.eclipse.jetty.LEVEL", "WARN");
+        StdErrLog.setProperties(p);
 
         // Setup the server
         server = new Server(config.getInt("server.port"));
