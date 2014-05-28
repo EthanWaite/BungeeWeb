@@ -51,10 +51,17 @@ public class GetLogs extends APICommand {
 
         qry += "ORDER BY `id` DESC ";
 
-        String limit = req.getParameter("limit");
-        if (limit != null && BungeeWeb.isNumber(limit)) {
-            qry += "LIMIT " + (int) Math.floor(Integer.parseInt(limit));
+        String offset = req.getParameter("offset");
+        if (offset == null || !BungeeWeb.isNumber(offset)) {
+            offset = "0";
         }
+
+        String limit = req.getParameter("limit");
+        if (limit == null || !BungeeWeb.isNumber(limit) || Integer.parseInt(limit) > 100) {
+            limit = "100";
+        }
+
+        qry += "LIMIT " + offset + "," + limit;
 
         ArrayList<Object> out = new ArrayList<Object>();
         try {
