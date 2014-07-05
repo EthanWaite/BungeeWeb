@@ -28,7 +28,6 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class BungeeWeb extends Plugin {
-    private static Server server;
     private static Configuration config;
     private static DatabaseManager manager;
 
@@ -94,7 +93,7 @@ public class BungeeWeb extends Plugin {
         StdErrLog.setProperties(p);
 
         // Setup the server
-        server = new Server(config.getInt("server.port"));
+        Server server = new Server(config.getInt("server.port"));
         server.setSessionIdManager(new HashSessionIdManager());
         server.setHandler(sessions);
         server.setStopAtShutdown(true);
