@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class BungeeWeb extends Plugin {
     private static Server server;
     private static Configuration config;
-    private static Connection db;
+    private static DatabaseManager manager;
 
     public void onEnable() {
         // Get configuration
@@ -49,10 +48,12 @@ public class BungeeWeb extends Plugin {
             e.printStackTrace();
         }
 
-        // Connect to the database and create tables
-        try {
-            db = DriverManager.getConnection("jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
+        // Connect to the database
+        manager = new DatabaseManager(this, "jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
 
+        // Initial database table setup
+        Connection db = getDatabase();
+        try {
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(16) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
             db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "stats` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `playercount` int(6) NOT NULL DEFAULT -1, `maxplayers` int(6) NOT NULL DEFAULT -1, `activity` int(12) NOT NULL DEFAULT -1, PRIMARY KEY (`id`))");
@@ -65,8 +66,9 @@ public class BungeeWeb extends Plugin {
                 getLogger().warning("Both the username and password is 'admin'. Please change the password after first logging in.");
             }
         } catch (SQLException e) {
-            getLogger().severe("Unable to connect to the database.");
+            getLogger().severe("Unable to connect to the database. Disabling...");
             e.printStackTrace();
+            return;
         }
 
         // Register listeners
@@ -111,7 +113,7 @@ public class BungeeWeb extends Plugin {
     }
 
     public static Connection getDatabase() {
-        return db;
+        return manager.getConnection();
     }
 
     public static void log(ProxiedPlayer player, int type) {
@@ -120,7 +122,7 @@ public class BungeeWeb extends Plugin {
 
     public static void log(ProxiedPlayer player, int type, String content) {
         try {
-            PreparedStatement st = db.prepareStatement("INSERT INTO `" + config.getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement st = manager.getConnection().prepareStatement("INSERT INTO `" + config.getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
             st.setLong(1, System.currentTimeMillis() / 1000);
             st.setInt(2, type);
             st.setString(3, getUUID(player));
