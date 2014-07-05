@@ -151,6 +151,7 @@ function loadDashboard() {
 
 // Logs loader
 function loadLogs() {
+	$('#logs .log').html('');
 	$.get('/api/getlogs?limit=50', function(data) {
 		parse(data, function(json) {
 			for (item in json) {
