@@ -38,8 +38,8 @@ $('.navbar .right a').click(function(e) {
 		case 'players': loadPlayers(); break;
 		case 'logs': loadLogs(); break;
 	}
-	$('.client > div.active').removeClass('active').fadeOut(1000, function() {
-		$('.client > ' + href).addClass('active').fadeIn(1000);
+	$('.client > div.active').removeClass('active').fadeOut(500, function() {
+		$('.client > ' + href).addClass('active').fadeIn(500);
 	});
 	e.preventDefault();
 });
