@@ -324,6 +324,14 @@ h1 span {
 }
 
 /**
+  * LOGS STYLING
+  */
+.logs .more {
+	text-align:center;
+	color:#333;
+}
+
+/**
  * RESPONSIVE STYLING
  */
  @media screen and (max-width: 700px) {

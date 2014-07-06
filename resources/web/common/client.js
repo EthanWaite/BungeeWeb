@@ -152,16 +152,32 @@ function loadDashboard() {
 // Logs loader
 function loadLogs() {
 	$('#logs .log').html('');
-	$.get('/api/getlogs?limit=50', function(data) {
+	addLogs(0);
+}
+
+// Logs retrieval
+function addLogs(offset, cb) {
+	var limit = 50;
+	$.get('/api/getlogs?offset=' + offset + '&limit=50', function(data) {
 		parse(data, function(json) {
 			for (item in json) {
 				var d = new Date(json[item]['time'] * 1000);
 				$('#logs .log').append('<li><div class="left">' + formatLog(json[item], true) + '</div> <div class="right">' + d.toLocaleString() + '</div></li>');
 			}
-			$('#logs .log').append('<li class="more">Show more</li>');
+			if (json.length == limit) $('#logs .log').append('<li class="more">Show more</li>');
+			if (cb !== undefined) cb();
 		});
 	});
 }
+
+// Logs "show more" button handler
+$('#logs .log').on('click', '.more', function() {
+	var more = $('#logs .log .more');
+	more.removeClass('more').text('Loading...');
+	addLogs($('#logs li').size() - 1, function() {
+		more.remove();
+	});
+});
 
 // Players overview loader
 function loadPlayers() {
@@ -205,6 +221,13 @@ function showPlayer(uuid) {
 		});
 	});
 }
+
+// Scroll handler
+$(window).scroll(function() {
+	if ($('#logs').hasClass('active') && $(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+		$('#logs .log .more').click();
+	}
+});
 
 // JSON handler
 function parse(data, cb) {

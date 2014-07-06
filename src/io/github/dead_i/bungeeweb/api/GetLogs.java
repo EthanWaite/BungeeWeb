@@ -61,7 +61,7 @@ public class GetLogs extends APICommand {
             limit = "100";
         }
 
-        qry += "LIMIT " + offset + "," + limit;
+        qry += "LIMIT " + offset + ", " + limit;
 
         ArrayList<Object> out = new ArrayList<Object>();
         try {
