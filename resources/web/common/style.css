@@ -55,6 +55,7 @@ h1 span {
 
 .container {
 	width:90%;
+	max-width:1000px;
 	margin:0px auto;
 }
 
