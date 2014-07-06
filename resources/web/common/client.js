@@ -207,7 +207,7 @@ function showPlayer(uuid) {
 		parse(data, function(json) {
 			var user = json[0].username;
 			$('#playerinfo h1').text(user);
-			$('#playerinfo h4').text('UUID: ' + json[0].uuid);
+			$('#playerinfo h4').text(json[0].uuid);
 			$('#playerinfo .log').html('');
 			skinview.changeSkin(user);
 			for (item in json) {

@@ -143,6 +143,10 @@ h1 span {
 	overflow:hidden;
 }
 
+.dialog > div {
+	overflow:hidden;
+}
+
 .dialog h1, .dialog h2, .dialog h3, .dialog h4 {
 	font-weight:300;
 	color:#333;
@@ -402,5 +406,9 @@ h1 span {
 		border-top:solid 1px #ccc;
 		border-radius:0px;
 		margin-top:0px;
+	}
+	 
+	.dialog #skinpreview {
+		display:none;
 	}
  }
