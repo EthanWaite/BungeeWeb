@@ -39,6 +39,18 @@ public class GetLogs extends APICommand {
             params.add(Integer.parseInt(from));
         }
 
+        String filter = req.getParameter("filter");
+        if (filter != null) {
+            String filters = "";
+            for (String f : filter.split(",")) {
+                if (BungeeWeb.isNumber(f)) {
+                    filters += "`type`=? OR ";
+                    params.add(f);
+                }
+            }
+            if (filters.length() > 0) conditions.add("(" + filters.substring(0, filters.length() - 4) + ")");
+        }
+
         String qry = "SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "log` ";
 
         if (conditions.size() > 0) {
@@ -46,7 +58,7 @@ public class GetLogs extends APICommand {
             for (String s : conditions) {
                 cond += s + " AND ";
             }
-            qry += cond.substring(0, cond.length() - 4);
+            qry += cond.substring(0, cond.length() - 5);
         }
 
         qry += "ORDER BY `id` DESC ";
