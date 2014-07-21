@@ -162,6 +162,15 @@ h1 span {
 	margin-top:-32px;
 }
 
+.dialog .close {
+	float:right;
+}
+
+.dialog .close img {
+	width:24px;
+	height:24px;
+}
+
 .dialog ul {
 	border:none;
 }
@@ -299,8 +308,14 @@ h1 span {
 
 #players .server {
 	width:33%;
+	box-sizing:border-box;
+	padding-right:6px;
 	overflow:hidden;
 	float:left;
+}
+
+#players .server h4 {
+	margin-bottom:4px;
 }
 
 #players h2 {

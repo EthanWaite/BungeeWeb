@@ -68,6 +68,9 @@ $('.mask').click(function() {
 $('.dialog').click(function(e) {
 	e.stopPropagation();
 });
+$('.dialog .close').click(function() {
+	$('.mask').click();
+});
 
 // Initial client loader
 function loadClient() {
