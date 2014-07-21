@@ -78,6 +78,17 @@ function loadClient() {
 	$('.navbar').slideDown(800);
 	$('#dashboard, .footer').addClass('active').fadeIn(1000);
 	loadDashboard();
+	loadTypes();
+}
+
+// Types loader
+var types = {};
+function loadTypes() {
+	$.get('/api/gettypes', function(data) {
+		parse(data, function(json) {
+			types = json;
+		});
+	});
 }
 
 // Dashboard loader
@@ -156,6 +167,10 @@ function loadDashboard() {
 // Logs loader
 function loadLogs() {
 	$('#logs .log').html('');
+	$('#logs .filters a').remove();
+	for (t in types) {
+		$('#logs .filters').append('<a data-type-id="' + t + '">' + types[t] + '</a>');
+	}
 	addLogs(0);
 }
 
