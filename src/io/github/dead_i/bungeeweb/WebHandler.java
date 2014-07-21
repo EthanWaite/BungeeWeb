@@ -6,6 +6,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,7 +68,9 @@ public class WebHandler extends AbstractHandler {
             }
             baseReq.setHandled(true);
         }else{
-            InputStream stream = plugin.getResourceAsStream("web" + target);
+            String file = "web" + target;
+            res.setContentType(getContentType(file));
+            InputStream stream = plugin.getResourceAsStream(file);
             if (stream != null) {
                 baseReq.setHandled(true);
                 ByteStreams.copy(stream, res.getOutputStream());
@@ -90,5 +93,16 @@ public class WebHandler extends AbstractHandler {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public String getContentType(String filename) {
+        MimetypesFileTypeMap map = new MimetypesFileTypeMap();
+        map.addMimeTypes("text/html html htm");
+        map.addMimeTypes("text/javascript js json");
+        map.addMimeTypes("text/css css");
+        map.addMimeTypes("image/jpeg jpg jpeg");
+        map.addMimeTypes("image/gif gif");
+        map.addMimeTypes("image/png png");
+        return map.getContentType(filename.toLowerCase());
     }
 }
