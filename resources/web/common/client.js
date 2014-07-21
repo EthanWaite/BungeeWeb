@@ -285,7 +285,7 @@ function formatLog(log, linked) {
 	
 	return msg.replace('{PLAYER}', log.username)
 		.replace('{UUID}', log.uuid)
-		.replace('{CONTENT}', log.content);
+		.replace('{CONTENT}', $('<div/>').text(log.content).html());
 }
 
 // Error handler
