@@ -59,7 +59,7 @@ h1 span {
 	margin:0px auto;
 }
 
-.navbar, .errorbar, .client > div {
+.navbar, .errorbar, .client > div, .footer {
 	display:none;
 }
 

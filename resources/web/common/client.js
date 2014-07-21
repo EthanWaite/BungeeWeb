@@ -29,6 +29,8 @@ $('.login form').submit(function(e) {
 
 // Navigation handler
 $('.navbar .right a').click(function(e) {
+	e.preventDefault();
+	if ($(this).hasClass('active')) return;
 	$('.navbar .active').removeClass('active');
 	$(this).addClass('active');
 	
@@ -41,7 +43,6 @@ $('.navbar .right a').click(function(e) {
 	$('.client > div.active').removeClass('active').fadeOut(500, function() {
 		$('.client > ' + href).addClass('active').fadeIn(500);
 	});
-	e.preventDefault();
 });
 
 // Player link click handler
@@ -75,7 +76,7 @@ $('.dialog .close').click(function() {
 // Initial client loader
 function loadClient() {
 	$('.navbar').slideDown(800);
-	$('#dashboard').addClass('active').fadeIn(1000);
+	$('#dashboard, .footer').addClass('active').fadeIn(1000);
 	loadDashboard();
 }
 
