@@ -25,6 +25,7 @@ public class WebHandler extends AbstractHandler {
         registerCommand(new GetLogs());
         registerCommand(new GetServers());
         registerCommand(new GetStats());
+        registerCommand(new GetTypes());
         registerCommand(new GetUUID());
         registerCommand(new IsLoggedIn());
         registerCommand(new ListServers());
