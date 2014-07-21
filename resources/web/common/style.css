@@ -69,6 +69,12 @@ h1 span {
 	padding:6px 6px 9px 6px;
 }
 
+.footer {
+	font-size:14px;
+	color:#222;
+	text-align:center;
+}
+
 /**
  * LOGIN STYLING
  */
