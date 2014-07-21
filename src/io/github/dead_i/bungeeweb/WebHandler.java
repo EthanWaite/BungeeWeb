@@ -35,12 +35,9 @@ public class WebHandler extends AbstractHandler {
     @Override
     public void handle(String target, Request baseReq, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         res.setStatus(HttpServletResponse.SC_OK);
-        plugin.getLogger().info("Serving " + target);
 
         if (target.equals("/")) target = "/index.html";
         String[] path = target.split("/");
-
-        plugin.getLogger().info("Got request from ID " + req.getSession().getId());
 
         if (path.length > 2 && path[1].equalsIgnoreCase("api")) {
             if (commands.containsKey(path[2])) {

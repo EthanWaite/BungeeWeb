@@ -24,10 +24,6 @@ $('.login form').submit(function(e) {
 				$('.login .error').slideDown(500);
 			}
 		});
-	}).error(function(j, t, e) {
-		console.log(j);
-		console.log(t);
-		console.log(e);
 	});
 });
 
