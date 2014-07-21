@@ -18,8 +18,6 @@ public class GetUUID extends APICommand {
 
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException, SQLException {
-        if (!checkPermission(req, res)) return;
-
         String user = req.getParameter("username");
         if (user == null) {
             res.getWriter().print("{ \"error\": \"A username was not provided.\" }");

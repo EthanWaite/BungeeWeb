@@ -43,7 +43,12 @@ public class WebHandler extends AbstractHandler {
         if (path.length > 2 && path[1].equalsIgnoreCase("api")) {
             if (commands.containsKey(path[2])) {
                 try {
-                    commands.get(path[2]).execute(plugin, req, res, path);
+                    APICommand command = commands.get(path[2]);
+                    if (command.hasPermission(req)) {
+                        command.execute(plugin, req, res, path);
+                    }else{
+                        res.getWriter().print("{ \"error\": \"You do not have permission to perform this action.\" }");
+                    }
                 } catch (SQLException e) {
                     plugin.getLogger().warning("A MySQL database error occurred.");
                     e.printStackTrace();

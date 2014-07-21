@@ -23,7 +23,6 @@ public class GetLogs extends APICommand {
 
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException {
-        if (!checkPermission(req, res)) return;
         ArrayList<String> conditions = new ArrayList<String>();
         ArrayList<Object> params = new ArrayList<Object>();
 

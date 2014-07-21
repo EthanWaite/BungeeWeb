@@ -25,14 +25,13 @@ public abstract class APICommand {
     }
 
     public boolean hasPermission(HttpServletRequest req) {
-        Integer group = (Integer) req.getSession().getAttribute("group");
-        return (group != null && group >= permission);
+        return hasPermission(req, permission);
     }
 
-    public boolean checkPermission(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        boolean has = hasPermission(req);
-        if (!has) res.getWriter().print("{ \"error\": \"You do not have permission to perform this action.\" }");
-        return has;
+    public boolean hasPermission(HttpServletRequest req, int i) {
+        Integer group = (Integer) req.getSession().getAttribute("group");
+        if (group == null) group = 0;
+        return (group >= i);
     }
 
     public abstract void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException, SQLException;

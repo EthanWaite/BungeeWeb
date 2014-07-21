@@ -23,7 +23,6 @@ public class GetServers extends APICommand {
 
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException {
-        if (!checkPermission(req, res)) return;
         HashMap<String, HashMap> out = new HashMap<String, HashMap>();
         for (ServerInfo info : plugin.getProxy().getServers().values()) {
             HashMap<String, String> players = new HashMap<String, String>();

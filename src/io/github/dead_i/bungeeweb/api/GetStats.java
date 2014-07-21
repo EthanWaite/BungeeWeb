@@ -22,7 +22,6 @@ public class GetStats extends APICommand {
 
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException, SQLException {
-        if (!checkPermission(req, res)) return;
         String param = req.getParameter("limit");
         int limit = 50;
         if (param != null && BungeeWeb.isNumber(param)) limit = Integer.parseInt(param);

@@ -7,7 +7,7 @@
 $(document).ready(function() {
 	$.get('/api/isloggedin', function(data) {
 		parse(data, function(json) {
-			if (json.result == 1) $('.login').hide(0, loadClient);
+			if (json.result == 'true') $('.login').hide(0, loadClient);
 		});
 	});
 });

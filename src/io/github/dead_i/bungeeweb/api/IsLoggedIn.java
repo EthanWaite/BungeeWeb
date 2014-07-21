@@ -11,13 +11,11 @@ import java.sql.SQLException;
 public class IsLoggedIn extends APICommand {
 
     public IsLoggedIn() {
-        super("isloggedin", 1);
+        super("isloggedin", 0);
     }
 
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException, SQLException {
-        int out = 0;
-        if (hasPermission(req)) out = 1;
-        res.getWriter().print("{ \"result\": \"" + out + "\" }");
+        res.getWriter().print("{ \"result\": \"" + hasPermission(req, 1) + "\" }");
     }
 }
