@@ -166,18 +166,29 @@ function loadDashboard() {
 
 // Logs loader
 function loadLogs() {
-	$('#logs .log').html('');
 	$('#logs .filters a').remove();
 	for (t in types) {
 		$('#logs .filters').append('<a data-type-id="' + t + '">' + types[t] + '</a>');
 	}
-	addLogs(0);
+	resetLogs();
+}
+
+// Logs reset
+function resetLogs() {
+	$('#logs .log').html('');
+	var filter = '';
+	$('#logs .filters a').each(function() {
+		if ($(this).hasClass('active')) {
+			filter += $(this).attr('data-type-id') + ',';
+		}
+	});
+	addLogs(0, (filter == '' ? filter : filter.substring(0, filter.length - 1)));
 }
 
 // Logs retrieval
-function addLogs(offset, cb) {
+function addLogs(offset, filter, cb) {
 	var limit = 50;
-	$.get('/api/getlogs?offset=' + offset + '&limit=50', function(data) {
+	$.get('/api/getlogs?offset=' + offset + '&filter=' + filter + '&limit=50', function(data) {
 		parse(data, function(json) {
 			for (item in json) {
 				var d = new Date(json[item]['time'] * 1000);
@@ -188,6 +199,12 @@ function addLogs(offset, cb) {
 		});
 	});
 }
+
+// Logs filter
+$('#logs .filters').on('click', 'a', function() {
+	$(this).toggleClass('active');
+	resetLogs();
+});
 
 // Logs "show more" button handler
 $('#logs .log').on('click', '.more', function() {
