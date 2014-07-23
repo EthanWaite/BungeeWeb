@@ -177,6 +177,10 @@ h1 span {
 	height:24px;
 }
 
+.dialog .filters .label {
+	color:#000;
+}
+
 .dialog ul {
 	border:none;
 }

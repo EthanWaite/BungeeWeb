@@ -191,7 +191,6 @@ function loadLogs() {
 
 // Logs reset
 function resetLogs() {
-	$('#logs .log').html('');
 	addLogs(0, getFilters($('#logs .filters')));
 }
 
@@ -200,6 +199,7 @@ function addLogs(offset, filter, cb) {
 	var limit = 50;
 	$.get('/api/getlogs?offset=' + offset + '&filter=' + filter + '&limit=50', function(data) {
 		parse(data, function(json) {
+			if (offset == 0) $('#logs .log').html('');
 			for (item in json) {
 				var d = new Date(json[item]['time'] * 1000);
 				$('#logs .log').append('<li><div class="left">' + formatLog(json[item], true) + '</div> <div class="right">' + d.toLocaleString() + '</div></li>');
@@ -255,7 +255,6 @@ function showPlayer(uuid) {
 
 // Player info retrieval
 function resetPlayer(uuid) {
-	$('#playerinfo .log').html('');
 	addPlayerLogs(uuid, 0, getFilters($('#playerinfo .filters')));
 }
 
@@ -264,6 +263,7 @@ function addPlayerLogs(uuid, offset, filter, cb) {
 	$.get('/api/getlogs?uuid=' + uuid + '&offset=' + offset + '&filter=' + filter + '&limit=30', function(data) {
 		parse(data, function(json) {
 			if (offset == 0) {
+				$('#playerinfo .log').html('');
 				var user = json[0].username;
 				$('#playerinfo h1').text(user);
 				$('#playerinfo h4').text(json[0].uuid);
