@@ -164,25 +164,35 @@ function loadDashboard() {
 	});
 }
 
+// Filters loader
+function setFilters(el) {
+	el.find('a').remove();
+	for (t in types) {
+		el.append('<a data-type-id="' + t + '">' + types[t] + '</a>');
+	}
+}
+
+// Filter string
+function getFilters(el) {
+	var filter = '';
+	el.find('a').each(function() {
+		if ($(this).hasClass('active')) {
+			filter += $(this).attr('data-type-id') + ',';
+		}
+	});
+	return (filter == '' ? filter : filter.substring(0, filter.length - 1));
+}
+
 // Logs loader
 function loadLogs() {
-	$('#logs .filters a').remove();
-	for (t in types) {
-		$('#logs .filters').append('<a data-type-id="' + t + '">' + types[t] + '</a>');
-	}
+	setFilters($('#logs .filters'));
 	resetLogs();
 }
 
 // Logs reset
 function resetLogs() {
 	$('#logs .log').html('');
-	var filter = '';
-	$('#logs .filters a').each(function() {
-		if ($(this).hasClass('active')) {
-			filter += $(this).attr('data-type-id') + ',';
-		}
-	});
-	addLogs(0, (filter == '' ? filter : filter.substring(0, filter.length - 1)));
+	addLogs(0, getFilters($('#logs .filters')));
 }
 
 // Logs retrieval
@@ -210,7 +220,7 @@ $('#logs .filters').on('click', 'a', function() {
 $('#logs .log').on('click', '.more', function() {
 	var more = $('#logs .log .more');
 	more.removeClass('more').text('Loading...');
-	addLogs($('#logs li').size() - 1, function() {
+	addLogs($('#logs li').size() - 1, getFilters($('#logs .filters')), function() {
 		more.remove();
 	});
 });
@@ -237,15 +247,30 @@ function loadPlayers() {
 // Player dialog
 function showPlayer(uuid) {
 	$('body').css({ 'overflow': 'hidden' });
-	$('#playerinfo').hide(0);
+	$('#playerinfo').attr('data-uuid', uuid).hide(0);
 	$('.mask').fadeIn(1000);
-	$.get('/api/getlogs?uuid=' + uuid + '&limit=30', function(data) {
+	setFilters($('#playerinfo .filters'));
+	resetPlayer(uuid);
+}
+
+// Player info retrieval
+function resetPlayer(uuid) {
+	$('#playerinfo .log').html('');
+	addPlayerLogs(uuid, 0, getFilters($('#playerinfo .filters')));
+}
+
+// Player add logs
+function addPlayerLogs(uuid, offset, filter, cb) {
+	$.get('/api/getlogs?uuid=' + uuid + '&offset=' + offset + '&filter=' + filter + '&limit=30', function(data) {
 		parse(data, function(json) {
-			var user = json[0].username;
-			$('#playerinfo h1').text(user);
-			$('#playerinfo h4').text(json[0].uuid);
-			$('#playerinfo .log').html('');
-			skinview.changeSkin(user);
+			if (offset == 0) {
+				var user = json[0].username;
+				$('#playerinfo h1').text(user);
+				$('#playerinfo h4').text(json[0].uuid);
+				$('#playerinfo .log').html('');
+				skinview.changeSkin(user);
+			}
+			
 			for (item in json) {
 				$('#playerinfo .log').append('<li>' + formatLog(json[item], false) + '</li>');
 				if (json[item].username != user) {
@@ -257,6 +282,12 @@ function showPlayer(uuid) {
 		});
 	});
 }
+
+// Player logs filter
+$('#playerinfo .filters').on('click', 'a', function() {
+	$(this).toggleClass('active');
+	resetPlayer($('#playerinfo').attr('data-uuid'));
+});
 
 // Scroll handler
 $(window).scroll(function() {
