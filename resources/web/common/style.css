@@ -366,13 +366,14 @@ h1 span {
 }
 
 .filters a {
+	display:inline-block;
 	background-color:#428bca;
 	border-radius:3px;
 	font-family:Arial;
 	font-weight:bold;
 	font-size:13px;
 	padding:4px 8px;
-	margin-left:4px;
+	margin:0px 0px 4px 4px;
 	opacity:0.6;
 	transition:.5s ease;
 	cursor:default;
