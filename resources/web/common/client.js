@@ -197,7 +197,7 @@ function resetLogs() {
 // Logs retrieval
 function addLogs(offset, filter, cb) {
 	var limit = 50;
-	$.get('/api/getlogs?offset=' + offset + '&filter=' + filter + '&limit=50', function(data) {
+	$.get('/api/getlogs?offset=' + offset + '&filter=' + filter + '&limit=' + limit, function(data) {
 		parse(data, function(json) {
 			if (offset == 0) $('#logs .log').html('');
 			for (item in json) {
@@ -260,7 +260,8 @@ function resetPlayer(uuid) {
 
 // Player add logs
 function addPlayerLogs(uuid, offset, filter, cb) {
-	$.get('/api/getlogs?uuid=' + uuid + '&offset=' + offset + '&filter=' + filter + '&limit=30', function(data) {
+	var limit = 30;
+	$.get('/api/getlogs?uuid=' + uuid + '&offset=' + offset + '&filter=' + filter + '&limit=' + limit, function(data) {
 		parse(data, function(json) {
 			if (offset == 0) {
 				$('#playerinfo .log').html('');
@@ -278,7 +279,10 @@ function addPlayerLogs(uuid, offset, filter, cb) {
 					user = json[item].username;
 				}
 			}
-			$('#playerinfo').slideDown(2000);
+			
+			if (json.length == limit) $('#playerinfo .log').append('<li class="more">Show more</li>');
+			if (cb !== undefined) cb();
+			$('#playerinfo').addClass('active').slideDown(2000);
 		});
 	});
 }
@@ -289,10 +293,30 @@ $('#playerinfo .filters').on('click', 'a', function() {
 	resetPlayer($('#playerinfo').attr('data-uuid'));
 });
 
-// Scroll handler
+// Player logs "show more" button handler
+$('#playerinfo .log').on('click', '.more', function() {
+	var more = $('#playerinfo .log .more');
+	more.removeClass('more').text('Loading...');
+	addPlayerLogs($('#playerinfo').attr('data-uuid'), $('#playerinfo .log li').size() - 1, getFilters($('#playerinfo .filters')), function() {
+		more.remove();
+	});
+});
+
+// Window scroll handler
 $(window).scroll(function() {
 	if ($('#logs').hasClass('active') && $(window).scrollTop() + $(window).height() > $(document).height() - 50) {
 		$('#logs .log .more').click();
+	}
+});
+
+// Mask scroll handler
+$('.mask').scroll(function() {
+	console.log('omg u scrollded!');
+	console.log($('.mask').scrollTop() + $('.mask').height());
+	console.log($('.mask')[0].scrollHeight);
+	console.log($('#playerinfo').hasClass('active'));
+	if ($('#playerinfo').hasClass('active') && $('.mask').scrollTop() + $('.mask').height() > $('.mask')[0].scrollHeight - 50) {
+		$('#playerinfo .log .more').click();
 	}
 });
 
