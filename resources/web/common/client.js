@@ -30,15 +30,25 @@ $('.login form').submit(function(e) {
 // Navigation handler
 $('.navbar .right a').click(function(e) {
 	e.preventDefault();
-	if ($(this).hasClass('active')) return;
+	var href = $(this).attr('href');
+	if ($(this).hasClass('active') && href != '#dropdown') return;
 	$('.navbar .active').removeClass('active');
 	$(this).addClass('active');
 	
-	var href = $(this).attr('href');
 	switch(href.substring(1)) {
 		case 'dashboard': loadDashboard(); break;
 		case 'players': loadPlayers(); break;
 		case 'logs': loadLogs(); break;
+		case 'dropdown':
+			var el = $('.dropdown > div');
+			if (el.hasClass('active')) {
+				el.fadeOut(500);
+			}else{
+				el.fadeIn(500);
+			}
+			el.toggleClass('active');
+			return;
+			break;
 	}
 	$('.client > div.active').removeClass('active').fadeOut(500, function() {
 		$('.client > ' + href).addClass('active').fadeIn(500);
@@ -76,6 +86,7 @@ $('.dialog .close').click(function() {
 // Initial client loader
 function loadClient() {
 	$('.navbar').slideDown(800);
+	$('.dropdown').show();
 	$('#dashboard, .footer').addClass('active').fadeIn(1000);
 	loadDashboard();
 	loadTypes();

@@ -218,15 +218,46 @@ h1 span {
 	color:#fff;
 	padding:21px 12px;
 	opacity:0.6;
+	transition:.5s ease;
 }
 
-.navbar .right a.active {
+.navbar .right a:hover, .navbar .right a.active {
 	opacity:1;
 }
 
 .navbar img {
 	float:left;
 	margin:-2px 8px 0px 0px;
+}
+
+.dropdown {
+	display:none;
+	position:relative;
+	overflow:visible;
+}
+
+.dropdown > div {
+	position:absolute;
+	right:0px;
+	display:none;
+	background-color:#222;
+	border-style:solid;
+	border-width:0px 1px;
+	border-color:#111;
+}
+
+.dropdown a, .dropdown a:link, .dropdown a:visited {
+	display:block;
+	border-bottom:solid 1px #111;
+	text-decoration:none;
+	color:#fff;
+	padding:9px;
+	opacity:0.6;
+	transition:.5s ease;
+}
+
+.dropdown a:hover {
+	opacity:1;
 }
 
 /**
