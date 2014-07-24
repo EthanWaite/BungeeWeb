@@ -62,7 +62,7 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 
 // Dropdown hide handler
 $(document).click(function() {
-	if ($('.dropdown > div').hasClass('active')) {
+	if ($('.dropdown > div').hasClass('active') && $('.navbar .active').length) {
 		$('.navbar .active').click();
 	}
 });
