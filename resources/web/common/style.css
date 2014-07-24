@@ -298,6 +298,7 @@ h1 span {
 .servers li .badge {
 	background-color:rgba(0, 0, 0, 0.2);
 	border-radius:12px;
+	font-size:14px;
 	padding:0px 7px 2px 7px;
 	float:right;
 }
