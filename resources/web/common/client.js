@@ -29,8 +29,10 @@ $('.login form').submit(function(e) {
 
 // Navigation handler
 $('.navbar .right a').click(function(e) {
-	e.preventDefault();
 	var href = $(this).attr('href');
+	if (href.indexOf('#') != 0) return;
+	e.preventDefault();
+	
 	if ($(this).hasClass('active') && href != '#dropdown') return;
 	$('.navbar .active').removeClass('active');
 	$(this).addClass('active');
