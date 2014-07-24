@@ -35,6 +35,7 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 	
 	if ($(this).hasClass('active') && href != '#dropdown') return;
 	$('.navbar .active').removeClass('active');
+	$('.dropdown > div').fadeOut(500);
 	$(this).addClass('active');
 	
 	switch(href.substring(1)) {
