@@ -28,7 +28,7 @@ $('.login form').submit(function(e) {
 });
 
 // Navigation handler
-$('.navbar .right a').click(function(e) {
+$('.navbar .right a, .dropdown a').click(function(e) {
 	var href = $(this).attr('href');
 	if (href.indexOf('#') != 0) return;
 	e.preventDefault();
@@ -321,6 +321,25 @@ $('#playerinfo .log').on('click', '.more', function() {
 	more.removeClass('more').text('Loading...');
 	addPlayerLogs($('#playerinfo').attr('data-uuid'), $('#playerinfo .log li').size() - 1, getFilters($('#playerinfo .filters')), function() {
 		more.remove();
+	});
+});
+
+// Password change submission handler
+$('.password').submit(function(e) {
+	e.preventDefault();
+	if ($(this).find('#newpass').val() != $(this).find('#confirmpass').val()) {
+		error('Please ensure that your "Confirm Password" is the same as your "New Password".');
+		return;
+	}
+	
+	$.post('/api/changepassword', $(this).serialize()).done(function(data) {
+		parse(data, function(json) {
+			if (json.status == 1) {
+				error('Your password has been changed.');
+			}else{
+				error('Your current password is incorrect.');
+			}
+		});
 	});
 });
 

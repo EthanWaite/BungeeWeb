@@ -64,7 +64,7 @@ public class BungeeWeb extends Plugin {
             ResultSet rs = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + config.getString("database.prefix") + "users`");
             while (rs.next()) if (rs.getInt(1) == 0) {
                 String salt = salt();
-                db.createStatement().executeUpdate("INSERT INTO `" + config.getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES('admin', '" + encrypt("admin" + salt) + "', '" + salt + "', 3)");
+                db.createStatement().executeUpdate("INSERT INTO `" + config.getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES('admin', '" + encrypt("admin", salt) + "', '" + salt + "', 3)");
                 getLogger().warning("A new admin account has been created.");
                 getLogger().warning("Both the username and password is 'admin'. Please change the password after first logging in.");
             }
@@ -142,8 +142,25 @@ public class BungeeWeb extends Plugin {
         return p.getUniqueId().toString().replace("-", "");
     }
 
+    public static ResultSet getLogin(String user, String pass) {
+        if (user == null || pass == null) return null;
+        try {
+            PreparedStatement st = manager.getConnection().prepareStatement("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "users` WHERE `user`=?");
+            st.setString(1, user);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) if (rs.getString("pass").equals(BungeeWeb.encrypt(pass + rs.getString("salt")))) return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String encrypt(String pass) {
         return Password.MD5.digest(pass).split(":")[1];
+    }
+
+    public static String encrypt(String pass, String salt) {
+        return encrypt(pass + salt);
     }
 
     public static String salt() {
