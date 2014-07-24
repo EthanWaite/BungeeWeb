@@ -42,9 +42,11 @@ $('.navbar .right a').click(function(e) {
 		case 'players': loadPlayers(); break;
 		case 'logs': loadLogs(); break;
 		case 'dropdown':
+			e.stopPropagation();
 			var el = $('.dropdown > div');
 			if (el.hasClass('active')) {
 				el.fadeOut(500);
+				$('.navbar .active[href="#dropdown"]').toggleClass('active');
 			}else{
 				el.fadeIn(500);
 			}
@@ -55,6 +57,13 @@ $('.navbar .right a').click(function(e) {
 	$('.client > div.active').removeClass('active').fadeOut(500, function() {
 		$('.client > ' + href).addClass('active').fadeIn(500);
 	});
+});
+
+// Dropdown hide handler
+$(document).click(function() {
+	if ($('.dropdown > div').hasClass('active')) {
+		$('.navbar .active').click();
+	}
 });
 
 // Player link click handler

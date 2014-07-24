@@ -67,7 +67,6 @@ public class WebHandler extends AbstractHandler {
         }else if (path.length > 1 && path[1].equalsIgnoreCase("logout")) {
             req.getSession().invalidate();
             res.sendRedirect("/");
-            //res.setHeader("Location", "/");
             baseReq.setHandled(true);
         }else{
             String file = "web" + target;
