@@ -48,7 +48,7 @@ public class BungeeWeb extends Plugin {
         }
 
         // Connect to the database
-        manager = new DatabaseManager(this, "jdbc:mysql://" + config.getString("database.host") + ":" + config.getInt("database.port") + "/" + config.getString("database.db"), config.getString("database.user"), config.getString("database.pass"));
+        manager = new DatabaseManager(this, "jdbc:mysql://" + getConfig().getString("database.host") + ":" + getConfig().getInt("database.port") + "/" + getConfig().getString("database.db"), getConfig().getString("database.user"), getConfig().getString("database.pass"));
         Connection db = getDatabase();
         if (db == null) {
             getLogger().severe("BungeeWeb is disabling. Please check your database settings in your config.yml");
@@ -57,14 +57,14 @@ public class BungeeWeb extends Plugin {
 
         // Initial database table setup
         try {
-            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
-            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(16) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
-            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + config.getString("database.prefix") + "stats` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `playercount` int(6) NOT NULL DEFAULT -1, `maxplayers` int(6) NOT NULL DEFAULT -1, `activity` int(12) NOT NULL DEFAULT -1, PRIMARY KEY (`id`))");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(16) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "stats` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `playercount` int(6) NOT NULL DEFAULT -1, `maxplayers` int(6) NOT NULL DEFAULT -1, `activity` int(12) NOT NULL DEFAULT -1, PRIMARY KEY (`id`))");
 
-            ResultSet rs = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + config.getString("database.prefix") + "users`");
+            ResultSet rs = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + getConfig().getString("database.prefix") + "users`");
             while (rs.next()) if (rs.getInt(1) == 0) {
                 String salt = salt();
-                db.createStatement().executeUpdate("INSERT INTO `" + config.getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES('admin', '" + encrypt("admin", salt) + "', '" + salt + "', 3)");
+                db.createStatement().executeUpdate("INSERT INTO `" + getConfig().getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES('admin', '" + encrypt("admin", salt) + "', '" + salt + "', 3)");
                 getLogger().warning("A new admin account has been created.");
                 getLogger().warning("Both the username and password is 'admin'. Please change the password after first logging in.");
             }
@@ -82,7 +82,7 @@ public class BungeeWeb extends Plugin {
         getProxy().getPluginManager().registerListener(this, new ServerKickListener());
 
         // Graph loops
-        int inc = config.getInt("server.statscheck");
+        int inc = getConfig().getInt("server.statscheck");
         if (inc > 0) getProxy().getScheduler().schedule(this, new StatusCheck(this, inc), inc, inc, TimeUnit.MILLISECONDS);
 
         // Setup the context
@@ -97,7 +97,7 @@ public class BungeeWeb extends Plugin {
         StdErrLog.setProperties(p);
 
         // Setup the server
-        Server server = new Server(config.getInt("server.port"));
+        Server server = new Server(getConfig().getInt("server.port"));
         server.setSessionIdManager(new HashSessionIdManager());
         server.setHandler(sessions);
         server.setStopAtShutdown(true);
@@ -125,7 +125,7 @@ public class BungeeWeb extends Plugin {
 
     public static void log(ProxiedPlayer player, int type, String content) {
         try {
-            PreparedStatement st = manager.getConnection().prepareStatement("INSERT INTO `" + config.getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement st = getDatabase().prepareStatement("INSERT INTO `" + getConfig().getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
             st.setLong(1, System.currentTimeMillis() / 1000);
             st.setInt(2, type);
             st.setString(3, getUUID(player));
@@ -145,7 +145,7 @@ public class BungeeWeb extends Plugin {
     public static ResultSet getLogin(String user, String pass) {
         if (user == null || pass == null) return null;
         try {
-            PreparedStatement st = manager.getConnection().prepareStatement("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "users` WHERE `user`=?");
+            PreparedStatement st = getDatabase().prepareStatement("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "users` WHERE `user`=?");
             st.setString(1, user);
             ResultSet rs = st.executeQuery();
             while (rs.next()) if (rs.getString("pass").equals(BungeeWeb.encrypt(pass + rs.getString("salt")))) return rs;
