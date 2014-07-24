@@ -30,6 +30,19 @@ h1 span {
 	color:#ccc;
 }
 
+input[type="submit"] {
+	background-color:#428bca;
+	border:none;
+	color:#fff;
+	padding:8px;
+	opacity:0.7;
+	transition:.5s ease;
+}
+
+input[type="submit"]:hover {
+	opacity:0.9;
+}
+
 .log {
 	border:solid 6px rgba(0, 0, 0, 0.7);
 	background-color:#fff;
