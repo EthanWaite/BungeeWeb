@@ -2,6 +2,9 @@
  * BungeeWeb
  * https://github.com/Dead-i/BungeeWeb
  */
+
+// Define groups
+var groups = [ 'user', 'moderator', 'admin', 'superadmin' ];
  
 // Load handler
 $(document).ready(function() {
@@ -42,6 +45,7 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 		case 'dashboard': loadDashboard(); break;
 		case 'players': loadPlayers(); break;
 		case 'logs': loadLogs(); break;
+		case 'settings': loadSettings(); break;
 		case 'dropdown':
 			e.stopPropagation();
 			var el = $('.dropdown > div');
@@ -344,6 +348,18 @@ $('.password').submit(function(e) {
 	});
 });
 
+// Server settings loader
+function loadSettings() {
+	$('#settings .log').html('');
+	$.get('/api/getusers', function(data) {
+		parse(data, function(json) {
+			for (item in json) {
+				$('#settings .log').append('<li>' + strip(json[item].user) + ' (' + groups[json[item].group] + ')</li>');
+			}
+		});
+	});
+}
+
 // Window scroll handler
 $(window).scroll(function() {
 	if ($('#logs').hasClass('active') && $(window).scrollTop() + $(window).height() > $(document).height() - 50) {
@@ -414,7 +430,12 @@ function formatLog(log, linked) {
 	
 	return msg.replace('{PLAYER}', log.username)
 		.replace('{UUID}', log.uuid)
-		.replace('{CONTENT}', $('<div/>').text(log.content).html());
+		.replace('{CONTENT}', strip(log.content));
+}
+
+// Parse text with HTML entities
+function strip(content) {
+	return $('<div/>').text(content).html();
 }
 
 // Error handler
