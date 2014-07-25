@@ -119,6 +119,7 @@ function loadTypes() {
 }
 
 // Dashboard loader
+var timeout = null;
 function loadDashboard() {
 	$('#dashboard .log').html('');
 	var players = 0;
@@ -143,6 +144,17 @@ function loadDashboard() {
 			});
 		});
 	});
+	
+	if (timeout != null) clearTimeout(timeout);
+	getStats(true);
+}
+
+// Stats loader
+function getStats(initial) {
+	if (!$('#dashboard').hasClass('active') && !initial) {
+		timeout = null;
+		return;
+	}
 	
 	$.get('/api/getstats', function(data) {
 		parse(data, function(json) {
@@ -188,6 +200,10 @@ function loadDashboard() {
 				xaxis: { mode: 'time' },
 				yaxis: { min: 0, tickDecimals: 0 }
 			});
+			
+			timeout = setTimeout(function() {
+				getStats(false);
+			}, json.increment);
 		});
 	});
 }
