@@ -37,16 +37,24 @@ input[type="text"], input[type="password"] {
 	box-sizing:border-box;
 }
 
-input[type="submit"] {
+input[type="submit"], .btn {
+	display:inline-block;
 	background-color:#428bca;
 	border:none;
+	text-decoration:none;
 	color:#fff;
 	padding:8px;
+	cursor:default;
 	opacity:0.7;
 	transition:.5s ease;
 }
 
-input[type="submit"]:hover {
+.btnsm {
+	font-size:13px;
+	padding:3px 6px;
+}
+
+input[type="submit"]:hover, .btn:hover {
 	opacity:0.9;
 }
 
@@ -69,8 +77,11 @@ input[type="submit"]:hover {
 }
 
 .log li .right {
-	color:#ccc;
 	float:right;
+}
+
+.log li .fade {
+	color:#ccc;
 }
 
 .container {

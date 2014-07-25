@@ -246,7 +246,7 @@ function addLogs(offset, filter, cb) {
 			if (offset == 0) $('#logs .log').html('');
 			for (item in json) {
 				var d = new Date(json[item]['time'] * 1000);
-				$('#logs .log').append('<li><div class="left">' + formatLog(json[item], true) + '</div> <div class="right">' + d.toLocaleString() + '</div></li>');
+				$('#logs .log').append('<li><div class="left">' + formatLog(json[item], true) + '</div> <div class="right fade">' + d.toLocaleString() + '</div></li>');
 			}
 			if (json.length == limit) $('#logs .log').append('<li class="more">Show more</li>');
 			if (cb !== undefined) cb();
@@ -371,7 +371,7 @@ function loadSettings() {
 	$.get('/api/getusers', function(data) {
 		parse(data, function(json) {
 			for (item in json) {
-				$('#settings .log').append('<li>' + strip(json[item].user) + ' (' + groups[json[item].group] + ')</li>');
+				$('#settings .log').append('<li><div class="left">' + strip(json[item].user) + ' <span class="fade">(' + groups[json[item].group] + ')</span></div><div class="right"><a class="edit btn btnsm">Edit</a></li>');
 			}
 		});
 	});
