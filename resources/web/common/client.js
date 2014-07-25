@@ -185,7 +185,8 @@ function loadDashboard() {
 			}
 			
 			$.plot('#dashboard .graph', out, {
-				xaxis: { mode: 'time' }
+				xaxis: { mode: 'time' },
+				yaxis: { min: 0, tickDecimals: 0 }
 			});
 		});
 	});
