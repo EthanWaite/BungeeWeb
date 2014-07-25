@@ -41,9 +41,8 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 	e.preventDefault();
 	
 	if ($(this).hasClass('active') && href != '#dropdown') return;
-	$('.navbar .active, .dropdown .active').removeClass('active');
-	$('.dropdown > div').removeClass('active').fadeOut(500);
-	$(this).addClass('active');
+	if (!$('.navbar .active[href="#dropdown"]').length) $('.navbar .active').removeClass('active');
+	if ($(this).parent().hasClass('right')) $(this).toggleClass('active');
 	
 	switch(href.substring(1)) {
 		case 'dashboard': loadDashboard(); break;
@@ -55,7 +54,6 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 			var el = $('.dropdown > div');
 			if (el.hasClass('active')) {
 				el.fadeOut(500);
-				$('.navbar .active[href="#dropdown"]').toggleClass('active');
 			}else{
 				el.fadeIn(500);
 			}
