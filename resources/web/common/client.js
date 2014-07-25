@@ -37,8 +37,8 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 	e.preventDefault();
 	
 	if ($(this).hasClass('active') && href != '#dropdown') return;
-	$('.navbar .active').removeClass('active');
-	$('.dropdown > div').fadeOut(500);
+	$('.navbar .active, .dropdown .active').removeClass('active');
+	$('.dropdown > div').removeClass('active').fadeOut(500);
 	$(this).addClass('active');
 	
 	switch(href.substring(1)) {
