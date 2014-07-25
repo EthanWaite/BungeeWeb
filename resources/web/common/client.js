@@ -10,7 +10,11 @@ var groups = [ 'user', 'moderator', 'admin', 'superadmin' ];
 $(document).ready(function() {
 	$.get('/api/isloggedin', function(data) {
 		parse(data, function(json) {
-			if (json.result == 'true') $('.login').hide(0, loadClient);
+			if (json.result == 'true') {
+				loadClient();
+			}else{
+				$('.login').fadeIn(1000);
+			}
 		});
 	});
 });

@@ -119,6 +119,10 @@ input[type="submit"]:hover, .btn:hover {
 /**
  * LOGIN STYLING
  */
+.login {
+	display:none;
+}
+
 .login .main {
 	max-width:420px;
 	background-color:#fff;
