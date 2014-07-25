@@ -30,6 +30,13 @@ h1 span {
 	color:#ccc;
 }
 
+input[type="text"], input[type="password"] {
+	min-width:200px;
+	border:solid 1px #ccc;
+	padding:6px;
+	box-sizing:border-box;
+}
+
 input[type="submit"] {
 	background-color:#428bca;
 	border:none;
@@ -74,6 +81,16 @@ input[type="submit"]:hover {
 
 .navbar, .errorbar, .client > div, .footer {
 	display:none;
+}
+
+.client form {
+	color:#fff;
+}
+
+.client form label {
+	min-width:15%;
+	display:inline-block;
+	margin-right:6px;
 }
 
 .errorbar {
@@ -121,8 +138,6 @@ input[type="submit"]:hover {
 
 .login input[type="text"], .login input[type="password"] {
 	width:100%;
-	padding:6px;
-	box-sizing:border-box;
 	margin-bottom:12px;
 }
 
