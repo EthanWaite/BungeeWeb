@@ -22,7 +22,7 @@ public class EditUser extends APICommand {
         ArrayList<Object> params = new ArrayList<Object>();
 
         String user = req.getParameter("user");
-        if (user != null && !user.isEmpty()) {
+        if (user != null && !user.isEmpty() && user.length() <= 16) {
             conditions.add("user");
             params.add(user);
         }
@@ -63,7 +63,7 @@ public class EditUser extends APICommand {
 
             res.getWriter().print("{ \"status\": 1 }");
         }else{
-            res.getWriter().print("{ \"status\": 0 }");
+            res.getWriter().print("{ \"status\": 0, \"error\": \"Incorrect usage.\" }");
         }
     }
 }

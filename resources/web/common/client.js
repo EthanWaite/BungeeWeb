@@ -467,7 +467,7 @@ function parse(data, cb) {
 			return;
 		}
 	} catch(err) {
-		error();
+		error('An invalid response was received from the server.');
 		return;
 	}
 	cb(json);

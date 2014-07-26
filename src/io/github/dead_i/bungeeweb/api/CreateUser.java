@@ -21,18 +21,22 @@ public class CreateUser extends APICommand {
         String pass = req.getParameter("pass");
         String group = req.getParameter("group");
         String salt = BungeeWeb.salt();
-        
-        if (user != null && !user.isEmpty() && pass != null && !pass.isEmpty() && group != null && BungeeWeb.isNumber(group)) {
-            PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("INSERT INTO `" + BungeeWeb.getConfig().getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES(?, ?, ?, ?)");
-            st.setString(1, user);
-            st.setString(2, BungeeWeb.encrypt(pass, salt));
-            st.setString(3, salt);
-            st.setInt(4, Integer.parseInt(group));
-            st.executeUpdate();
 
-            res.getWriter().print("{ \"status\": 1 }");
+        if (user != null && !user.isEmpty() && pass != null && !pass.isEmpty() && group != null && BungeeWeb.isNumber(group)) {
+            if (user.length() <= 16) {
+                PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("INSERT INTO `" + BungeeWeb.getConfig().getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES(?, ?, ?, ?)");
+                st.setString(1, user);
+                st.setString(2, BungeeWeb.encrypt(pass, salt));
+                st.setString(3, salt);
+                st.setInt(4, Integer.parseInt(group));
+                st.executeUpdate();
+
+                res.getWriter().print("{ \"status\": 1 }");
+            }else{
+                res.getWriter().print("{ \"status\": 0, \"error\": \"The username provided is too long.\" }");
+            }
         }else{
-            res.getWriter().print("{ \"status\": 0 }");
+            res.getWriter().print("{ \"status\": 0, \"error\": \"Incorrect usage.\" }");
         }
     }
 }
