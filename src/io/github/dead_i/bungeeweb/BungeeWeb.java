@@ -84,7 +84,7 @@ public class BungeeWeb extends Plugin {
 
         // Graph loops
         int inc = getConfig().getInt("server.statscheck");
-        if (inc > 0) getProxy().getScheduler().schedule(this, new StatusCheck(this, inc), inc, inc, TimeUnit.MILLISECONDS);
+        if (inc > 0) getProxy().getScheduler().schedule(this, new StatusCheck(this, inc), inc, inc, TimeUnit.SECONDS);
 
         // Setup logging
         org.eclipse.jetty.util.log.Log.setLog(new JettyLogger());

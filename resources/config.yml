@@ -6,9 +6,9 @@ server:
   # Port to run the server on
   port: 8080
 
-  # Amount of time in milliseconds between status checks
+  # Amount of time in seconds between status checks
   # Set to -1 to disable all graphing
-  statscheck: 5000
+  statscheck: 60
 
 # Logged items
 log:
