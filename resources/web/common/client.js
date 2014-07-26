@@ -420,6 +420,11 @@ $('#settings .log').on('click', '.edit', function() {
 	switchSettings('.useredit');
 });
 
+// User cancel button handler
+$('#settings .cancel').click(function() {
+	switchSettings('.userlist');
+});
+
 // User edit form handler
 $('#settings .useredit form').submit(function(e) {
 	e.preventDefault();

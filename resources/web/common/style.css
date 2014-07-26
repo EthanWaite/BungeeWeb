@@ -44,6 +44,7 @@ select {
 input[type="submit"], .btn {
 	display:inline-block;
 	background-color:#428bca;
+	font-size:14px;
 	border:none;
 	text-decoration:none;
 	color:#fff;
@@ -58,8 +59,16 @@ input[type="submit"], .btn {
 	padding:3px 6px;
 }
 
+.btnsub {
+	background-color:rgba(255, 255, 255, 0.3);
+}
+
 input[type="submit"]:hover, .btn:hover {
 	opacity:0.9;
+}
+
+.btngroup {
+	margin-top:6px;
 }
 
 .log {
