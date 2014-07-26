@@ -369,13 +369,68 @@ $('.password').submit(function(e) {
 
 // Server settings loader
 function loadSettings() {
+	$('#settings > div').removeClass('active').hide();
+	$('#settings .userlist').addClass('active').show();
+	updateUsers();
+}
+
+// Settings page switcher
+function switchSettings(el) {
+	$('#settings .active').removeClass('active').fadeOut(500, function() {
+		$('#settings').find(el).addClass('active').fadeIn(500);
+	});
+}
+
+// Settings group updater
+function updateGroups() {
+	var sel = $('#settings select#group').html('');
+	for (id in groups) {
+		sel.append('<option value="' + id + '">' + groups[id] + '</option>');
+	}
+}
+
+// Settings list updater
+function updateUsers() {
 	$('#settings .log').html('');
 	$.get('/api/getusers', function(data) {
 		parse(data, function(json) {
 			for (item in json) {
-				$('#settings .log').append('<li><div class="left">' + strip(json[item].user) + ' <span class="fade">(' + groups[json[item].group] + ')</span></div><div class="right"><a class="edit btn btnsm">Edit</a></li>');
+				$('#settings .log').append('<li data-user-id="' + item + '" data-group-id="' + json[item].group + '"><div class="left"><span class="user">' + strip(json[item].user) + '</span> <span class="fade">(' + groups[json[item].group] + ')</span></div><div class="right"><a class="edit btn btnsm">Edit</a></li>');
 			}
 		});
+	});
+}
+
+// User edit button handler
+$('#settings .log').on('click', '.edit', function() {
+	updateGroups();
+	var li = $(this).closest('li');
+	$('.useredit #id').val(li.attr('data-user-id'));
+	$('.useredit #user').val(li.find('.user').text());
+	$('.useredit #pass').val('password');
+	$('.useredit #group option[value="' + li.attr('data-group-id') + '"]').prop('selected', true);
+	switchSettings('.useredit');
+});
+
+// User edit form handler
+$('#settings .useredit form').submit(function(e) {
+	e.preventDefault();
+	if ($(this).find('#id').val() > 0) {
+		if ($(this).find('#pass').val() == 'password') $(this).find('#pass').val('');
+		$.post('/api/edituser', $(this).serialize(), settingsHandler);
+	}
+});
+
+// Settings ajax handler
+function settingsHandler(data) {
+	parse(data, function(json) {
+		if (json.status == 1) {
+			updateUsers();
+			switchSettings('.userlist');
+			error('The user\'s details have been updated.');
+		}else{
+			error('An error occurred when updating the user\'s details.');
+		}
 	});
 }
 
@@ -388,10 +443,6 @@ $(window).scroll(function() {
 
 // Mask scroll handler
 $('.mask').scroll(function() {
-	console.log('omg u scrollded!');
-	console.log($('.mask').scrollTop() + $('.mask').height());
-	console.log($('.mask')[0].scrollHeight);
-	console.log($('#playerinfo').hasClass('active'));
 	if ($('#playerinfo').hasClass('active') && $('.mask').scrollTop() + $('.mask').height() > $('.mask')[0].scrollHeight - 50) {
 		$('#playerinfo .log .more').click();
 	}

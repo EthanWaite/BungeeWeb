@@ -24,6 +24,7 @@ public class WebHandler extends AbstractHandler {
     public WebHandler(Plugin plugin) {
         this.plugin = plugin;
         registerCommand(new ChangePassword());
+        registerCommand(new EditUser());
         registerCommand(new GetLogs());
         registerCommand(new GetServers());
         registerCommand(new GetStats());

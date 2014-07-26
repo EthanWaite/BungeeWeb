@@ -82,16 +82,28 @@
 			
 			<div id="settings" class="container">
 				<h1>Manage Users</h1>
-				<a class="btn" id="createbtn">Create New User</a>
-				<ul class="log"></ul>
+				<div class="userlist">
+					<a class="btn" id="createbtn">Create New User</a>
+					<ul class="log"></ul>
+				</div>
+				
+				<div class="useredit">
+					<form>
+						<input type="hidden" name="id" id="id" value="0" />
+						<div><label for="user">Username:</label><input type="text" name="user" id="user" /></div>
+						<div><label for="pass">Password:</label><input type="password" name="pass" id="pass" /></div>
+						<div><label for="group">Group:</label><select name="group" id="group"></select></div>
+						<input type="submit" value="Submit User" />
+					</form>
+				</div>
 			</div>
 			
 			<div id="account" class="container">
 				<h1>Change Password</h1>
 				<form class="password">
-					<div><label for="currentpass">Current password: </label><input type="password" name="currentpass" id="currentpass" /></div>
-					<div><label for="newpass">New password: </label><input type="password" name="newpass" id="newpass" /></div>
-					<div><label for="confirmpass">Confirm password: </label><input type="password" name="confirmpass" id="confirmpass" /></div>
+					<div><label for="currentpass">Current password:</label><input type="password" name="currentpass" id="currentpass" /></div>
+					<div><label for="newpass">New password:</label><input type="password" name="newpass" id="newpass" /></div>
+					<div><label for="confirmpass">Confirm password:</label><input type="password" name="confirmpass" id="confirmpass" /></div>
 					<input type="submit" value="Change password" />
 				</form>
 			</div>

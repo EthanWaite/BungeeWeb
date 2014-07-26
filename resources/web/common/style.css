@@ -8,7 +8,7 @@ body {
 	margin:0px;
 }
 
-body, input {
+body, input, select {
 	font-family:Lato, Trebuchet MS, Arial, sans-serif;
 }
 
@@ -30,11 +30,15 @@ h1 span {
 	color:#ccc;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], select {
 	min-width:200px;
 	border:solid 1px #ccc;
 	padding:6px;
 	box-sizing:border-box;
+}
+
+select {
+	padding:5px;
 }
 
 input[type="submit"], .btn {
