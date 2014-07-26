@@ -406,6 +406,7 @@ $('#settings #createbtn').click(function() {
 	updateGroups();
 	$('.useredit #id').val('0');
 	$('.useredit input[type="text"], .useredit input[type="password"]').val('');
+	$('.useredit .delete').hide();
 	switchSettings('.useredit');
 });
 
@@ -413,11 +414,30 @@ $('#settings #createbtn').click(function() {
 $('#settings .log').on('click', '.edit', function() {
 	updateGroups();
 	var li = $(this).closest('li');
+	$('.useredit .delete').show();
 	$('.useredit #id').val(li.attr('data-user-id'));
 	$('.useredit #user').val(li.find('.user').text());
 	$('.useredit #pass').val('password');
 	$('.useredit #group option[value="' + li.attr('data-group-id') + '"]').prop('selected', true);
 	switchSettings('.useredit');
+});
+
+// User delete button handler
+$('#settings .delete').click(function() {
+	if (window.confirm('Are you sure you wish to permanently delete this user? This action cannot be undone.')) {
+		console.log('Murderizing /api/deleteuser?id=' + $('.useredit #id').val());
+		$.get('/api/deleteuser?id=' + $('.useredit #id').val(), function(data) {
+			parse(data, function(json) {
+				if (json.status == 1) {
+					updateUsers();
+					switchSettings('.userlist');
+					error('The user has been deleted.');
+				}else{
+					error('An error occurred when deleting the user.');
+				}
+			});
+		});
+	}
 });
 
 // User cancel button handler

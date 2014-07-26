@@ -49,6 +49,7 @@ input[type="submit"], .btn {
 	text-decoration:none;
 	color:#fff;
 	padding:8px;
+	margin-right:3px;
 	cursor:default;
 	opacity:0.7;
 	transition:.5s ease;
