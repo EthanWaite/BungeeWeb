@@ -37,9 +37,9 @@ public class EditUser extends APICommand {
         }
 
         String group = req.getParameter("group");
-        if (group != null && !group.isEmpty()) {
+        if (group != null && !group.isEmpty() && BungeeWeb.isNumber(group)) {
             conditions.add("group");
-            params.add(group);
+            params.add(Integer.parseInt(group));
         }
 
         String id = req.getParameter("id");
@@ -60,7 +60,7 @@ public class EditUser extends APICommand {
 
             st.setInt(i + 1, Integer.parseInt(id));
             st.executeUpdate();
-            
+
             res.getWriter().print("{ \"status\": 1 }");
         }else{
             res.getWriter().print("{ \"status\": 0 }");

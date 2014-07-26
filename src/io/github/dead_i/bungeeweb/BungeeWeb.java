@@ -177,6 +177,6 @@ public class BungeeWeb extends Plugin {
         } catch (NumberFormatException ignored) {
             return false;
         }
-        return o > 0;
+        return o >= 0;
     }
 }

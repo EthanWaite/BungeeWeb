@@ -401,6 +401,14 @@ function updateUsers() {
 	});
 }
 
+// User create button handler
+$('#settings #createbtn').click(function() {
+	updateGroups();
+	$('.useredit #id').val('0');
+	$('.useredit input[type="text"], .useredit input[type="password"]').val('');
+	switchSettings('.useredit');
+});
+
 // User edit button handler
 $('#settings .log').on('click', '.edit', function() {
 	updateGroups();
@@ -418,6 +426,8 @@ $('#settings .useredit form').submit(function(e) {
 	if ($(this).find('#id').val() > 0) {
 		if ($(this).find('#pass').val() == 'password') $(this).find('#pass').val('');
 		$.post('/api/edituser', $(this).serialize(), settingsHandler);
+	}else{
+		$.post('/api/createuser', $(this).serialize(), settingsHandler);
 	}
 });
 
