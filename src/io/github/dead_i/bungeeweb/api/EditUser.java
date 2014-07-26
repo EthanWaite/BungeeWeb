@@ -45,7 +45,7 @@ public class EditUser extends APICommand {
 
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty() && BungeeWeb.isNumber(id) && conditions.size() > 0) {
-            int power = (Integer) req.getSession().getAttribute("group");
+            int power = BungeeWeb.getGroupPower(req);
             if (!conditions.contains("group") || groupid < power) {
                 String cond = "";
                 for (String s : conditions) {
@@ -53,7 +53,7 @@ public class EditUser extends APICommand {
                 }
                 cond = cond.substring(0, cond.length() - 2);
 
-                PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("UPDATE `" + BungeeWeb.getConfig().getString("database.prefix") + "users` SET " + cond + " WHERE `id`=? AND `group`<=?");
+                PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("UPDATE `" + BungeeWeb.getConfig().getString("database.prefix") + "users` SET " + cond + " WHERE `id`=? AND `group`<?");
 
                 int i = 0;
                 for (Object o : params) {

@@ -19,9 +19,9 @@ public class DeleteUser extends APICommand {
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException, SQLException {
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty() && BungeeWeb.isNumber(id)) {
-            PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("DELETE FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "users` WHERE `id`=? AND `group`<=?");
+            PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("DELETE FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "users` WHERE `id`=? AND `group`<?");
             st.setInt(1, Integer.parseInt(id));
-            st.setInt(2, (Integer) req.getSession().getAttribute("group"));
+            st.setInt(2, BungeeWeb.getGroupPower(req));
             st.executeUpdate();
             res.getWriter().print("{ \"status\": 1 }");
         }else{

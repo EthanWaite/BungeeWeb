@@ -29,11 +29,11 @@ public class WebHandler extends AbstractHandler {
         registerCommand(new EditUser());
         registerCommand(new GetLogs());
         registerCommand(new GetServers());
+        registerCommand(new GetSession());
         registerCommand(new GetStats());
         registerCommand(new GetTypes());
         registerCommand(new GetUsers());
         registerCommand(new GetUUID());
-        registerCommand(new IsLoggedIn());
         registerCommand(new ListServers());
     }
 

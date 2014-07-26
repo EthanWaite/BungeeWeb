@@ -25,7 +25,7 @@ public class CreateUser extends APICommand {
         if (user != null && !user.isEmpty() && pass != null && !pass.isEmpty() && group != null && BungeeWeb.isNumber(group)) {
             if (user.length() <= 16) {
                 int groupid = Integer.parseInt(group);
-                if (groupid < (Integer) req.getSession().getAttribute("group")) {
+                if (groupid < BungeeWeb.getGroupPower(req)) {
                     PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("INSERT INTO `" + BungeeWeb.getConfig().getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES(?, ?, ?, ?)");
                     st.setString(1, user);
                     st.setString(2, BungeeWeb.encrypt(pass, salt));

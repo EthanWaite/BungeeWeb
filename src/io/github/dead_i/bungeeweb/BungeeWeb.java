@@ -157,6 +157,12 @@ public class BungeeWeb extends Plugin {
         return null;
     }
 
+    public static int getGroupPower(HttpServletRequest req) {
+        int group = (Integer) req.getSession().getAttribute("group");
+        if (group >= 3) group++;
+        return group;
+    }
+
     public static String encrypt(String pass) {
         return Password.MD5.digest(pass).split(":")[1];
     }

@@ -3,20 +3,15 @@
  * https://github.com/Dead-i/BungeeWeb
  */
 
-// Define groups
+// Define variables
 var groups = [ 'user', 'moderator', 'admin', 'superadmin' ];
+var sessionid;
+var sessionuser;
+var sessiongroup;
  
 // Load handler
 $(document).ready(function() {
-	$.get('/api/isloggedin', function(data) {
-		parse(data, function(json) {
-			if (json.result == 'true') {
-				loadClient();
-			}else{
-				$('.login').fadeIn(1000);
-			}
-		});
-	});
+	updateSession(loadClient)
 });
 
 // Login handler
@@ -26,13 +21,31 @@ $('.login form').submit(function(e) {
 	$.post('/login/', $(this).serialize()).done(function(data) {
 		parse(data, function(json) {
 			if (json.status == 1) {
-				$('.login').fadeOut(1000, loadClient);
+				updateSession(function() {
+					$('.login').fadeOut(1000, loadClient);
+				});
 			}else{
 				$('.login .error').slideDown(500);
 			}
 		});
 	});
 });
+
+// Session updater
+function updateSession(cb) {
+	$.get('/api/getsession', function(data) {
+		parse(data, function(json) {
+			if (json.group > 0) {
+				sessionid = json.id;
+				sessionuser = json.user;
+				sessiongroup = json.group;
+				cb();
+			}else{
+				$('.login').fadeIn(1000);
+			}
+		});
+	});
+}
 
 // Navigation handler
 $('.navbar .right a, .dropdown a').click(function(e) {
@@ -103,6 +116,7 @@ $('.dialog .close').click(function() {
 
 // Initial client loader
 function loadClient() {
+	if (sessiongroup < 2) $('.dropdown a[href="#settings"]').hide();
 	$('.navbar').slideDown(800);
 	$('.dropdown').show();
 	$('#dashboard, .footer').addClass('active').fadeIn(1000);
@@ -385,7 +399,9 @@ function switchSettings(el) {
 function updateGroups() {
 	var sel = $('#settings select#group').html('');
 	for (id in groups) {
-		sel.append('<option value="' + id + '">' + groups[id] + '</option>');
+		if (id > 0 && (id < sessiongroup || sessiongroup >= 3)) {
+			sel.append('<option value="' + id + '">' + groups[id] + '</option>');
+		}
 	}
 }
 
@@ -395,7 +411,8 @@ function updateUsers() {
 	$.get('/api/getusers', function(data) {
 		parse(data, function(json) {
 			for (item in json) {
-				$('#settings .log').append('<li data-user-id="' + item + '" data-group-id="' + json[item].group + '"><div class="left"><span class="user">' + strip(json[item].user) + '</span> <span class="fade">(' + groups[json[item].group] + ')</span></div><div class="right"><a class="edit btn btnsm">Edit</a></li>');
+				$('#settings .log').append('<li data-user-id="' + item + '" data-group-id="' + json[item].group + '"><div class="left"><span class="user">' + strip(json[item].user) + '</span> <span class="fade">(' + groups[json[item].group] + ')</span></div><div class="right"></li>');
+				if (sessiongroup >= 3 || (sessiongroup > json[item].group && item != sessionid)) $('#settings .log li .right').last().append('<a class="edit btn btnsm">Edit</a>');
 			}
 		});
 	});
@@ -425,7 +442,6 @@ $('#settings .log').on('click', '.edit', function() {
 // User delete button handler
 $('#settings .delete').click(function() {
 	if (window.confirm('Are you sure you wish to permanently delete this user? This action cannot be undone.')) {
-		console.log('Murderizing /api/deleteuser?id=' + $('.useredit #id').val());
 		$.get('/api/deleteuser?id=' + $('.useredit #id').val(), function(data) {
 			parse(data, function(json) {
 				if (json.status == 1) {
@@ -492,7 +508,7 @@ function parse(data, cb) {
 			return;
 		}
 	} catch(err) {
-		error('An invalid response was received from the server.');
+		error();
 		return;
 	}
 	cb(json);
