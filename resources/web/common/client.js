@@ -219,7 +219,7 @@ function getStats(initial) {
 			
 			timeout = setTimeout(function() {
 				getStats(false);
-			}, json.increment);
+			}, json.increment * 1000);
 		});
 	});
 }
