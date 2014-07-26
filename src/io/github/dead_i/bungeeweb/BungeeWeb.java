@@ -85,16 +85,17 @@ public class BungeeWeb extends Plugin {
         int inc = getConfig().getInt("server.statscheck");
         if (inc > 0) getProxy().getScheduler().schedule(this, new StatusCheck(this, inc), inc, inc, TimeUnit.MILLISECONDS);
 
+        // Setup logging
+        org.eclipse.jetty.util.log.Log.setLog(new JettyLogger());
+        Properties p = new Properties();
+        p.setProperty("org.eclipse.jetty.LEVEL", "WARN");
+        StdErrLog.setProperties(p);
+
         // Setup the context
         ContextHandler context = new ContextHandler("/");
         SessionHandler sessions = new SessionHandler(new HashSessionManager());
         sessions.setHandler(new WebHandler(this));
         context.setHandler(sessions);
-
-        // Setup logging
-        Properties p = new Properties();
-        p.setProperty("org.eclipse.jetty.LEVEL", "WARN");
-        StdErrLog.setProperties(p);
 
         // Setup the server
         Server server = new Server(getConfig().getInt("server.port"));
