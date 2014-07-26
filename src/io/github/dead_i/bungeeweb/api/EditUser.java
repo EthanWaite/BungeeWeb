@@ -37,31 +37,38 @@ public class EditUser extends APICommand {
         }
 
         String group = req.getParameter("group");
+        int groupid = Integer.parseInt(group);
         if (group != null && !group.isEmpty() && BungeeWeb.isNumber(group)) {
             conditions.add("group");
-            params.add(Integer.parseInt(group));
+            params.add(groupid);
         }
 
         String id = req.getParameter("id");
         if (id != null && !id.isEmpty() && BungeeWeb.isNumber(id) && conditions.size() > 0) {
-            String cond = "";
-            for (String s : conditions) {
-                cond += "`" + s + "`=?, ";
+            int power = (Integer) req.getSession().getAttribute("group");
+            if (!conditions.contains("group") || groupid < power) {
+                String cond = "";
+                for (String s : conditions) {
+                    cond += "`" + s + "`=?, ";
+                }
+                cond = cond.substring(0, cond.length() - 2);
+
+                PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("UPDATE `" + BungeeWeb.getConfig().getString("database.prefix") + "users` SET " + cond + " WHERE `id`=? AND `group`<=?");
+
+                int i = 0;
+                for (Object o : params) {
+                    i++;
+                    st.setObject(i, o);
+                }
+
+                st.setInt(i + 1, Integer.parseInt(id));
+                st.setInt(i + 2, power);
+                st.executeUpdate();
+
+                res.getWriter().print("{ \"status\": 1 }");
+            }else{
+                res.getWriter().print("{ \"status\": 0, \"error\": \"You do not have permission to edit a user to this group.\" }");
             }
-            cond = cond.substring(0, cond.length() - 2);
-
-            PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("UPDATE `" + BungeeWeb.getConfig().getString("database.prefix") + "users` SET " + cond + " WHERE `id`=?");
-
-            int i = 0;
-            for (Object o : params) {
-                i++;
-                st.setObject(i, o);
-            }
-
-            st.setInt(i + 1, Integer.parseInt(id));
-            st.executeUpdate();
-
-            res.getWriter().print("{ \"status\": 1 }");
         }else{
             res.getWriter().print("{ \"status\": 0, \"error\": \"Incorrect usage.\" }");
         }

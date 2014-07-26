@@ -24,14 +24,19 @@ public class CreateUser extends APICommand {
 
         if (user != null && !user.isEmpty() && pass != null && !pass.isEmpty() && group != null && BungeeWeb.isNumber(group)) {
             if (user.length() <= 16) {
-                PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("INSERT INTO `" + BungeeWeb.getConfig().getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES(?, ?, ?, ?)");
-                st.setString(1, user);
-                st.setString(2, BungeeWeb.encrypt(pass, salt));
-                st.setString(3, salt);
-                st.setInt(4, Integer.parseInt(group));
-                st.executeUpdate();
+                int groupid = Integer.parseInt(group);
+                if (groupid < (Integer) req.getSession().getAttribute("group")) {
+                    PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("INSERT INTO `" + BungeeWeb.getConfig().getString("database.prefix") + "users` (`user`, `pass`, `salt`, `group`) VALUES(?, ?, ?, ?)");
+                    st.setString(1, user);
+                    st.setString(2, BungeeWeb.encrypt(pass, salt));
+                    st.setString(3, salt);
+                    st.setInt(4, groupid);
+                    st.executeUpdate();
 
-                res.getWriter().print("{ \"status\": 1 }");
+                    res.getWriter().print("{ \"status\": 1 }");
+                }else{
+                    res.getWriter().print("{ \"status\": 0, \"error\": \"You do not have permission to create a user of this group.\" }");
+                }
             }else{
                 res.getWriter().print("{ \"status\": 0, \"error\": \"The username provided is too long.\" }");
             }

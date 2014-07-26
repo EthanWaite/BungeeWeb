@@ -15,6 +15,7 @@ import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.util.log.StdErrLog;
 import org.eclipse.jetty.util.security.Password;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.FileOutputStream;
