@@ -39,7 +39,7 @@ public class StatusCheck implements Runnable {
             Connection db = BungeeWeb.getDatabase();
 
             if (config.getBoolean("stats.activity")) {
-                ResultSet activity = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + config.getString("database.prefix") + "log` WHERE `time`>" + (cur - (inc / 1000)));
+                ResultSet activity = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + config.getString("database.prefix") + "log` WHERE `time`>" + (cur - inc));
                 activity.next();
                 conditions.add("activity");
                 params.add(activity.getInt(1));
