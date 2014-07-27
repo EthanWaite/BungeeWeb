@@ -14,6 +14,7 @@ import org.eclipse.jetty.server.session.HashSessionManager;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.util.log.StdErrLog;
 import org.eclipse.jetty.util.security.Password;
+import org.mcstats.Metrics;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
@@ -33,6 +34,14 @@ public class BungeeWeb extends Plugin {
     private static DatabaseManager manager;
 
     public void onEnable() {
+        // Run metrics
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch (IOException e) {
+            getLogger().info("Unable to connect to Metrics for plugin statistics.");
+        }
+
         // Get configuration
         if (!getDataFolder().exists()) getDataFolder().mkdir();
         File configFile = new File(getDataFolder(), "config.yml");
