@@ -186,7 +186,7 @@ function getStats(initial) {
 				for (c in cat) {
 					if (res.length <= key) res.push([]);
 					var v = entries[i][c];
-					var t = i * 1000;
+					var t = i;
 					
 					if (last > 0 && ((t - last) > json.increment)) {
 						for (var n = last + json.increment; n < (t - json.increment); n = n + json.increment) {
