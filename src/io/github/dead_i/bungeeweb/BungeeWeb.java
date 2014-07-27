@@ -35,12 +35,18 @@ public class BungeeWeb extends Plugin {
 
     public void onEnable() {
         // Run metrics
-        try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException e) {
-            getLogger().info("Unable to connect to Metrics for plugin statistics.");
-        }
+        final Plugin plugin = this;
+        getProxy().getScheduler().runAsync(this, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Metrics metrics = new Metrics(plugin);
+                    metrics.start();
+                } catch (IOException e) {
+                    getLogger().info("Unable to connect to Metrics for plugin statistics.");
+                }
+            }
+        });
 
         // Get configuration
         if (!getDataFolder().exists()) getDataFolder().mkdir();
@@ -108,18 +114,23 @@ public class BungeeWeb extends Plugin {
         context.setHandler(sessions);
 
         // Setup the server
-        Server server = new Server(getConfig().getInt("server.port"));
+        final Server server = new Server(getConfig().getInt("server.port"));
         server.setSessionIdManager(new HashSessionIdManager());
         server.setHandler(sessions);
         server.setStopAtShutdown(true);
 
         // Start listening
-        try {
-            server.start();
-        } catch(Exception e) {
-            getLogger().warning("Unable to bind web server to port.");
-            e.printStackTrace();
-        }
+        getProxy().getScheduler().runAsync(this, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    server.start();
+                } catch(Exception e) {
+                    getLogger().warning("Unable to bind web server to port.");
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public static Configuration getConfig() {
