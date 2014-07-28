@@ -64,7 +64,7 @@ public class BungeeWeb extends Plugin {
         }
 
         // Connect to the database
-        manager = new DatabaseManager(this, "jdbc:mysql://" + getConfig().getString("database.host") + ":" + getConfig().getInt("database.port") + "/" + getConfig().getString("database.db"), getConfig().getString("database.user"), getConfig().getString("database.pass"));
+        manager = new DatabaseManager(this, "jdbc:mysql://" + getConfig().getString("database.host") + ":" + getConfig().getInt("database.port") + "/" + getConfig().getString("database.db") + "?useUnicode=true&characterEncoding=utf8", getConfig().getString("database.user"), getConfig().getString("database.pass"));
         Connection db = getDatabase();
         if (db == null) {
             getLogger().severe("BungeeWeb is disabling. Please check your database settings in your config.yml");
@@ -73,9 +73,9 @@ public class BungeeWeb extends Plugin {
 
         // Initial database table setup
         try {
-            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`))");
-            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(16) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`))");
-            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "stats` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `playercount` int(6) NOT NULL DEFAULT -1, `maxplayers` int(6) NOT NULL DEFAULT -1, `activity` int(12) NOT NULL DEFAULT -1, PRIMARY KEY (`id`))");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "log` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `type` int(2) NOT NULL, `uuid` varchar(32) NOT NULL, `username` varchar(16) NOT NULL, `content` varchar(100) NOT NULL DEFAULT '', PRIMARY KEY (`id`)) CHARACTER SET utf8");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "users` (`id` int(4) NOT NULL AUTO_INCREMENT, `user` varchar(16) NOT NULL, `pass` varchar(32) NOT NULL, `salt` varchar(16) NOT NULL, `group` int(1) NOT NULL DEFAULT '1', PRIMARY KEY (`id`)) CHARACTER SET utf8");
+            db.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `" + getConfig().getString("database.prefix") + "stats` (`id` int(16) NOT NULL AUTO_INCREMENT, `time` int(10) NOT NULL, `playercount` int(6) NOT NULL DEFAULT -1, `maxplayers` int(6) NOT NULL DEFAULT -1, `activity` int(12) NOT NULL DEFAULT -1, PRIMARY KEY (`id`)) CHARACTER SET utf8");
 
             ResultSet rs = db.createStatement().executeQuery("SELECT COUNT(*) FROM `" + getConfig().getString("database.prefix") + "users`");
             while (rs.next()) if (rs.getInt(1) == 0) {

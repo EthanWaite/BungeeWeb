@@ -40,6 +40,7 @@ public class WebHandler extends AbstractHandler {
     @Override
     public void handle(String target, Request baseReq, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         res.setStatus(HttpServletResponse.SC_OK);
+        res.setCharacterEncoding("utf8");
 
         if (target.equals("/")) target = "/index.html";
         String[] path = target.split("/");
