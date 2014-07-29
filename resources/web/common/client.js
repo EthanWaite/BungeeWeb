@@ -5,10 +5,7 @@
 
 // Define variables
 var groups = [ 'user', 'moderator', 'admin', 'superadmin' ];
-var sessionid;
-var sessionuser;
-var sessiongroup;
-var sessiontransitions;
+var session = {};
  
 // Load handler
 $(document).ready(function() {
@@ -36,11 +33,8 @@ $('.login form').submit(function(e) {
 function updateSession(cb) {
 	$.get('/api/getsession', function(data) {
 		parse(data, function(json) {
-			sessiontransitions = json.transitions;
+			session = json;
 			if (json.group > 0) {
-				sessionid = json.id;
-				sessionuser = json.user;
-				sessiongroup = json.group;
 				cb();
 			}else{
 				show($('.login'));
@@ -123,9 +117,9 @@ $('.dialog .close').click(function() {
 
 // Initial client loader
 function loadClient() {
-	if (sessiongroup < 2) $('.dropdown a[href="#settings"]').hide();
+	if (session.group < 2) $('.dropdown a[href="#settings"]').hide();
 	
-	if (sessiontransitions) {
+	if (session.transitions) {
 		$('.navbar').slideDown(800);
 	}else{
 		$('.navbar').show();
@@ -412,7 +406,7 @@ function switchSettings(el) {
 function updateGroups() {
 	var sel = $('#settings select#group').html('');
 	for (id in groups) {
-		if (id > 0 && (id < sessiongroup || sessiongroup >= 3)) {
+		if (id > 0 && (id < session.group || session.group >= 3)) {
 			sel.append('<option value="' + id + '">' + groups[id] + '</option>');
 		}
 	}
@@ -425,7 +419,7 @@ function updateUsers() {
 		parse(data, function(json) {
 			for (item in json) {
 				$('#settings .log').append('<li data-user-id="' + item + '" data-group-id="' + json[item].group + '"><div class="left"><span class="user">' + strip(json[item].user) + '</span> <span class="fade">(' + groups[json[item].group] + ')</span></div><div class="right"></li>');
-				if (sessiongroup >= 3 || (sessiongroup > json[item].group && item != sessionid)) $('#settings .log li .right').last().append('<a class="edit btn btnsm">Edit</a>');
+				if (session.group >= 3 || (session.group > json[item].group && item != session.id)) $('#settings .log li .right').last().append('<a class="edit btn btnsm">Edit</a>');
 			}
 		});
 	});
@@ -514,7 +508,7 @@ $('.mask').scroll(function() {
 
 // Show function
 function show(el, cb) {
-	if (sessiontransitions) {
+	if (session.transitions) {
 		el.fadeIn(500, cb);
 	}else{
 		el.show();
@@ -524,7 +518,7 @@ function show(el, cb) {
 
 // Hide function
 function hide(el, cb) {
-	if (sessiontransitions) {
+	if (session.transitions) {
 		el.fadeOut(500, cb);
 	}else{
 		el.hide();
