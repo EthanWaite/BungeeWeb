@@ -8,6 +8,7 @@ var groups = [ 'user', 'moderator', 'admin', 'superadmin' ];
 var sessionid;
 var sessionuser;
 var sessiongroup;
+var sessiontransitions;
  
 // Load handler
 $(document).ready(function() {
@@ -17,12 +18,12 @@ $(document).ready(function() {
 // Login handler
 $('.login form').submit(function(e) {
 	e.preventDefault();
-	$('.login .error').fadeOut(200);
+	hide($('.login .error'));
 	$.post('/login/', $(this).serialize()).done(function(data) {
 		parse(data, function(json) {
 			if (json.status == 1) {
 				updateSession(function() {
-					$('.login').fadeOut(1000, loadClient);
+					hide($('.login'), loadClient);
 				});
 			}else{
 				$('.login .error').slideDown(500);
@@ -35,13 +36,14 @@ $('.login form').submit(function(e) {
 function updateSession(cb) {
 	$.get('/api/getsession', function(data) {
 		parse(data, function(json) {
+			sessiontransitions = json.transitions;
 			if (json.group > 0) {
 				sessionid = json.id;
 				sessionuser = json.user;
 				sessiongroup = json.group;
 				cb();
 			}else{
-				$('.login').fadeIn(1000);
+				show($('.login'));
 			}
 		});
 	});
@@ -66,16 +68,16 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 			e.stopPropagation();
 			var el = $('.dropdown > div');
 			if (el.hasClass('active')) {
-				el.fadeOut(500);
+				hide(el);
 			}else{
-				el.fadeIn(500);
+				show(el);
 			}
 			el.toggleClass('active');
 			return;
 			break;
 	}
-	$('.client > div.active').removeClass('active').fadeOut(500, function() {
-		$('.client > ' + href).addClass('active').fadeIn(500);
+	hide($('.client > div.active').removeClass('active'), function() {
+		show($('.client > ' + href).addClass('active'));
 	});
 });
 
@@ -117,9 +119,15 @@ $('.dialog .close').click(function() {
 // Initial client loader
 function loadClient() {
 	if (sessiongroup < 2) $('.dropdown a[href="#settings"]').hide();
-	$('.navbar').slideDown(800);
+	
+	if (sessiontransitions) {
+		$('.navbar').slideDown(800);
+	}else{
+		$('.navbar').show();
+	}
+	
 	$('.dropdown').show();
-	$('#dashboard, .footer').addClass('active').fadeIn(1000);
+	show($('#dashboard, .footer').addClass('active'));
 	loadDashboard();
 	loadTypes();
 }
@@ -390,8 +398,8 @@ function loadSettings() {
 
 // Settings page switcher
 function switchSettings(el) {
-	$('#settings .active').removeClass('active').fadeOut(500, function() {
-		$('#settings').find(el).addClass('active').fadeIn(500);
+	hide($('#settings .active').removeClass('active'), function() {
+		show($('#settings').find(el).addClass('active'));
 	});
 }
 
@@ -498,6 +506,26 @@ $('.mask').scroll(function() {
 		$('#playerinfo .log .more').click();
 	}
 });
+
+// Show function
+function show(el, cb) {
+	if (sessiontransitions) {
+		el.fadeIn(500, cb);
+	}else{
+		el.show();
+		if (cb !== undefined) cb();
+	}
+}
+
+// Hide function
+function hide(el, cb) {
+	if (sessiontransitions) {
+		el.fadeOut(500, cb);
+	}else{
+		el.hide();
+		if (cb !== undefined) cb();
+	}
+}
 
 // JSON handler
 function parse(data, cb) {

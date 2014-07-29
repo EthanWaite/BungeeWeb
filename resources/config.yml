@@ -10,6 +10,18 @@ server:
   # Set to -1 to disable all graphing
   statscheck: 60
 
+  # Whether page transitions should be disabled
+  disabletransitions: false
+
+# MySQL details
+database:
+  host: 127.0.0.1
+  port: 3306
+  user: bungeeweb
+  pass: password
+  db: bungeeweb
+  prefix: bungeeweb_
+
 # Logged items
 log:
   chat: true
@@ -24,12 +36,3 @@ stats:
   playercount: true
   maxplayers: true
   activity: true
-
-# MySQL details
-database:
-  host: 127.0.0.1
-  port: 3306
-  user: bungeeweb
-  pass: password
-  db: bungeeweb
-  prefix: bungeeweb_

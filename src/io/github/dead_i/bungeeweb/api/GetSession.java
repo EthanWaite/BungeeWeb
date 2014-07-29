@@ -2,6 +2,7 @@ package io.github.dead_i.bungeeweb.api;
 
 import com.google.gson.Gson;
 import io.github.dead_i.bungeeweb.APICommand;
+import io.github.dead_i.bungeeweb.BungeeWeb;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ public class GetSession extends APICommand {
             out.put("user", req.getSession().getAttribute("user"));
             out.put("group", group);
         }
+        out.put("transitions", !BungeeWeb.getConfig().getBoolean("server.disabletransitions"));
 
         res.getWriter().print(gson.toJson(out));
     }
