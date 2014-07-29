@@ -260,6 +260,7 @@ input[type="submit"]:hover, .btn:hover {
 .navbar h1 {
 	font-size:24px;
 	font-weight:300;
+	cursor:pointer;
 	float:left;
 }
 
