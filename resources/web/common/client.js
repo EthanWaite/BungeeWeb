@@ -67,9 +67,8 @@ function updateLang(cb) {
 				}else{
 					$(this).prepend(out);
 				}
-				
-				cb();
 			});
+			cb();
 		}, 'Your language file has incorrect JSON. Please check your JSON formatting and try again.');
 	});
 }
