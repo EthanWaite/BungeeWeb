@@ -1,0 +1,101 @@
+{
+	"name": "English",
+	"language": {
+		"general": {
+			"username": "Username",
+			"password": "Password",
+			"group": "Group",
+			"login": "Log in",
+			"logout": "Logout"
+		},
+		
+		"groups": [
+			"user",
+			"moderator",
+			"admin",
+			"superadmin"
+		],
+		
+		"dashboard": {
+			"title": "Dashboard",
+			"servers": "Servers",
+			"latestlogs": "Latest Logs",
+			"players": "players",
+			"playercount": "Player count",
+			"playerlimit": "Player limit",
+			"loggeditems": "Logged items"
+		},
+		
+		"logs": {
+			"title": "Logs",
+			"latestlogs": "Latest Logs",
+			"filter": "Filter",
+			"loading": "Loading...",
+			"1": {
+				"type": "chat",
+				"entry": "{PLAYER}: {CONTENT}"
+			},
+			"2": {
+				"type": "command",
+				"entry": "{PLAYER} ran the command {CONTENT}"
+			},
+			"3": {
+				"type": "join",
+				"entry": "{PLAYER} joined the proxy from {CONTENT}"
+			},
+			"4": {
+				"type": "quit",
+				"entry": "{PLAYER} disconnected from the proxy"
+			},
+			"5": {
+				"type": "kick",
+				"entry": "{PLAYER} was kicked from {CONTENT}"
+			},
+			"6": {
+				"type": "serverchange",
+				"entry": "{PLAYER} switched to {CONTENT}"
+			}
+		},
+		
+		"players": {
+			"title": "Players",
+			"search": "Search",
+			"placeholder": "Search for a player..."
+		},
+		
+		"dropdown": {
+			"title": "Account"
+		},
+		
+		"settings": {
+			"title": "System Settings",
+			"manageusers": "Manage Users",
+			"createuser": "Create New User",
+			"edit": "Edit",
+			"submit": "Submit User",
+			"delete": "Delete User",
+			"cancel": "Cancel"
+		},
+		
+		"account": {
+			"title": "Account Settings",
+			"changepassword": "Change Password",
+			"current": "Current password",
+			"new": "New password",
+			"confirm": "Confirm password",
+			"submit": "Change password"
+		},
+		
+		"error": {
+			"internal": "An internal error occurred when processing your request.",
+			"auth": "Unable to authenticate with the details provided.",
+			"passwordmismatch": "Please ensure that your \"Confirm Password\" is the same as your \"New Password\".",
+			"passwordincorrect": "Your current password is incorrect.",
+			"passwordsuccess": "Your password has been changed.",
+			"deleteerror": "An error occurred when deleting the user.",
+			"deletesuccess": "The user has been deleted.",
+			"modifyerror": "An error occurred when updating the user's details.",
+			"modifysuccess": "The user's details have been updated."
+		}
+	}
+}

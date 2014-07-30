@@ -14,10 +14,10 @@
 				<div>
 					<a class="close"><img src="images/close.png" /></a>
 					<div id="skinpreview"></div>
-					<h1>Player</h1>
+					<h1 data-lang="players.title"></h1>
 					<h4></h4>
 					<div class="filters">
-						<div class="label">Filter:</div>
+						<div class="label" data-lang="logs.filter"></div>
 					</div>
 				</div>
 				<ul class="log"></ul>
@@ -29,10 +29,10 @@
 				<div class="container">
 					<h1>BungeeWeb</h1>
 					<div class="right">
-						<a href="#dashboard" class="active"><img src="images/dashboard.png" /><span>Dashboard</span></a>
-						<a href="#logs"><img src="images/logs.png" /><span>Logs</span></a>
-						<a href="#players"><img src="images/players.png" /><span>Players</span></a>
-						<a href="#dropdown"><img src="images/logout.png" /><span>Account</span></a>
+						<a href="#dashboard" class="active"><img src="images/dashboard.png" /><span data-lang="dashboard.title"></span></a>
+						<a href="#logs"><img src="images/logs.png" /><span data-lang="logs.title"></span></a>
+						<a href="#players"><img src="images/players.png" /><span data-lang="players.title"></span></a>
+						<a href="#dropdown"><img src="images/logout.png" /><span data-lang="dropdown.title"></span></a>
 					</div>
 				</div>
 			</div>
@@ -40,9 +40,9 @@
 		
 		<div class="dropdown container">
 			<div>
-				<a href="#settings">System Settings</a>
-				<a href="#account">Account Settings</a>
-				<a href="/logout">Logout</a>
+				<a href="#settings" data-lang="settings.title"></a>
+				<a href="#account" data-lang="account.title"></a>
+				<a href="/logout" data-lang="general.logout"></a>
 			</div>
 		</div>
 		
@@ -51,13 +51,13 @@
 				<div class="sect">
 					<div class="half">
 						<div class="inner servers">
-							<h1>Servers <span></span></h1>
+							<h1 data-lang="dashboard.servers"> <span></span></h1>
 							<ul class="log"></ul>
 						</div>
 					</div>
 					<div class="half">
 						<div class="inner logs">
-							<h1>Latest Logs <span></span></h1>
+							<h1 data-lang="dashboard.latestlogs"> <span></span></h1>
 							<ul class="log"></ul>
 						</div>
 					</div>
@@ -66,49 +66,49 @@
 			</div>
 			
 			<div id="logs" class="container">
-				<h1>Latest Logs</h1>
+				<h1 data-lang="logs.latestlogs"></h1>
 				<div class="filters">
-					<div class="label">Filter:</div>
+					<div class="label" data-lang="logs.filter"></div>
 				</div>
 				<ul class="log"></ul>
 			</div>
 			
 			<div id="players" class="container">
 				<form class="search">
-					<input type="text" name="player" placeholder="Search for a player..." autocomplete="off" />
-					<input type="submit" value="Search" />
+					<input type="text" name="player" class="langholder" data-lang="players.placeholder" autocomplete="off" />
+					<input type="submit" class="langval" data-lang="players.search" />
 				</form>
 			</div>
 			
 			<div id="settings" class="container">
-				<h1>Manage Users</h1>
+				<h1 data-lang="settings.manageusers"></h1>
 				<div class="userlist">
-					<a class="btn" id="createbtn">Create New User</a>
+					<a class="btn" id="createbtn" data-lang="settings.createuser"></a>
 					<ul class="log"></ul>
 				</div>
 				
 				<div class="useredit">
 					<form>
 						<input type="hidden" name="id" id="id" value="0" />
-						<div><label for="user">Username:</label><input type="text" name="user" id="user" maxlength="16" /></div>
-						<div><label for="pass">Password:</label><input type="password" name="pass" id="pass" /></div>
-						<div><label for="group">Group:</label><select name="group" id="group"></select></div>
+						<div><label for="user" data-lang="general.username">:</label><input type="text" name="user" id="user" maxlength="16" /></div>
+						<div><label for="pass" data-lang="general.password">:</label><input type="password" name="pass" id="pass" /></div>
+						<div><label for="group" data-lang="general.group">:</label><select name="group" id="group"></select></div>
 						<div class="btngroup">
-							<input type="submit" value="Submit User" />
-							<a class="delete btn btnsub">Delete User</a>
-							<a class="cancel btn btnsub">Cancel</a>
+							<input type="submit" class="langval" data-lang="settings.submit" />
+							<a class="delete btn btnsub" data-lang="settings.delete"></a>
+							<a class="cancel btn btnsub" data-lang="settings.cancel"></a>
 						</div>
 					</form>
 				</div>
 			</div>
 			
 			<div id="account" class="container">
-				<h1>Change Password</h1>
+				<h1 data-lang="changepassword"></h1>
 				<form class="password">
-					<div><label for="currentpass">Current password:</label><input type="password" name="currentpass" id="currentpass" /></div>
-					<div><label for="newpass">New password:</label><input type="password" name="newpass" id="newpass" /></div>
-					<div><label for="confirmpass">Confirm password:</label><input type="password" name="confirmpass" id="confirmpass" /></div>
-					<input type="submit" value="Change password" />
+					<div><label for="currentpass" data-lang="account.current">:</label><input type="password" name="currentpass" id="currentpass" /></div>
+					<div><label for="newpass" data-lang="account.new">:</label><input type="password" name="newpass" id="newpass" /></div>
+					<div><label for="confirmpass" data-lang="account.confirm">:</label><input type="password" name="confirmpass" id="confirmpass" /></div>
+					<input type="submit" class="langval" data-lang="account.submit" />
 				</form>
 			</div>
 			
@@ -119,14 +119,14 @@
 			<div class="main">
 				<h1>BungeeWeb</h1>
 				<form>
-					<div class="error">Unable to authenticate with the details provided.</div>
-					<label for="user">Username:</label>
+					<div class="error" data-lang="error.auth"></div>
+					<label for="user" data-lang="general.username">:</label>
 					<input type="text" name="user" />
 					
-					<label for="pass">Password:</label>
+					<label for="pass" data-lang="general.password">:</label>
 					<input type="password" name="pass" />
 					
-					<div class="center"><input type="submit" value="Log in" /></div>
+					<div class="center"><input type="submit" class="langval" data-lang="general.login" /></div>
 				</form>
 			</div>
 		</div>

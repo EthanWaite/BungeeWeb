@@ -10,6 +10,9 @@ server:
   # Set to -1 to disable all graphing
   statscheck: 60
 
+  # Default language to use, loaded from the "lang" directory.
+  language: en
+
   # Whether page transitions should be disabled
   disabletransitions: false
 

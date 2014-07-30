@@ -27,6 +27,7 @@ public class WebHandler extends AbstractHandler {
         registerCommand(new CreateUser());
         registerCommand(new DeleteUser());
         registerCommand(new EditUser());
+        registerCommand(new GetLang());
         registerCommand(new GetLogs());
         registerCommand(new GetServers());
         registerCommand(new GetSession());

@@ -4,12 +4,15 @@
  */
 
 // Define variables
-var groups = [ 'user', 'moderator', 'admin', 'superadmin' ];
+var groups = [];
+var lang = {};
 var session = {};
  
 // Load handler
 $(document).ready(function() {
-	updateSession(loadClient)
+	updateLang(function() {
+		updateSession(loadClient);
+	});
 });
 
 // Login handler
@@ -40,6 +43,34 @@ function updateSession(cb) {
 				show($('.login'));
 			}
 		});
+	});
+}
+
+// Language updater
+function updateLang(cb) {
+	$.get('/api/getlang', function(data) {
+		parse(data, function(json) {
+			lang = json.language;
+			groups = lang.groups;
+			$('[data-lang]').each(function() {
+				var id = $(this).attr('data-lang');
+				var split = id.split('.');
+				var out = lang;
+				for (i in split) {
+					out = out[split[i]];	
+				}
+				
+				if ($(this).hasClass('langval')) {
+					$(this).val(out);
+				}else if ($(this).hasClass('langholder')) {
+					$(this).attr('placeholder', out);
+				}else{
+					$(this).prepend(out);
+				}
+				
+				cb();
+			});
+		}, 'Your language file has incorrect JSON. Please check your JSON formatting and try again.');
 	});
 }
 
@@ -136,7 +167,13 @@ var types = {};
 function loadTypes() {
 	$.get('/api/gettypes', function(data) {
 		parse(data, function(json) {
-			types = json;
+			for (id in json) {
+				if (id in lang.logs) {
+					types[id] = lang.logs[id].type;	
+				}else{
+					types[id] = json[id];
+				}
+			}
 		});
 	});
 }
@@ -154,7 +191,7 @@ function loadDashboard() {
 				players = players + json[server];
 				i++;
 			}
-			$('#dashboard .servers h1 span').text(i + ' servers');
+			$('#dashboard .servers h1 span').text(i + ' ' + lang.dashboard.servers.toLowerCase());
 			
 			if (i < 5) i = 5;
 			$.get('/api/getlogs?limit=' + i, function(data) {
@@ -162,7 +199,7 @@ function loadDashboard() {
 					for (item in json) {
 						$('#dashboard .logs .log').append('<li>' + formatLog(json[item], true) + '</li>');
 					}
-					$('#dashboard .logs h1 span').text(players + ' players');
+					$('#dashboard .logs h1 span').text(players + ' ' + lang.dashboard.players);
 				});
 			});
 		});
@@ -184,7 +221,7 @@ function getStats(initial) {
 			var entries = json.data;
 			if (entries.length == 0) return;
 			
-			var cat = { 'playercount': 'Player count', 'maxplayers': 'Player limit', 'activity': 'Logged items' };
+			var cat = { 'playercount': lang.dashboard.playercount, 'maxplayers': lang.dashboard.playerlimit, 'activity': lang.dashboard.loggeditems };
 			
 			var res = [];
 			var last = 0;
@@ -286,7 +323,7 @@ $('#logs .filters').on('click', 'a', function() {
 // Logs "show more" button handler
 $('#logs .log').on('click', '.more', function() {
 	var more = $('#logs .log .more');
-	more.removeClass('more').text('Loading...');
+	more.removeClass('more').text(lang.logs.loading);
 	addLogs($('#logs li').size() - 1, getFilters($('#logs .filters')), function() {
 		more.remove();
 	});
@@ -373,16 +410,16 @@ $('#playerinfo .log').on('click', '.more', function() {
 $('.password').submit(function(e) {
 	e.preventDefault();
 	if ($(this).find('#newpass').val() != $(this).find('#confirmpass').val()) {
-		error('Please ensure that your "Confirm Password" is the same as your "New Password".');
+		error(lang.error.passwordmismatch);
 		return;
 	}
 	
 	$.post('/api/changepassword', $(this).serialize()).done(function(data) {
 		parse(data, function(json) {
 			if (json.status == 1) {
-				error('Your password has been changed.');
+				error(lang.error.passwordsuccess);
 			}else{
-				error('Your current password is incorrect.');
+				error(lang.error.passwordincorrect);
 			}
 		});
 	});
@@ -454,9 +491,9 @@ $('#settings .delete').click(function() {
 				if (json.status == 1) {
 					updateUsers();
 					switchSettings('.userlist');
-					error('The user has been deleted.');
+					error(lang.error.deletesuccess);
 				}else{
-					error('An error occurred when deleting the user.');
+					error(lang.error.deleteerror);
 				}
 			});
 		});
@@ -485,9 +522,9 @@ function settingsHandler(data) {
 		if (json.status == 1) {
 			updateUsers();
 			switchSettings('.userlist');
-			error('The user\'s details have been updated.');
+			error(lang.error.modifysuccess);
 		}else{
-			error('An error occurred when updating the user\'s details.');
+			error(lang.error.modifyerror);
 		}
 	});
 }
@@ -527,7 +564,7 @@ function hide(el, cb) {
 }
 
 // JSON handler
-function parse(data, cb) {
+function parse(data, cb, msg) {
 	try {
 		var json = $.parseJSON(data);
 		if ('error' in json) {
@@ -535,7 +572,7 @@ function parse(data, cb) {
 			return;
 		}
 	} catch(err) {
-		error();
+		error(msg);
 		return;
 	}
 	cb(json);
@@ -543,34 +580,7 @@ function parse(data, cb) {
 
 // Log handler
 function formatLog(log, linked) {
-	switch(log.type) {
-		case 1:
-			var msg = '{PLAYER}: {CONTENT}';
-			break;
-		
-		case 2:
-			var msg = '{PLAYER} ran the command {CONTENT}';
-			break;
-		
-		case 3:
-			var msg = '{PLAYER} joined the proxy';
-			break;
-		
-		case 4:
-			var msg = '{PLAYER} disconnected from the proxy';
-			break;
-		
-		case 5:
-			var msg = '{PLAYER} was kicked from {CONTENT}';
-			break;
-		
-		case 6:
-			var msg = '{PLAYER} switched to {CONTENT}';
-			break;
-		
-		default:
-			var msg = '{CONTENT}';
-	}
+	msg = lang.logs[log.type].entry;
 	
 	if (linked) {
 		msg = msg.replace('{PLAYER}', '<a class="playerlink" data-player="{UUID}">{PLAYER}</a>');
@@ -589,7 +599,7 @@ function strip(content) {
 // Error handler
 function error(err) {
 	if (err === undefined) {
-		var err = 'An internal error occurred when processing your request.';
+		var err = lang.error.internal || 'An internal error occurred when processing your request.';
 	}
 	$('.errorbar').text(err).slideDown(800).delay(4000).slideUp(800);
 }

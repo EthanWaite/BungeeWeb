@@ -18,9 +18,7 @@ import org.mcstats.Metrics;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,6 +60,9 @@ public class BungeeWeb extends Plugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Setup locales
+        setupLocale("en");
 
         // Connect to the database
         manager = new DatabaseManager(this, "jdbc:mysql://" + getConfig().getString("database.host") + ":" + getConfig().getInt("database.port") + "/" + getConfig().getString("database.db") + "?useUnicode=true&characterEncoding=utf8", getConfig().getString("database.user"), getConfig().getString("database.pass"));
@@ -131,6 +132,24 @@ public class BungeeWeb extends Plugin {
                 }
             }
         });
+    }
+
+    public void setupLocale(String lang) {
+        File langs = new File(getDataFolder(), "lang");
+        try {
+            if (!langs.exists()) {
+                langs.mkdir();
+                File readme = new File(langs, "REAMDE.md");
+                readme.createNewFile();
+                ByteStreams.copy(getResourceAsStream("lang/README.md"), new FileOutputStream(readme));
+            }
+
+            File file = new File(langs, lang + ".json");
+            if (!file.exists()) file.createNewFile();
+            ByteStreams.copy(getResourceAsStream("lang/" + lang + ".json"), new FileOutputStream(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Configuration getConfig() {
