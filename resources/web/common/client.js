@@ -205,64 +205,104 @@ function loadDashboard() {
 	});
 	
 	if (timeout != null) clearTimeout(timeout);
-	getStats(true);
+	getStats();
 }
 
 // Stats loader
-function getStats(initial) {
+var stats = {};
+function getStats() {
+	stats = { 'playercount': lang.dashboard.playercount, 'maxplayers': lang.dashboard.playerlimit, 'activity': lang.dashboard.loggeditems };
+	
 	if (!$('#dashboard').hasClass('active') && !initial) {
 		timeout = null;
 		return;
 	}
 	
-	$.get('/api/getstats', function(data) {
-		parse(data, function(json) {
-			var entries = json.data;
-			if (entries.length == 0) return;
-			
-			var cat = { 'playercount': lang.dashboard.playercount, 'maxplayers': lang.dashboard.playerlimit, 'activity': lang.dashboard.loggeditems };
-			
-			var res = [];
-			var last = 0;
-			for (i in entries) {
-				var key = 0;
-				for (c in cat) {
-					if (res.length <= key) res.push([]);
-					var v = entries[i][c];
-					var t = i;
-					
-					if (last > 0 && ((t - last) > json.increment)) {
-						for (var n = last + json.increment; n < (t - json.increment); n = n + json.increment) {
-							res[key].push([ n, null ]);
-						}
+	Highcharts.setOptions({
+		global: {
+			useUTC: false
+		}
+	});
+	
+	var increment;
+	getStatsData('', function(data, inc) {
+		increment = inc;
+		var last = new Date().getTime() / 1000;
+		$('#dashboard .graph').highcharts('StockChart', {
+			chart: {
+				events: {
+					load: function() {
+						var series = this.series;
+						timeout = setInterval(function() {
+							getStatsData(Math.floor(last), function(data, inc) {
+								for (c in data) {
+									console.log('Plotting:');
+									console.log(data[c].data);
+									series[c].addPoint(data[c].data, true, true);
+								}
+								last = new Date().getTime() / 1000;
+								increment = inc;
+							});
+						}, increment * 1000);	
 					}
-					
-					last = t;
-					if (v != -1) res[key].push([ t, v ]);
-					key++;
 				}
+			},
+			series: data,
+			yAxis: { min: 0 },
+			rangeSelector: {
+				buttons: [
+					{
+						count: 1,
+						type: 'hour',
+						text: '1h'
+					},
+					{
+						count: 3,
+						type: 'hour',
+						text: '3h'
+					},
+					{
+						count: 1,
+						type: 'day',
+						text: '1d'
+					},
+					{
+						count: 1,
+						type: 'week',
+						text: '1w'
+					},
+					{
+						count: 2,
+						type: 'week',
+						text: '2w'
+					},
+					{
+						count: 1,
+						type: 'month',
+						text: '1m'
+					}
+				],
+				inputEnabled: true,
+				selected: 0
 			}
-			
-			var key = 0;
+		});
+	});
+}
+
+// Stats data loader
+function getStatsData(since, cb) {
+	console.log('Calling to /api/getstats?since=' + since);
+	$.get('/api/getstats?since=' + since, function(data) {
+		parse(data, function(json) {
+			console.log(json.data);
 			var out = [];
-			for (c in cat) {
+			for (c in stats) {
 				out.push({
-					legend: { show: true },
-					label: cat[c],
-					data: res[key],
-					lines: { show: true }
+					name: stats[c],
+					data: json.data[c]
 				});
-				key++;
 			}
-			
-			$.plot('#dashboard .graph', out, {
-				xaxis: { mode: 'time' },
-				yaxis: { min: 0, tickDecimals: 0 }
-			});
-			
-			timeout = setTimeout(function() {
-				getStats(false);
-			}, json.increment * 1000);
+			cb(out, json.increment);
 		});
 	});
 }

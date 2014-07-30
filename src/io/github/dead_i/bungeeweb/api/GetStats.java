@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GetStats extends APICommand {
     private Gson gson = new Gson();
@@ -22,24 +24,28 @@ public class GetStats extends APICommand {
 
     @Override
     public void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException, SQLException {
-        String param = req.getParameter("limit");
-        int limit = 100;
-        if (param != null && BungeeWeb.isNumber(param)) limit = Integer.parseInt(param);
+        String since = req.getParameter("since");
+        long current = System.currentTimeMillis() / 1000;
+        long month = current - 2628000;
+        long time = month;
 
-        if (limit > 500) {
-            res.getWriter().print("{ \"error\": \"Attempted to fetch " + limit + " records. The number of records you request is capped at 500 for security reasons.\" }");
+        if (since != null && BungeeWeb.isNumber(since)) time = Integer.parseInt(since);
+
+        if ((current - time) > month) {
+            res.getWriter().print("{ \"error\": \"Attempted to fetch too many records. The number of records you request is capped at 1 month for security reasons.\" }");
             return;
         }
 
-        ResultSet rs = BungeeWeb.getDatabase().createStatement().executeQuery("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "stats` ORDER BY `id` DESC LIMIT " + limit);
+        ResultSet rs = BungeeWeb.getDatabase().createStatement().executeQuery("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "stats` WHERE `time`>" + time);
 
-        HashMap<Integer, Object> records = new HashMap<Integer, Object>();
-        while (rs.next()) {
-            HashMap<String, Object> record = new HashMap<String, Object>();
-            record.put("playercount", rs.getInt("playercount"));
-            record.put("maxplayers", rs.getInt("maxplayers"));
-            record.put("activity", rs.getInt("activity"));
-            records.put(rs.getInt("time"), record);
+        String[] types = { "playercount", "maxplayers", "activity" };
+        HashMap<String, List<Object>> records = new HashMap<String, List<Object>>();
+        for (String t : types) records.put(t, new ArrayList<Object>());
+        while (rs.next()) for (String t : types) {
+            List<Object> record = new ArrayList<Object>();
+            record.add((long) rs.getInt("time") * 1000);
+            record.add(rs.getInt(t));
+            records.get(t).add(record);
         }
 
         HashMap<String, Object> out = new HashMap<String, Object>();
