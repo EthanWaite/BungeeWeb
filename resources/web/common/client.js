@@ -228,7 +228,7 @@ function getStats() {
 	getStatsData('', function(data, inc) {
 		increment = inc;
 		var last = new Date().getTime() / 1000;
-		$('#dashboard .graph').highcharts('StockChart', {
+		var chart = $('#dashboard .graph').highcharts('StockChart', {
 			chart: {
 				events: {
 					load: function() {
@@ -236,9 +236,10 @@ function getStats() {
 						timeout = setInterval(function() {
 							getStatsData(Math.floor(last), function(data, inc) {
 								for (c in data) {
-									console.log('Plotting:');
-									console.log(data[c].data);
-									series[c].addPoint(data[c].data, true, true);
+									var set = data[c].data;
+									for (i in set) {
+										series[c].addPoint(set[i], true, true);
+									}
 								}
 								last = new Date().getTime() / 1000;
 								increment = inc;
@@ -291,10 +292,8 @@ function getStats() {
 
 // Stats data loader
 function getStatsData(since, cb) {
-	console.log('Calling to /api/getstats?since=' + since);
 	$.get('/api/getstats?since=' + since, function(data) {
 		parse(data, function(json) {
-			console.log(json.data);
 			var out = [];
 			for (c in stats) {
 				out.push({
