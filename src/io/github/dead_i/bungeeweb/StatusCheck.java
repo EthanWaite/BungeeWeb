@@ -66,7 +66,7 @@ public class StatusCheck implements Runnable {
 
             st.executeUpdate();
 
-            db.createStatement().executeUpdate("DELETE FROM `" + config.getString("database.prefix") + "stats` WHERE `time`<" + (cur - (inc * 500)));
+            db.createStatement().executeUpdate("DELETE FROM `" + config.getString("database.prefix") + "stats` WHERE `time`<" + (cur - 2628000));
         } catch (SQLException e) {
             plugin.getLogger().warning("An error occurred when executing the database query to update the statistics.");
         }
