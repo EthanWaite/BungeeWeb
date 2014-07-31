@@ -91,6 +91,10 @@ public class BungeeWeb extends Plugin {
             return;
         }
 
+        // Start automatic chunking
+        //getProxy().getScheduler().schedule(this, new PurgeScheduler("log", 30), 10, 10, TimeUnit.MINUTES);
+        //getProxy().getScheduler().schedule(this, new PurgeScheduler("stats", 30), 10, 10, TimeUnit.MINUTES);
+
         // Register listeners
         getProxy().getPluginManager().registerListener(this, new ChatListener());
         getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener());
