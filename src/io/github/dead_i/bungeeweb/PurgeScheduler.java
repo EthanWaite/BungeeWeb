@@ -13,7 +13,8 @@ public class PurgeScheduler implements Runnable {
         time = days * 86400;
 
         try {
-            min = BungeeWeb.getDatabase().createStatement().executeQuery("SELECT MIN(`id`) FROM `" + table + "`").getInt(1);
+            ResultSet rs = BungeeWeb.getDatabase().createStatement().executeQuery("SELECT MIN(`id`) FROM `" + this.table + "`");
+            if (rs.next()) min = rs.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -24,7 +25,7 @@ public class PurgeScheduler implements Runnable {
         // Chunking method courtesy of guidance from http://mysql.rjweb.org/doc.php/deletebig
         try {
             ResultSet maxquery = BungeeWeb.getDatabase().createStatement().executeQuery("SELECT `id` FROM `" + table + "` WHERE `id`>=" + min + " ORDER BY `id` LIMIT 1000,1");
-            while (maxquery.next()) {
+            if (maxquery.next()) {
                 int max = maxquery.getInt("id");
                 BungeeWeb.getDatabase().createStatement().executeUpdate("DELETE FROM `" + table + "` WHERE `id`>=" + min + " AND `id`<" + max + " AND `time`<" + ((System.currentTimeMillis() / 1000) - time));
                 min = max;
