@@ -390,7 +390,7 @@ function loadPlayers() {
 function showPlayer(uuid) {
 	$('body').css({ 'overflow': 'hidden' });
 	$('#playerinfo').attr('data-uuid', uuid).hide(0);
-	$('.mask').fadeIn(1000);
+	if (session.transitions) $('.mask').fadeIn(1000);
 	setFilters($('#playerinfo .filters'));
 	resetPlayer(uuid);
 }
@@ -424,7 +424,7 @@ function addPlayerLogs(uuid, offset, filter, cb) {
 			
 			if (json.length == limit) $('#playerinfo .log').append('<li class="more">Show more</li>');
 			if (cb !== undefined) cb();
-			$('#playerinfo').addClass('active').slideDown(2000);
+			$('#playerinfo').addClass('active').show();
 		});
 	});
 }
