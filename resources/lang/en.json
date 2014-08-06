@@ -4,6 +4,7 @@
 		"general": {
 			"username": "Username",
 			"password": "Password",
+			"uuid": "UUID",
 			"group": "Group",
 			"login": "Log in",
 			"logout": "Logout"

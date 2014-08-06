@@ -11,16 +11,24 @@
 		
 		<div class="mask">
 			<div class="dialog" id="playerinfo">
-				<div>
+				<div class="info">
 					<a class="close"><img src="images/close.png" /></a>
 					<div id="skinpreview"></div>
-					<h1 data-lang="players.title"></h1>
-					<h4></h4>
-					<div class="filters">
-						<div class="label" data-lang="logs.filter"></div>
+					<div class="attribute">
+						<h3 data-lang="general.username" class="langcaps">:</h3>
+						<h1 data-lang="players.title"></h1>
+					</div>
+					<div class="attribute">
+						<h3 data-lang="general.uuid" class="langcaps">:</h3>
+						<h2 class="uuid"></h2>
 					</div>
 				</div>
-				<ul class="log"></ul>
+				<div class="logs">
+					<div class="filters">
+						<div class="label" data-lang="logs.filter">:</div>
+					</div>
+					<ul class="log"></ul>
+				</div>
 			</div>
 		</div>
 		

@@ -16,7 +16,7 @@ var skinview = function(global, undefined) {
 	
 	var container = global.document.querySelector('#skinpreview');
 	
-	var cw = 130, ch = 220;
+	var cw = 165, ch = 280;
 	var tileUvWidth = 1/64;
 	var tileUvHeight = 1/32;
 	

@@ -59,6 +59,10 @@ function updateLang(cb) {
 				for (i in split) {
 					out = out[split[i]];	
 				}
+                
+                if ($(this).hasClass('langcaps')) {
+                    out = out.toUpperCase();
+                }
 				
 				if ($(this).hasClass('langval')) {
 					$(this).val(out);
@@ -409,7 +413,7 @@ function addPlayerLogs(uuid, offset, filter, cb) {
 				$('#playerinfo .log').html('');
 				var user = json[0].username;
 				$('#playerinfo h1').text(user);
-				$('#playerinfo h4').text(json[0].uuid);
+				$('#playerinfo .uuid').text(json[0].uuid);
 				$('#playerinfo .log').html('');
 				skinview.changeSkin(user);
 			}
