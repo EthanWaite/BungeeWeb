@@ -59,10 +59,10 @@ function updateLang(cb) {
 				for (i in split) {
 					out = out[split[i]];	
 				}
-                
-                if ($(this).hasClass('langcaps')) {
-                    out = out.toUpperCase();
-                }
+				
+				if ($(this).hasClass('langcaps')) {
+					out = out.toUpperCase();
+				}
 				
 				if ($(this).hasClass('langval')) {
 					$(this).val(out);

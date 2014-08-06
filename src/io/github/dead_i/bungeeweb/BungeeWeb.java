@@ -92,8 +92,8 @@ public class BungeeWeb extends Plugin {
         }
 
         // Start automatic chunking
-        //getProxy().getScheduler().schedule(this, new PurgeScheduler("log", 30), 10, 10, TimeUnit.MINUTES);
-        getProxy().getScheduler().schedule(this, new PurgeScheduler("stats", 30), 10, 10, TimeUnit.MINUTES);
+        setupPurging("logs");
+        setupPurging("stats");
 
         // Register listeners
         getProxy().getPluginManager().registerListener(this, new ChatListener());
@@ -154,6 +154,13 @@ public class BungeeWeb extends Plugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setupPurging(String type) {
+        int days = getConfig().getInt("server." + type + "days");
+        int purge = getConfig().getInt("server.purge");
+        purge = (purge < 1 ? 10 : purge);
+        getProxy().getScheduler().schedule(this, new PurgeScheduler("stats", (days < 1 ? 30 : days)), purge, purge, TimeUnit.MINUTES);
     }
 
     public static Configuration getConfig() {

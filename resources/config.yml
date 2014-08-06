@@ -13,6 +13,13 @@ server:
   # Default language to use, loaded from the "lang" directory.
   language: en
 
+  # Amount of days that records will be kept for
+  logsdays: 30
+  statsdays: 30
+
+  # Amount of minutes between purges
+  purge: 10
+
   # Whether page transitions should be disabled
   disabletransitions: false
 
