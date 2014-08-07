@@ -83,10 +83,14 @@ public class WebHandler extends AbstractHandler {
             baseReq.setHandled(true);
         }else{
             String file = "web" + target;
-            res.setContentType(getContentType(file));
             InputStream stream = plugin.getResourceAsStream(file);
+            if (stream == null && path.length == 2) {
+                file = "web/index.html";
+                stream = plugin.getResourceAsStream(file);
+            }
             if (stream != null) {
                 baseReq.setHandled(true);
+                res.setContentType(getContentType(file));
                 ByteStreams.copy(stream, res.getOutputStream());
             }
         }

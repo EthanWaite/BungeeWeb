@@ -7,7 +7,13 @@
 var groups = [];
 var lang = {};
 var session = {};
- 
+var pages = {
+	'dashboard': loadDashboard,
+	'players': loadPlayers,
+	'logs': loadLogs,
+	'settings': loadSettings
+};
+
 // Load handler
 $(document).ready(function() {
 	updateLang(function() {
@@ -80,32 +86,32 @@ function updateLang(cb) {
 // Navigation handler
 $('.navbar .right a, .dropdown a').click(function(e) {
 	var href = $(this).attr('href');
-	if (href.indexOf('#') != 0) return;
 	e.preventDefault();
 	
 	if ($(this).hasClass('active') && href != '#dropdown') return;
 	if (!$('.navbar .active[href="#dropdown"]').length) $('.navbar .active').removeClass('active');
 	if ($(this).parent().hasClass('right')) $(this).toggleClass('active');
 	
-	switch(href.substring(1)) {
-		case 'dashboard': loadDashboard(); break;
-		case 'players': loadPlayers(); break;
-		case 'logs': loadLogs(); break;
-		case 'settings': loadSettings(); break;
-		case 'dropdown':
-			e.stopPropagation();
-			var el = $('.dropdown > div');
-			if (el.hasClass('active')) {
-				hide(el);
-			}else{
-				show(el);
-			}
-			el.toggleClass('active');
-			return;
-			break;
+	href = href.substring(1);
+	if (href == 'dropdown') {
+		e.stopPropagation();
+		var el = $('.dropdown > div');
+		if (el.hasClass('active')) {
+			hide(el);
+		}else{
+			show(el);
+		}
+		el.toggleClass('active');
+		return;
+	}else if (href in pages) {
+		pages[href]();
+	}else{
+		return;
 	}
+	
+	window.history.pushState({}, '', href);
 	hide($('.client > div.active').removeClass('active'), function() {
-		show($('.client > ' + href).addClass('active'));
+		show($('.client > #' + href).addClass('active'));
 	});
 });
 
@@ -161,13 +167,25 @@ function loadClient() {
 	
 	$('.dropdown').show();
 	show($('#dashboard, .footer').addClass('active'));
-	loadDashboard();
-	loadTypes();
+	
+	loadTypes(function() {
+		var path = window.location.pathname.split('/')[1];
+		var button = $('.navbar a[href="/' + path + '"]');
+		if (path != '' && button.length) {
+			$('.navbar .active').removeClass('active');
+			button.addClass('active');
+			$('.client > div.active').hide().removeClass('active');
+			$('.client > #' + path).show().addClass('active');
+			pages[path]();
+		}else{
+			loadDashboard();
+		}
+	});
 }
 
 // Types loader
 var types = {};
-function loadTypes() {
+function loadTypes(cb) {
 	$.get('/api/gettypes', function(data) {
 		parse(data, function(json) {
 			for (id in json) {
@@ -177,6 +195,7 @@ function loadTypes() {
 					types[id] = json[id];
 				}
 			}
+			if (cb !== undefined) cb();
 		});
 	});
 }
@@ -217,7 +236,7 @@ var stats = {};
 function getStats() {
 	stats = { 'playercount': lang.dashboard.playercount, 'maxplayers': lang.dashboard.playerlimit, 'activity': lang.dashboard.loggeditems };
 	
-	if (!$('#dashboard').hasClass('active') && !initial) {
+	if (!$('#dashboard').hasClass('active')) {
 		timeout = null;
 		return;
 	}
