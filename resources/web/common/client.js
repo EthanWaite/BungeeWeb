@@ -105,8 +105,6 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 		return;
 	}else if (href in pages) {
 		pages[href]();
-	}else{
-		return;
 	}
 	
 	window.history.pushState({}, '', href);
@@ -157,26 +155,27 @@ $('.dialog .close').click(function() {
 
 // Initial client loader
 function loadClient() {
-	if (session.group < 2) $('.dropdown a[href="#settings"]').hide();
-	
-	if (session.transitions) {
-		$('.navbar').slideDown(800);
-	}else{
-		$('.navbar').show();
-	}
-	
-	$('.dropdown').show();
-	show($('#dashboard, .footer').addClass('active'));
-	
 	loadTypes(function() {
+		if (session.group < 2) $('.dropdown a[href="#settings"]').hide();
+
+		if (session.transitions) {
+			$('.navbar').slideDown(800);
+		}else{
+			$('.navbar').show();
+		}
+
+		show($('#dashboard, .footer').addClass('active'));
 		var path = window.location.pathname.split('/')[1];
-		var button = $('.navbar a[href="/' + path + '"]');
-		if (path != '' && button.length) {
-			$('.navbar .active').removeClass('active');
-			button.addClass('active');
+		if (path != '' && $('.client > #' + path).length) {
+			var cb = pages[path];
+			if (cb) cb();
+			
 			$('.client > div.active').hide().removeClass('active');
-			$('.client > #' + path).show().addClass('active');
-			pages[path]();
+			show($('.client > #' + path).addClass('active'));
+			
+			$('.navbar .active').removeClass('active');
+			var link = 'a[href="/' + path + '"]';
+			$('.navbar ' + link + ', .dropdown ' + link).addClass('active');
 		}else{
 			loadDashboard();
 		}
@@ -609,8 +608,7 @@ function show(el, cb) {
 	if (session.transitions) {
 		el.fadeIn(500, cb);
 	}else{
-		el.show();
-		if (cb !== undefined) cb();
+		el.show(0, cb);
 	}
 }
 
@@ -619,8 +617,7 @@ function hide(el, cb) {
 	if (session.transitions) {
 		el.fadeOut(500, cb);
 	}else{
-		el.hide();
-		if (cb !== undefined) cb();
+		el.hide(0, cb);
 	}
 }
 
