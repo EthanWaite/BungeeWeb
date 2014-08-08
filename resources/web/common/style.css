@@ -339,7 +339,6 @@ input[type="submit"]:hover, .btn:hover {
 }
 
 .dropdown {
-	display:none;
 	position:relative;
 	overflow:visible;
 }
