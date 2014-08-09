@@ -606,7 +606,7 @@ $('.mask').scroll(function() {
 // Show function
 function show(el, cb) {
 	if (session.transitions) {
-		el.fadeIn(500, cb);
+		el.fadeIn(300, cb);
 	}else{
 		el.show(0, cb);
 	}
@@ -615,7 +615,7 @@ function show(el, cb) {
 // Hide function
 function hide(el, cb) {
 	if (session.transitions) {
-		el.fadeOut(500, cb);
+		el.fadeOut(300, cb);
 	}else{
 		el.hide(0, cb);
 	}
