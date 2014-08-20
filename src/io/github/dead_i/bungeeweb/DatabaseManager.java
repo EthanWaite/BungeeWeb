@@ -46,6 +46,7 @@ public class DatabaseManager {
             return DriverManager.getConnection(dsn, user, pass);
         } catch(SQLException e) {
             plugin.getLogger().severe("Unable to connect to MySQL database. BungeeWeb may not function properly.");
+            plugin.getLogger().severe(e.getMessage());
             return null;
         }
     }
