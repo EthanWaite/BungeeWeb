@@ -76,14 +76,16 @@ function updateLang(cb) {
 // Navigation handler
 $('.navbar .right a, .dropdown a').click(function(e) {
 	var href = $(this).attr('href');
+	var link = href.substring(1);
+	
+	if (href.indexOf('#') != 0 && $('.client > #' + link).length == 0) return;	
 	e.preventDefault();
 	
 	if ($(this).hasClass('active') && href != '#dropdown') return;
 	if (!$('.navbar .active[href="#dropdown"]').length) $('.navbar .active').removeClass('active');
 	if ($(this).parent().hasClass('right')) $(this).toggleClass('active');
 	
-	href = href.substring(1);
-	if (href == 'dropdown') {
+	if (link == 'dropdown') {
 		e.stopPropagation();
 		var el = $('.dropdown > div');
 		if (el.hasClass('active')) {
@@ -93,13 +95,13 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 		}
 		el.toggleClass('active');
 		return;
-	}else if (href in pages && 'navigate' in pages[href]) {
-		pages[href].navigate();
+	}else if (link in pages && 'navigate' in pages[link]) {
+		pages[link].navigate();
 	}
 	
 	window.history.pushState({}, '', href);
 	hide($('.client > div.active').removeClass('active'), function() {
-		show($('.client > #' + href).addClass('active'));
+		show($('.client > #' + link).addClass('active'));
 	});
 });
 
