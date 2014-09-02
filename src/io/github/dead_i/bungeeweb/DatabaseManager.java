@@ -23,7 +23,8 @@ public class DatabaseManager {
     }
 
     public synchronized Connection getConnection() {
-        for (Connection c : connections) {
+        for (int i = 0; i < connections.size(); i++) {
+            Connection c = connections.get(i);
             try {
                 if (c.isValid(2) && !c.isClosed()) {
                     return c;
