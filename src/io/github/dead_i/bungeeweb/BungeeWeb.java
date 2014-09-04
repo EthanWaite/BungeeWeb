@@ -65,7 +65,7 @@ public class BungeeWeb extends Plugin {
         setupLocale("en");
 
         // Connect to the database
-        manager = new DatabaseManager(this, "jdbc:mysql://" + getConfig().getString("database.host") + ":" + getConfig().getInt("database.port") + "/" + getConfig().getString("database.db") + "?useUnicode=true&characterEncoding=utf8", getConfig().getString("database.user"), getConfig().getString("database.pass"));
+        manager = new DatabaseManager(this, "jdbc:mysql://" + getConfig().get("database.host") + ":" + getConfig().getInt("database.port") + "/" + getConfig().get("database.db") + "?useUnicode=true&characterEncoding=utf8", getConfig().get("database.user").toString(), getConfig().get("database.pass").toString());
         Connection db = getDatabase();
         if (db == null) {
             getLogger().severe("BungeeWeb is disabling. Please check your database settings in your config.yml");

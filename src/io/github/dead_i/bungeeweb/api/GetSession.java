@@ -29,6 +29,7 @@ public class GetSession extends APICommand {
             out.put("id", req.getSession().getAttribute("id"));
             out.put("user", req.getSession().getAttribute("user"));
             out.put("group", group);
+            out.put("updatetime", BungeeWeb.getConfig().getInt("server.updatetime", 10));
         }
         out.put("transitions", !BungeeWeb.getConfig().getBoolean("server.disabletransitions"));
 

@@ -12,6 +12,9 @@ server:
 
   # Default language to use, loaded from the "lang" directory.
   language: en
+  
+  # Amount of time between automatic page updates
+  updatetime: 10
 
   # Amount of days that records will be kept for
   logsdays: 30

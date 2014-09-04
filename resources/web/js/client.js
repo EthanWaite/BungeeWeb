@@ -8,6 +8,7 @@ var groups = [];
 var lang = {};
 var session = {};
 var pages = {};
+var activepage = {};
 
 // Load handler
 $(document).ready(function() {
@@ -96,7 +97,8 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 		el.toggleClass('active');
 		return;
 	}else if (link in pages && 'navigate' in pages[link]) {
-		pages[link].navigate();
+		activepage = pages[link];
+		activepage.navigate();
 	}
 	
 	window.history.pushState({}, '', href);
@@ -163,8 +165,8 @@ function loadClient() {
 		show($('#dashboard, .footer').addClass('active'));
 		var path = window.location.pathname.split('/')[1];
 		if (path != '' && $('.client > #' + path).length) {
-			var page = pages[path];
-			if (page && page.navigate) page.navigate();
+			var activepage = pages[path];
+			if (activepage && activepage.navigate) activepage.navigate();
 			
 			$('.client > div.active').hide().removeClass('active');
 			show($('.client > #' + path).addClass('active'));
@@ -173,7 +175,16 @@ function loadClient() {
 			var link = 'a[href="/' + path + '"]';
 			$('.navbar ' + link + ', .dropdown ' + link).addClass('active');
 		}else{
-			pages.dashboard.navigate();
+			activepage = pages.dashboard;
+			activepage.navigate();
+		}
+		
+		if (session.updatetime > 0) {
+			var lastupdate = 0;
+			setInterval(function() {
+				if (activepage.update && lastupdate > 0) activepage.update(lastupdate);
+				lastupdate = Math.floor(new Date().getTime() / 1000);
+			}, session.updatetime * 1000);
 		}
 	});
 }
