@@ -57,7 +57,7 @@ public class GetLogs extends APICommand {
             for (String s : conditions) {
                 cond += s + " AND ";
             }
-            qry += cond.substring(0, cond.length() - 5);
+            qry += cond.substring(0, cond.length() - 4);
         }
 
         qry += "ORDER BY `id` DESC ";
