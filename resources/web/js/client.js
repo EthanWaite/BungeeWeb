@@ -124,14 +124,6 @@ $('.client').on('click', '.playerlink', function() {
 	showPlayer($(this).attr('data-player'));
 });
 
-// Player search handler
-$('#players .search').submit(function(e) {
-	query('/api/getuuid?username=' + $(this).find('input[name="player"]').val(), function(data) {
-		if ("uuid" in data) showPlayer(data.uuid);
-	});
-	e.preventDefault();
-});
-
 // Dialog escape handler
 $('.mask').click(function() {
 	$(this).fadeOut(1000, function() {

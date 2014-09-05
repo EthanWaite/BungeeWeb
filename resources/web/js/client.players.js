@@ -22,6 +22,14 @@ pages.players = (function() {
 		
 	}
 	
+	// Player search handler
+	$('#players .search').submit(function(e) {
+		query('/api/getuuid?username=' + $(this).find('input[name="player"]').val(), function(data) {
+			if ("uuid" in data) showPlayer(data.uuid);
+		});
+		e.preventDefault();
+	});
+	
 	return {
 		navigate: navigate,
 		update: update
