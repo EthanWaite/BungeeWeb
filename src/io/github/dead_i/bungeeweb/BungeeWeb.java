@@ -96,11 +96,11 @@ public class BungeeWeb extends Plugin {
         setupPurging("stats");
 
         // Register listeners
-        getProxy().getPluginManager().registerListener(this, new ChatListener());
-        getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener());
-        getProxy().getPluginManager().registerListener(this, new PostLoginListener());
-        getProxy().getPluginManager().registerListener(this, new ServerConnectedListener());
-        getProxy().getPluginManager().registerListener(this, new ServerKickListener());
+        getProxy().getPluginManager().registerListener(this, new ChatListener(this));
+        getProxy().getPluginManager().registerListener(this, new PlayerDisconnectListener(this));
+        getProxy().getPluginManager().registerListener(this, new PostLoginListener(this));
+        getProxy().getPluginManager().registerListener(this, new ServerConnectedListener(this));
+        getProxy().getPluginManager().registerListener(this, new ServerKickListener(this));
 
         // Graph loops
         int inc = getConfig().getInt("server.statscheck");
@@ -171,23 +171,28 @@ public class BungeeWeb extends Plugin {
         return manager.getConnection();
     }
 
-    public static void log(ProxiedPlayer player, int type) {
-        log(player, type, "");
+    public static void log(Plugin plugin, ProxiedPlayer player, int type) {
+        log(plugin, player, type, "");
     }
 
-    public static void log(ProxiedPlayer player, int type, String content) {
-        try {
-            PreparedStatement st = getDatabase().prepareStatement("INSERT INTO `" + getConfig().getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
-            st.setLong(1, System.currentTimeMillis() / 1000);
-            st.setInt(2, type);
-            st.setString(3, getUUID(player));
-            st.setString(4, player.getName());
-            st.setString(5, content);
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static void log(Plugin plugin, final ProxiedPlayer player, final int type, final String content) {
+        plugin.getProxy().getScheduler().runAsync(plugin, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    PreparedStatement st = getDatabase().prepareStatement("INSERT INTO `" + getConfig().getString("database.prefix") + "log` (`time`, `type`, `uuid`, `username`, `content`) VALUES(?, ?, ?, ?, ?)");
+                    st.setLong(1, System.currentTimeMillis() / 1000);
+                    st.setInt(2, type);
+                    st.setString(3, getUUID(player));
+                    st.setString(4, player.getName());
+                    st.setString(5, content);
+                    st.executeUpdate();
+                    st.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public static String getUUID(ProxiedPlayer p) {
