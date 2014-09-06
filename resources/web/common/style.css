@@ -475,6 +475,8 @@ input[type="submit"]:hover, .btn:hover {
 }
 
 .playericon {
+	width:32px;
+	height:32px;
 	background-color:#000;
 	border:solid 2px #222;
 	border-radius:4px;
