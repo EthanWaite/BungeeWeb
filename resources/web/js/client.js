@@ -157,7 +157,7 @@ function loadClient() {
 		show($('#dashboard, .footer').addClass('active'));
 		var path = window.location.pathname.split('/')[1];
 		if (path != '' && $('.client > #' + path).length) {
-			var activepage = pages[path];
+			activepage = pages[path];
 			if (activepage && activepage.navigate) activepage.navigate();
 			
 			$('.client > div.active').hide().removeClass('active');
