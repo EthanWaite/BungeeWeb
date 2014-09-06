@@ -44,6 +44,10 @@ log:
   kick: true
   serverchange: true
 
+# Sensitive commands that will never be logged
+hiddencommands:
+  - login
+
 # Graphed items
 stats:
   playercount: true

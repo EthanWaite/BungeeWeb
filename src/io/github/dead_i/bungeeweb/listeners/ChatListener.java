@@ -19,7 +19,10 @@ public class ChatListener implements Listener {
         String msg = event.getMessage();
         ProxiedPlayer p = (ProxiedPlayer) event.getSender();
         int type = 1;
-        if (msg.startsWith("/")) type = 2;
+        if (msg.startsWith("/")) {
+            type = 2;
+            if (BungeeWeb.getConfig().getList("hiddencommands").contains(msg.split(" ")[0].substring(1).toLowerCase())) return;
+        }
         BungeeWeb.log(plugin, (ProxiedPlayer) event.getSender(), type, msg);
     }
 }
