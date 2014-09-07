@@ -273,8 +273,8 @@ $('#playerinfo .log').on('click', '.more', function() {
 });
 
 // Mask scroll handler
-$('.mask').scroll(function() {
-	if ($('#playerinfo').hasClass('active') && $('.mask').scrollTop() + $('.mask').height() > $('.mask')[0].scrollHeight - 50) {
+$('.mask .logs').scroll(function() {
+	if ($('#playerinfo').hasClass('active') && $('.mask .logs').scrollTop() + $('.mask .logs').height() > $('.mask .logs')[0].scrollHeight - 50) {
 		$('#playerinfo .log .more').click();
 	}
 });
