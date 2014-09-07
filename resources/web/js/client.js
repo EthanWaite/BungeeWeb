@@ -96,14 +96,15 @@ $('.navbar .right a, .dropdown a').click(function(e) {
 		}
 		el.toggleClass('active');
 		return;
-	}else if (link in pages && 'navigate' in pages[link]) {
-		activepage = pages[link];
-		activepage.navigate();
 	}
 	
 	window.history.pushState({}, '', href);
 	hide($('.client > div.active').removeClass('active'), function() {
 		show($('.client > #' + link).addClass('active'));
+		if (link in pages && 'navigate' in pages[link]) {
+			activepage = pages[link];
+			activepage.navigate();
+		}
 	});
 });
 
