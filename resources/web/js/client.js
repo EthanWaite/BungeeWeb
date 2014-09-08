@@ -117,7 +117,7 @@ $(document).click(function() {
 
 // Logo click handler
 $('.navbar h1').click(function() {
-	$('.navbar a[href="#dashboard"]').click();
+	$('.navbar a[href="/dashboard"]').click();
 });
 
 // Player link click handler
