@@ -64,6 +64,9 @@ public class BungeeWeb extends Plugin {
         // Setup locales
         setupLocale("en");
 
+        // Setup directories
+        setupDirectory("themes");
+
         // Connect to the database
         manager = new DatabaseManager(this, "jdbc:mysql://" + getConfig().get("database.host") + ":" + getConfig().getInt("database.port") + "/" + getConfig().get("database.db") + "?useUnicode=true&characterEncoding=utf8", getConfig().get("database.user").toString(), getConfig().get("database.pass").toString());
         Connection db = getDatabase();
@@ -139,18 +142,26 @@ public class BungeeWeb extends Plugin {
     }
 
     public void setupLocale(String lang) {
-        File langs = new File(getDataFolder(), "lang");
+        setupDirectory("lang");
         try {
-            if (!langs.exists()) {
-                langs.mkdir();
-                File readme = new File(langs, "REAMDE.md");
-                readme.createNewFile();
-                ByteStreams.copy(getResourceAsStream("lang/README.md"), new FileOutputStream(readme));
-            }
-
-            File file = new File(langs, lang + ".json");
+            String filename = "lang/" + lang + ".json";
+            File file = new File(getDataFolder(), filename);
             if (!file.exists()) file.createNewFile();
-            ByteStreams.copy(getResourceAsStream("lang/" + lang + ".json"), new FileOutputStream(file));
+            ByteStreams.copy(getResourceAsStream(filename), new FileOutputStream(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setupDirectory(String directory) {
+        File dir = new File(getDataFolder(), directory);
+        try {
+            if (!dir.exists()) {
+                dir.mkdir();
+                File readme = new File(dir, "REAMDE.md");
+                readme.createNewFile();
+                ByteStreams.copy(getResourceAsStream(directory + "/README.md"), new FileOutputStream(readme));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

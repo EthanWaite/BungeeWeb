@@ -10,9 +10,10 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -80,6 +81,19 @@ public class WebHandler extends AbstractHandler {
         }else if (path.length > 1 && path[1].equalsIgnoreCase("logout")) {
             req.getSession().invalidate();
             res.sendRedirect("/");
+            baseReq.setHandled(true);
+        }else if (target.equalsIgnoreCase("/css/theme.css")) {
+            String name = BungeeWeb.getConfig().getString("server.theme");
+            if (name.isEmpty()) name = "dark";
+            InputStream resource = plugin.getResourceAsStream("themes/" + name + ".css");
+            if (resource == null) {
+                File file = new File(plugin.getDataFolder(), "themes/" + name + ".css");
+                if (file.exists()) {
+                    ByteStreams.copy(new FileInputStream(file), res.getOutputStream());
+                }
+            }else{
+                ByteStreams.copy(resource, res.getOutputStream());
+            }
             baseReq.setHandled(true);
         }else{
             String file = "web" + target;
