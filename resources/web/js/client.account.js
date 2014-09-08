@@ -8,7 +8,8 @@ pages.account = (function() {
 			return;
 		}
 
-		query('/api/changepassword', $(this).serialize()).done(function(data) {
+		$.post('/api/changepassword', $(this).serialize()).done(function(data) {
+			data = parse(data);
 			if (data.status == 1) {
 				error(lang.error.passwordsuccess);
 			}else{
