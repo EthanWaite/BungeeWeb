@@ -5,7 +5,7 @@
 			"username": "Username",
 			"password": "Password",
 			"uuid": "UUID",
-			"group": "Group",
+			"group": "Gruppo",
 			"login": "Entra",
 			"logout": "Esci"
 		},
@@ -37,15 +37,15 @@
 				"entry": "{PLAYER}: {CONTENT}"
 			},
 			"2": {
-				"type": "command",
+				"type": "commandi",
 				"entry": "{PLAYER} ran the command {CONTENT}"
 			},
 			"3": {
-				"type": "join",
+				"type": "entrate",
 				"entry": "{PLAYER} joined the proxy from {CONTENT}"
 			},
 			"4": {
-				"type": "quit",
+				"type": "uscite",
 				"entry": "{PLAYER} disconnected from the proxy"
 			},
 			"5": {
@@ -53,7 +53,7 @@
 				"entry": "{PLAYER} was kicked from {CONTENT}"
 			},
 			"6": {
-				"type": "serverchange",
+				"type": "cambioserver",
 				"entry": "{PLAYER} switched to {CONTENT}"
 			}
 		},
@@ -69,34 +69,34 @@
 		},
 		
 		"settings": {
-			"title": "System Settings",
-			"manageusers": "Manage Users",
-			"createuser": "Create New User",
-			"edit": "Edit",
-			"submit": "Submit User",
-			"delete": "Delete User",
-			"cancel": "Cancel"
+			"title": "Opzioni di sistema",
+			"manageusers": "Gestione Utenti",
+			"createuser": "Crea un nuovo utente",
+			"edit": "Modifica",
+			"submit": "Inserisci Utente",
+			"delete": "Cancella Utente",
+			"cancel": "Anulla"
 		},
 		
 		"account": {
-			"title": "Account Settings",
-			"changepassword": "Change Password",
-			"current": "Current password",
-			"new": "New password",
-			"confirm": "Confirm password",
-			"submit": "Change password"
+			"title": "Impostazioni Account",
+			"changepassword": "Cambia Password",
+			"current": "Passworld corrente",
+			"new": "Nuova Password",
+			"confirm": "Conferma password",
+			"submit": "Cambia password"
 		},
 		
 		"error": {
-			"internal": "An internal error occurred when processing your request.",
-			"auth": "Unable to authenticate with the details provided.",
-			"passwordmismatch": "Please ensure that your \"Confirm Password\" is the same as your \"New Password\".",
-			"passwordincorrect": "Your current password is incorrect.",
-			"passwordsuccess": "Your password has been changed.",
-			"deleteerror": "An error occurred when deleting the user.",
-			"deletesuccess": "The user has been deleted.",
-			"modifyerror": "An error occurred when updating the user's details.",
-			"modifysuccess": "The user's details have been updated."
+			"internal": "Si è verificato un errore durante la tua richiesta.",
+			"auth": "Impossibile autenticarsi con i dati inseriti.",
+			"passwordmismatch": "Accertati che \"Conferma password\" sia la stessa di \"Nuova Password\".",
+			"passwordincorrect": "La tua password corrente è eratta.",
+			"passwordsuccess": "La tua password è stata cambiata con successo.",
+			"deleteerror": "Si è verificato un errore durante la eliminazione del utente.",
+			"deletesuccess": "Utente eliminato.",
+			"modifyerror": "Si è verificato un errore durante l'aggiornamento dei dati dell' Utente.",
+			"modifysuccess": "I dati dell'Utente sono stati aggiornati."
 		}
 	}
 }
