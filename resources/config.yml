@@ -47,7 +47,6 @@ log:
 # Sensitive commands that will never be logged
 hiddencommands:
   - login
-  - register
 
 # Graphed items
 stats:
