@@ -30,7 +30,7 @@
 		"logs": {
 			"title": "Logs",
 			"latestlogs": "Ultimi Logs",
-			"filter": "Filto",
+			"filter": "Filtro",
 			"loading": "Caricamento...",
 			"1": {
 				"type": "chat",
