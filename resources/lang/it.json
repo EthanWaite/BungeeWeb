@@ -21,7 +21,7 @@
 			"title": "Panello",
 			"servers": "Servers",
 			"latestlogs": "Ultimi Logs",
-			"players": "giocatore",
+			"players": "giocatori",
 			"playercount": "Giocatori connessi",
 			"playerlimit": "Giocatori massimi",
 			"loggeditems": "Oggetti loggati"
@@ -61,7 +61,7 @@
 		"players": {
 			"title": "Giocatori",
 			"search": "Cerca",
-			"placeholder": "Cercando un giocatore..."
+			"placeholder": "Cerca un giocatore..."
 		},
 		
 		"dropdown": {
