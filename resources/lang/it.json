@@ -53,7 +53,7 @@
 				"entry": "{PLAYER} è stato cacciato da {CONTENT}"
 			},
 			"6": {
-				"type": "cambioserver",
+				"type": "cambio server",
 				"entry": "{PLAYER} è entrato in {CONTENT}"
 			}
 		},
