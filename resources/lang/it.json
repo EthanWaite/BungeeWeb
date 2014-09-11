@@ -38,23 +38,23 @@
 			},
 			"2": {
 				"type": "commandi",
-				"entry": "{PLAYER} ran the command {CONTENT}"
+				"entry": "{PLAYER} ha eseguito il commando {CONTENT}"
 			},
 			"3": {
 				"type": "entrate",
-				"entry": "{PLAYER} joined the proxy from {CONTENT}"
+				"entry": "{PLAYER} è entrato nel proxy dall'ip {CONTENT}"
 			},
 			"4": {
 				"type": "uscite",
-				"entry": "{PLAYER} disconnected from the proxy"
+				"entry": "{PLAYER} si è disconesso dal proxy"
 			},
 			"5": {
 				"type": "kick",
-				"entry": "{PLAYER} was kicked from {CONTENT}"
+				"entry": "{PLAYER} è stato cacciato da {CONTENT}"
 			},
 			"6": {
 				"type": "cambioserver",
-				"entry": "{PLAYER} switched to {CONTENT}"
+				"entry": "{PLAYER} è entrato in {CONTENT}"
 			}
 		},
 		
