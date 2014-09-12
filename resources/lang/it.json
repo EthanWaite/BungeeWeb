@@ -1,0 +1,102 @@
+{
+	"name": "Italian",
+	"language": {
+		"general": {
+			"username": "Username",
+			"password": "Password",
+			"uuid": "UUID",
+			"group": "Gruppo",
+			"login": "Entra",
+			"logout": "Esci"
+		},
+		
+		"groups": [
+			"user",
+			"moderator",
+			"admin",
+			"superadmin"
+		],
+		
+		"dashboard": {
+			"title": "Panello",
+			"servers": "Servers",
+			"latestlogs": "Ultimi Logs",
+			"players": "giocatori",
+			"playercount": "Giocatori connessi",
+			"playerlimit": "Giocatori massimi",
+			"loggeditems": "Oggetti loggati"
+		},
+		
+		"logs": {
+			"title": "Logs",
+			"latestlogs": "Ultimi Logs",
+			"filter": "Filtro",
+			"loading": "Caricamento...",
+			"1": {
+				"type": "chat",
+				"entry": "{PLAYER}: {CONTENT}"
+			},
+			"2": {
+				"type": "commandi",
+				"entry": "{PLAYER} ha eseguito il commando {CONTENT}"
+			},
+			"3": {
+				"type": "entrate",
+				"entry": "{PLAYER} è entrato nel proxy dall'ip {CONTENT}"
+			},
+			"4": {
+				"type": "uscite",
+				"entry": "{PLAYER} si è disconesso dal proxy"
+			},
+			"5": {
+				"type": "kick",
+				"entry": "{PLAYER} è stato cacciato da {CONTENT}"
+			},
+			"6": {
+				"type": "cambio server",
+				"entry": "{PLAYER} è entrato in {CONTENT}"
+			}
+		},
+		
+		"players": {
+			"title": "Giocatori",
+			"search": "Cerca",
+			"placeholder": "Cerca un giocatore..."
+		},
+		
+		"dropdown": {
+			"title": "Account"
+		},
+		
+		"settings": {
+			"title": "Opzioni di sistema",
+			"manageusers": "Gestione Utenti",
+			"createuser": "Crea un nuovo utente",
+			"edit": "Modifica",
+			"submit": "Inserisci Utente",
+			"delete": "Cancella Utente",
+			"cancel": "Anulla"
+		},
+		
+		"account": {
+			"title": "Impostazioni Account",
+			"changepassword": "Cambia Password",
+			"current": "Passworld corrente",
+			"new": "Nuova Password",
+			"confirm": "Conferma password",
+			"submit": "Cambia password"
+		},
+		
+		"error": {
+			"internal": "Si è verificato un errore durante la tua richiesta.",
+			"auth": "Impossibile autenticarsi con i dati inseriti.",
+			"passwordmismatch": "Accertati che \"Conferma password\" sia la stessa di \"Nuova Password\".",
+			"passwordincorrect": "La tua password corrente è eratta.",
+			"passwordsuccess": "La tua password è stata cambiata con successo.",
+			"deleteerror": "Si è verificato un errore durante la eliminazione del utente.",
+			"deletesuccess": "Utente eliminato.",
+			"modifyerror": "Si è verificato un errore durante l'aggiornamento dei dati dell' Utente.",
+			"modifysuccess": "I dati dell'Utente sono stati aggiornati."
+		}
+	}
+}
