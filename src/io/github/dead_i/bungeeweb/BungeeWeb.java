@@ -64,6 +64,8 @@ public class BungeeWeb extends Plugin {
         // Setup locales
         setupDirectory("lang");
         setupLocale("en");
+        setupLocale("es");
+        setupLocale("it");
 
         // Setup directories
         setupDirectory("themes");
