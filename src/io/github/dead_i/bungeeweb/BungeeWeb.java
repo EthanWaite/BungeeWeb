@@ -62,6 +62,7 @@ public class BungeeWeb extends Plugin {
         }
 
         // Setup locales
+        setupDirectory("lang");
         setupLocale("en");
 
         // Setup directories
@@ -142,7 +143,6 @@ public class BungeeWeb extends Plugin {
     }
 
     public void setupLocale(String lang) {
-        setupDirectory("lang");
         try {
             String filename = "lang/" + lang + ".json";
             File file = new File(getDataFolder(), filename);
