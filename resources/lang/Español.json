@@ -1,0 +1,102 @@
+{
+	"name": "Español",
+	"language": {
+		"general": {
+			"username": "Nombre de usuario",
+			"password": "Contraseña",
+			"uuid": "UUID",
+			"group": "Grupo",
+			"login": "iniciar sesión",
+			"logout": "Salir"
+		},
+		
+		"groups": [
+			"usuario",
+			"moderador",
+			"administrador",
+			"superadministrador"
+		],
+		
+		"dashboard": {
+			"title": "salpicadero",
+			"servers": "Servidores",
+			"latestlogs": "Registros de Lastest",
+			"players": "jugadores",
+			"playercount": "recuento jugador",
+			"playerlimit": "límite jugador",
+			"loggeditems": "artículos En línea"
+		},
+		
+		"logs": {
+			"title": "Registros",
+			"latestlogs": "Registros de Lastest",
+			"filter": "Filtro",
+			"loading": "Cargando...",
+			"1": {
+				"type": "chat",
+				"entry": "{PLAYER}: {CONTENT}"
+			},
+			"2": {
+				"type": "command",
+				"entry": "{PLAYER} corrió el comando {CONTENT}"
+			},
+			"3": {
+				"type": "join",
+				"entry": "{PLAYER} unido a la representación de {CONTENT}"
+			},
+			"4": {
+				"type": "quit",
+				"entry": "{PLAYER} desconectada desde el proxy"
+			},
+			"5": {
+				"type": "kick",
+				"entry": "{PLAYER} fue expulsado de {CONTENT}"
+			},
+			"6": {
+				"type": "serverchange",
+				"entry": "{PLAYER} cambiado a {CONTENT}"
+			}
+		},
+		
+		"players": {
+			"title": "Jugadores",
+			"search": "Búsqueda",
+			"placeholder": "Buscar a un jugador..."
+		},
+		
+		"dropdown": {
+			"title": "cuenta"
+		},
+		
+		"settings": {
+			"title": "Configuración del sistema",
+			"manageusers": "administrar usuarios",
+			"createuser": "Crear nuevo usuario",
+			"edit": "Editar",
+			"submit": "Presentar usuario",
+			"delete": "eliminar usuario",
+			"cancel": "Cancelar"
+		},
+		
+		"account": {
+			"title": "Configuraciones de la cuenta",
+			"changepassword": "cambiar la contraseña",
+			"current": "contraseña actual",
+			"new": "Nueva contraseña",
+			"confirm": "confirmar Contraseña",
+			"submit": "cambiar la contraseña"
+		},
+		
+		"error": {
+			"internal": "Se ha producido un error interno al procesar su solicitud.",
+			"auth": "No se puede autenticar con los datos facilitados.",
+			"passwordmismatch": "Por favor, asegúrese de que su \"Confirm Password\" es el mismo que el \"New Password\".",
+			"passwordincorrect": "Su contraseña actual no es correcto.",
+			"passwordsuccess": "Su contraseña ha sido cambiada.",
+			"deleteerror": "Se produjo un error al borrar el usuario.",
+			"deletesuccess": "El usuario ha sido eliminado.",
+			"modifyerror": "Se produjo un error al actualizar los datos del usuario.",
+			"modifysuccess": "Los datos del usuario se han actualizado."
+		}
+	}
+}
