@@ -1,0 +1,102 @@
+{
+	"name": "Français",
+	"language": {
+		"general": {
+			"username": "Nom d'utilisateur",
+			"password": "Mot de passe",
+			"uuid": "UUID",
+			"group": "Groupe",
+			"login": "Connexion",
+			"logout": "Déconnexion"
+		},
+		
+		"groups": [
+			"uutilisateur",
+			"modérateur",
+			"admin",
+			"superadmin"
+		],
+		
+		"dashboard": {
+			"title": "Panel",
+			"servers": "Serveurs",
+			"latestlogs": "Derniers logs",
+			"players": "joueurs",
+			"playercount": "Nombre de joueurs",
+			"playerlimit": "Maximum de joueurs",
+			"loggeditems": "items connectés"
+		},
+		
+		"logs": {
+			"title": "Logs",
+			"latestlogs": "Derniers logs",
+			"filter": "Filtre",
+			"loading": "Chargement...",
+			"1": {
+				"type": "tchat",
+				"entry": "{PLAYER}: {CONTENT}"
+			},
+			"2": {
+				"type": "commandes",
+				"entry": "{PLAYER} a éxécuté la commande: {CONTENT}"
+			},
+			"3": {
+				"type": "join",
+				"entry": "{PLAYER} a rejoins le proxy depuis {CONTENT}"
+			},
+			"4": {
+				"type": "quit",
+				"entry": "{PLAYER} s'est déconnecté du proxy"
+			},
+			"5": {
+				"type": "kick",
+				"entry": "{PLAYER} a été éjecté depuis {CONTENT}"
+			},
+			"6": {
+				"type": "serverchange",
+				"entry": "{PLAYER} a changé de serveur pour {CONTENT}"
+			}
+		},
+		
+		"players": {
+			"title": "Joueurs",
+			"search": "Recherche",
+			"placeholder": "Rechercher un joueur..."
+		},
+		
+		"dropdown": {
+			"title": "Compte"
+		},
+		
+		"settings": {
+			"title": "Paramètres systèmes",
+			"manageusers": "Gérer les utilisateurs",
+			"createuser": "Créer un nouveau utilisateur",
+			"edit": "Modifier",
+			"submit": "Enregistrer",
+			"delete": "Supprimer",
+			"cancel": "Annuler"
+		},
+		
+		"account": {
+			"title": "Paramètres du comptes",
+			"changepassword": "Changer le mot de passe",
+			"current": "Mot de passe actuel",
+			"new": "Nouveau mot de passe",
+			"confirm": "Confirmer le mot de passe",
+			"submit": "Enregistrer"
+		},
+		
+		"error": {
+			"internal": "Une erreur interne s'est produite lors du traitement de votre demande.",
+			"auth": "Impossible de se connecter avec ses identifiants.",
+			"passwordmismatch": "Vérifiez que \"Confirmer le mot de passe\" est le même que \"Nouveau mot de passe\".",
+			"passwordincorrect": "Le mot de passe actuel est incorrect.",
+			"passwordsuccess": "Votre mot de passe a été changé.",
+			"deleteerror": "Une erreur est survenue lors de la suppression de l'utilisateur.",
+			"deletesuccess": "L'utilisateur a été supprimé.",
+			"modifyerror": "Une erreur est survenue lors de la mise à jour de l'utilisateur.",
+			"modifysuccess": "Les paramètres de l'utilisateur ont été sauvegardés."
+		}
+	}
+}
