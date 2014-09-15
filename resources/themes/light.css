@@ -1,0 +1,20 @@
+/* Light CSS */
+body {
+	background-color:#f6f6f6;
+}
+
+h1, h2, h3, h4, #players h2, .filters, .client form {
+	color:#000;
+}
+
+.navbar h1, .filters a {
+	color:#fff;
+}
+
+.log, .graph {
+	border:solid 6px rgba(0, 0, 0, 0.1);
+}
+
+.login .main {
+	border:solid 1px #ddd;
+}

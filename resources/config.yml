@@ -14,7 +14,7 @@ server:
   language: en
 
   # The name of the theme to use, excluding the file extension.
-  # Set to "dark", or the name of any theme in the "themes" directory
+  # Set to "dark", "light", or the name of any theme in the "themes" directory
   theme: dark
   
   # Amount of time between automatic page updates
