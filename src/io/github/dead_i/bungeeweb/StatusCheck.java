@@ -25,14 +25,11 @@ public class StatusCheck implements Runnable {
         ArrayList<String> conditions = new ArrayList<String>();
         ArrayList<Object> params = new ArrayList<Object>();
 
+        int players = 0;
         if (config.getBoolean("stats.playercount")) {
+            players = plugin.getProxy().getPlayers().size();
             conditions.add("playercount");
-            params.add(plugin.getProxy().getPlayers().size());
-        }
-
-        if (config.getBoolean("stats.maxplayers")) {
-            conditions.add("maxplayers");
-            params.add(plugin.getProxy().getConfig().getPlayerLimit());
+            params.add(players);
         }
 
         try {
@@ -43,6 +40,21 @@ public class StatusCheck implements Runnable {
                 activity.next();
                 conditions.add("activity");
                 params.add(activity.getInt(1));
+            }
+
+            if (config.getBoolean("stats.playercount") && config.getBoolean("stats.maxplayers")) {
+                ResultSet maxplayers = db.createStatement().executeQuery("SELECT * FROM `" + config.getString("database.prefix") + "stats` ORDER BY `playercount` DESC LIMIT 1");
+                conditions.add("maxplayers");
+                if (maxplayers.next()) {
+                    int max = maxplayers.getInt("playercount");
+                    if (players > max) {
+                        params.add(plugin.getProxy().getConfig().getPlayerLimit());
+                    }else{
+                        params.add(max);
+                    }
+                }else{
+                    params.add(players);
+                }
             }
 
             if (conditions.size() == 0) return;
