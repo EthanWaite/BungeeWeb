@@ -48,7 +48,7 @@ public class StatusCheck implements Runnable {
                 if (maxplayers.next()) {
                     int max = maxplayers.getInt("playercount");
                     if (players > max) {
-                        params.add(plugin.getProxy().getConfig().getPlayerLimit());
+                        params.add(players);
                     }else{
                         params.add(max);
                     }
