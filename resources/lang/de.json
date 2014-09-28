@@ -1,0 +1,102 @@
+{
+	"name": "Deutsch",
+	"language": {
+		"general": {
+			"username": "Benutzername",
+			"password": "Passwort",
+			"uuid": "UUID",
+			"group": "Gruppe",
+			"login": "Einloggen",
+			"logout": "Ausloggen"
+		},
+
+		"groups": [
+			"Nutzer",
+			"Moderator",
+			"Administrator",
+			"Superadministrator"
+		],
+
+		"dashboard": {
+			"title": "Dashboard",
+			"servers": "Server",
+			"latestlogs": "Neueste Aktivitäten",
+			"players": "Spieler",
+			"playercount": "Spieleranzahl",
+			"playerlimit": "Spielerlimit",
+			"loggeditems": "Aufgezeichtete Aktivitäten"
+		},
+
+		"logs": {
+			"title": "Aktivitäten",
+			"latestlogs": "Neueste Aktivitäten",
+			"filter": "Filter",
+			"loading": "Laden...",
+			"1": {
+				"type": "chat",
+				"entry": "{PLAYER}: {CONTENT}"
+			},
+			"2": {
+				"type": "command",
+				"entry": "{PLAYER} führte den Befehl {CONTENT} aus"
+			},
+			"3": {
+				"type": "join",
+				"entry": "{PLAYER} verband sich mit dem Proxyserver von {CONTENT}"
+			},
+			"4": {
+				"type": "quit",
+				"entry": "{PLAYER} trennte sich von dem Proxyserver"
+			},
+			"5": {
+				"type": "kick",
+				"entry": "{PLAYER} wurde von {CONTENT} gekickt"
+			},
+			"6": {
+				"type": "serverchange",
+				"entry": "{PLAYER} wechselte zu {CONTENT}"
+			}
+		},
+
+		"players": {
+			"title": "Spieler",
+			"search": "Suche",
+			"placeholder": "Suche nach einem Spieler..."
+		},
+
+		"dropdown": {
+			"title": "Konto"
+		},
+
+		"settings": {
+			"title": "Systemeinstellungen",
+			"manageusers": "Benutzer verwalten",
+			"createuser": "Neuen Benutzer erstellen",
+			"edit": "Bearbeiten",
+			"submit": "Benutzer speichern",
+			"delete": "Benutzer löschen",
+			"cancel": "Abbrechen"
+		},
+
+		"account": {
+			"title": "Kontoeinstellungen",
+			"changepassword": "Passwort ändern",
+			"current": "Aktuelles Passwort",
+			"new": "Neues Passwort",
+			"confirm": "Passwort bestätigen",
+			"submit": "Passwort speichern"
+		},
+
+		"error": {
+			"internal": "Bei Verarbeitung der Anfrage ist ein interner Fehler aufgetreten.",
+			"auth": "Einloggen mit diesen Zugangsdaten leider nicht möglich.",
+			"passwordmismatch": "Bitte stellen Sie sicher, das beide Passwörter identisch sind.",
+			"passwordincorrect": "Das aktuelle Passwort ist falsch.",
+			"passwordsuccess": "Das Passwort wurde geändert.",
+			"deleteerror": "Beim Löschen des Benutzer ist ein Fehler aufgetreten.",
+			"deletesuccess": "Der Benutzer wurde gelöscht",
+			"modifyerror": "Bei der Aktualisierung der Benutzerdetails ist ein Fehler aufgetreten.",
+			"modifysuccess": "Die Benutzerdetails wurden aktualisiert."
+		}
+	}
+}
