@@ -135,7 +135,7 @@ $('.client').on('click', '.playerlink', function() {
 
 // Dialog escape handler
 $('.mask').click(function() {
-	$(this).fadeOut(1000, function() {
+	hide($(this), function() {
 		$('body').css({ 'overflow': 'visible' });
 	});
 });
@@ -231,7 +231,7 @@ function hasPermission(permission) {
 function showPlayer(uuid) {
 	$('body').css({ 'overflow': 'hidden' });
 	$('#playerinfo').attr('data-uuid', uuid).hide(0);
-	if (session.transitions) $('.mask').fadeIn(1000);
+	show($('.mask'));
 	setFilters($('#playerinfo .filters'));
 	resetPlayer(uuid);
 }
