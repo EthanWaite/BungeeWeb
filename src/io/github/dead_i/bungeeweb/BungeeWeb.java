@@ -24,11 +24,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class BungeeWeb extends Plugin {
     private static Configuration config;
+    private static Configuration defaultConfig;
     private static DatabaseManager manager;
 
     public void onEnable() {
@@ -48,18 +52,23 @@ public class BungeeWeb extends Plugin {
 
         // Get configuration
         if (!getDataFolder().exists()) getDataFolder().mkdir();
+        ConfigurationProvider provider = ConfigurationProvider.getProvider(YamlConfiguration.class);
+        InputStream defaultStream = getResourceAsStream("config.yml");
         File configFile = new File(getDataFolder(), "config.yml");
         try {
             if (!configFile.exists()) {
                 configFile.createNewFile();
-                ByteStreams.copy(getResourceAsStream("config.yml"), new FileOutputStream(configFile));
+                ByteStreams.copy(defaultStream, new FileOutputStream(configFile));
                 getLogger().warning("A new configuration file has been created. Please edit config.yml and restart BungeeCord.");
                 return;
             }
-            config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configFile);
+            config = provider.load(configFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Get default configuration
+        defaultConfig = provider.load(new Scanner(defaultStream, "UTF-8").useDelimiter("\\A").next());
 
         // Setup locales
         setupDirectory("lang");
@@ -224,6 +233,17 @@ public class BungeeWeb extends Plugin {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List getGroupPermissions(int group) {
+        List<Object> permissions = new ArrayList<Object>();
+
+        for (int i = group; i > 0; i--) {
+            String key = "permissions.group" + i;
+            permissions.addAll(config.getList(key, defaultConfig.getList(key)));
+        }
+
+        return permissions;
     }
 
     public static int getGroupPower(HttpServletRequest req) {

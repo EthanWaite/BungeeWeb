@@ -18,7 +18,7 @@ public class GetStats extends APICommand {
     private Gson gson = new Gson();
 
     public GetStats() {
-        super("getstats", 1);
+        super("getstats", "stats");
     }
 
 

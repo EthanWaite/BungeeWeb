@@ -38,9 +38,9 @@
 				<div class="container">
 					<h1>BungeeWeb</h1>
 					<div class="right">
-						<a href="/dashboard" class="active"><img src="images/dashboard.png" /><span data-lang="dashboard.title"></span></a>
-						<a href="/logs"><img src="images/logs.png" /><span data-lang="logs.title"></span></a>
-						<a href="/players"><img src="images/players.png" /><span data-lang="players.title"></span></a>
+						<a href="/dashboard" data-permission="dashboard" class="active"><img src="images/dashboard.png" /><span data-lang="dashboard.title"></span></a>
+						<a href="/logs" data-permission="logs"><img src="images/logs.png" /><span data-lang="logs.title"></span></a>
+						<a href="/players" data-permission="players"><img src="images/players.png" /><span data-lang="players.title"></span></a>
 						<a href="#dropdown"><img src="images/logout.png" /><span data-lang="dropdown.title"></span></a>
 					</div>
 				</div>
@@ -49,8 +49,8 @@
 		
 		<div class="dropdown container">
 			<div>
-				<a href="/settings" data-lang="settings.title"></a>
-				<a href="/account" data-lang="account.title"></a>
+				<a href="/settings" data-lang="settings.title" data-permission="settings.users.list"></a>
+				<a href="/account" data-lang="account.title" data-permission="settings.password"></a>
 				<a href="/logout" data-lang="general.logout"></a>
 			</div>
 		</div>
@@ -71,7 +71,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="graph" id="graph-dashboard"></div>
+				<div class="graph" id="graph-dashboard" data-permission="stats"></div>
 			</div>
 			
 			<div id="logs" class="container">

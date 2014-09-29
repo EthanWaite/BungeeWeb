@@ -16,7 +16,7 @@ public class GetUsers extends APICommand {
     private Gson gson = new Gson();
 
     public GetUsers() {
-        super("getusers", 2);
+        super("getusers", "settings.users.list");
     }
 
     @Override

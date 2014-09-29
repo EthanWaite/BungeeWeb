@@ -18,7 +18,7 @@ public class GetServers extends APICommand {
     private Gson gson = new Gson();
 
     public GetServers() {
-        super("getservers", 1);
+        super("getservers", "players");
     }
 
     @Override

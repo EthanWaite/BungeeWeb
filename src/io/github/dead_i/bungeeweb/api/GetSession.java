@@ -15,7 +15,7 @@ public class GetSession extends APICommand {
     private Gson gson = new Gson();
 
     public GetSession() {
-        super("getsession", 0);
+        super("getsession");
     }
 
     @Override
@@ -30,6 +30,7 @@ public class GetSession extends APICommand {
             out.put("user", req.getSession().getAttribute("user"));
             out.put("group", group);
             out.put("updatetime", BungeeWeb.getConfig().getInt("server.updatetime", 10));
+            out.put("permissions", BungeeWeb.getGroupPermissions(group));
         }
         out.put("transitions", !BungeeWeb.getConfig().getBoolean("server.disabletransitions"));
 

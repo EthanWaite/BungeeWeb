@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class CreateUser extends APICommand {
     public CreateUser() {
-        super("createuser", 2);
+        super("createuser", "settings.users.create");
     }
 
     @Override

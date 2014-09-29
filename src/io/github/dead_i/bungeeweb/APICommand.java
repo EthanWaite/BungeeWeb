@@ -9,15 +9,21 @@ import java.sql.SQLException;
 
 public abstract class APICommand {
     private String name;
-    private int permission = 1;
+    private String permission = "";
+    private boolean login = false;
 
     public APICommand(String name) {
         this.name = name;
     }
 
-    public APICommand(String name, int permission) {
+    public APICommand(String name, String permission) {
         this.name = name;
         this.permission = permission;
+    }
+
+    public APICommand(String name, boolean login) {
+        this.name = name;
+        this.login = login;
     }
 
     public String getName() {
@@ -25,13 +31,16 @@ public abstract class APICommand {
     }
 
     public boolean hasPermission(HttpServletRequest req) {
-        return hasPermission(req, permission);
+        return !login || hasPermission(req, permission);
     }
 
-    public boolean hasPermission(HttpServletRequest req, int i) {
+    public boolean hasPermission(HttpServletRequest req, String i) {
         Integer group = (Integer) req.getSession().getAttribute("group");
-        if (group == null) group = 0;
-        return (group >= i);
+        if (group == null) {
+            group = 0;
+        }
+
+        return group > 0 && (i.isEmpty() || BungeeWeb.getGroupPermissions(group).contains(permission));
     }
 
     public abstract void execute(Plugin plugin, HttpServletRequest req, HttpServletResponse res, String[] args) throws IOException, SQLException;

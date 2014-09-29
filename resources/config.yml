@@ -48,6 +48,23 @@ log:
   kick: true
   serverchange: true
 
+# Permissions for each group
+permissions:
+  group1: # moderator
+    - dashboard
+    - stats
+    - logs
+    - players
+    - settings.password
+  group2: # admin
+    - console.view
+    - settings.users.list
+    - settings.users.edit
+  group3: # superadmin
+    - console.execute
+    - settings.users.create
+    - settings.users.delete
+
 # Sensitive commands that will never be logged
 hiddencommands:
   - login

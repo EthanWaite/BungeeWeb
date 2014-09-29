@@ -14,7 +14,7 @@ public class ListServers extends APICommand {
     private Gson gson = new Gson();
 
     public ListServers() {
-        super("listservers", 1);
+        super("listservers", "dashboard");
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class GetLang extends APICommand {
     public GetLang() {
-        super("getlang", 0);
+        super("getlang");
     }
 
     @Override

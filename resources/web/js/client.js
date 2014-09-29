@@ -38,6 +38,7 @@ function updateSession(cb) {
 	query('/api/getsession', function(data) {
 		session = data;
 		if (data.group > 0) {
+			updatePermissions();
 			cb();
 		}else{
 			show($('.login'));
@@ -72,6 +73,13 @@ function updateLang(cb) {
 		});
 		cb();
 	}, 'Your language file has incorrect JSON. Please check your JSON formatting and try again.');
+}
+
+// Permission updater
+function updatePermissions() {
+	$('[data-permission]').each(function() {
+		if (!hasPermission($(this).attr('data-permission'))) $(this).hide();
+	});
 }
 
 // Navigation handler
@@ -140,9 +148,7 @@ $('.dialog .close').click(function() {
 
 // Initial client loader
 function loadClient() {
-	loadTypes(function() {
-		if (session.group < 2) $('.dropdown a[href="#settings"]').hide();
-		
+	loadTypes(function() {		
 		for (page in pages) {
 			if ('load' in pages[page]) {
 				pages[page].load();
@@ -214,6 +220,11 @@ function getFilters(el) {
 		}
 	});
 	return (filter == '' ? filter : filter.substring(0, filter.length - 1));
+}
+
+// Permission check
+function hasPermission(permission) {
+	return $.inArray(permission, session.permissions) != -1;
 }
 
 // Player dialog

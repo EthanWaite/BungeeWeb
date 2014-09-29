@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class GetUUID extends APICommand {
     public GetUUID() {
-        super("getuuid", 1);
+        super("getuuid", null);
     }
 
     @Override

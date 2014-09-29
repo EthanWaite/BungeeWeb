@@ -15,7 +15,7 @@ public class GetTypes extends APICommand {
     private Gson gson = new Gson();
 
     public GetTypes() {
-        super("gettypes", 1);
+        super("gettypes", true);
     }
 
     @Override

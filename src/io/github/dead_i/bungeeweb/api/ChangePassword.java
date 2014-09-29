@@ -1,6 +1,5 @@
 package io.github.dead_i.bungeeweb.api;
 
-import com.google.gson.Gson;
 import io.github.dead_i.bungeeweb.APICommand;
 import io.github.dead_i.bungeeweb.BungeeWeb;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -12,10 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ChangePassword extends APICommand {
-    private Gson gson = new Gson();
-
     public ChangePassword() {
-        super("changepassword", 1);
+        super("changepassword", "settings.password");
     }
 
     @Override

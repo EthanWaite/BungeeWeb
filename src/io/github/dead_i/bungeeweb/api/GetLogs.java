@@ -18,7 +18,7 @@ public class GetLogs extends APICommand {
     private Gson gson = new Gson();
 
     public GetLogs() {
-        super("getlogs", 1);
+        super("getlogs", "logs");
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class EditUser extends APICommand {
     public EditUser() {
-        super("edituser", 2);
+        super("edituser", "settings.users.edit");
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class DeleteUser extends APICommand {
     public DeleteUser() {
-        super("deleteuser", 2);
+        super("deleteuser", "settings.users.delete");
     }
 
     @Override

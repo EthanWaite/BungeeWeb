@@ -113,16 +113,18 @@ pages.dashboard = (function() {
 	
 	// Retrieve the statistics for the graph
 	function getStatsData(since, cb) {
-		query('/api/getstats?since=' + since, function(data) {
-			var out = [];
-			for (c in stats) {
-				out.push({
-					name: stats[c],
-					data: data.data[c]
-				});
-			}
-			cb(out, data.increment);
-		});
+		if (hasPermission('stats')) {
+			query('/api/getstats?since=' + since, function(data) {
+				var out = [];
+				for (c in stats) {
+					out.push({
+						name: stats[c],
+						data: data.data[c]
+					});
+				}
+				cb(out, data.increment);
+			});
+		}
 	}
 	
 	return {
