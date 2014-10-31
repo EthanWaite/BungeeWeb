@@ -25,7 +25,7 @@ pages.players = (function() {
 			var entries = '';
 			for (uuid in data[server]) {
 				user = data[server][uuid];
-				entries += '<a class="playerlink" data-player="' + uuid + '"><img src="https://minotar.net/avatar/' + user + '/32" title="' + user + '" class="playericon" />';
+				entries += '<a class="playerlink" data-player="' + uuid + '"><img src="https://cravatar.eu/avatar/' + user" title="' + user + '" class="playericon" />';
 			}
 			$('#players .server[data-server="' + server + '"] span').html(entries);
 		}
