@@ -50,6 +50,12 @@ public class GetLogs extends APICommand {
             if (filters.length() > 0) conditions.add("(" + filters.substring(0, filters.length() - 4) + ")");
         }
 
+        String query = req.getParameter("query");
+        if (query != null) {
+            conditions.add("`content` LIKE ?");
+            params.add("%" + query + "%");
+        }
+
         String qry = "SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "log` ";
 
         if (conditions.size() > 0) {

@@ -1,5 +1,7 @@
 // Logs page
 pages.logs = (function() {
+	var searchTimer = 0;
+	
 	// When the whole client is loaded
 	function load() {
 		setFilters($('#logs .filters'));
@@ -24,7 +26,8 @@ pages.logs = (function() {
 	// Logs retrieval
 	function addLogs(offset, time, position, cb) {
 		var limit = 50;
-		query('/api/getlogs?offset=' + offset + '&time=' + time + '&filter=' + getFilters($('#logs .filters')) + '&limit=' + limit, function(data) {
+		var search = $('#logs .search input').val();
+		query('/api/getlogs?offset=' + offset + '&time=' + time + '&filter=' + getFilters($('#logs .filters')) + '&limit=' + limit + '&query=' + search, function(data) {
 			var entries = '';
 			for (item in data) {
 				var d = new Date(data[item]['time'] * 1000);
@@ -55,6 +58,20 @@ pages.logs = (function() {
 		addLogs($('#logs li').size() - 1, 0, 'append', function() {
 			more.remove();
 		});
+	});
+	
+	// Logs search handler
+	$('#logs .search').submit(function(e) {
+		e.preventDefault();
+		resetLogs();
+	});
+	
+	$('#logs .search input').keyup(function(e) {
+		var form = $(this).closest('form');
+		clearTimeout(searchTimer);
+		searchTimer = setTimeout(function() {
+			form.submit();
+		}, 500);
 	});
 	
 	// Window scroll handler

@@ -503,8 +503,13 @@ input[type="submit"]:hover, .btn:hover {
 	color:#333;
 }
 
+.search input {
+	float:right;
+}
+
 .filters {
 	color:#fff;
+	padding-top:3px;
 }
 
 .filters .label {
