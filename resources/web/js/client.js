@@ -239,13 +239,13 @@ function showPlayer(uuid) {
 
 // Player info retrieval
 function resetPlayer(uuid) {
-	addPlayerLogs(uuid, 0, getFilters($('#playerinfo .filters')));
+	addPlayerLogs(uuid, 0, getFilters($('#playerinfo .filters')), $('#playerinfo .search input').val());
 }
 
 // Player add logs
-function addPlayerLogs(uuid, offset, filter, cb) {
+function addPlayerLogs(uuid, offset, filter, search, cb) {
 	var limit = 30;
-	query('/api/getlogs?uuid=' + uuid + '&offset=' + offset + '&filter=' + filter + '&limit=' + limit, function(data) {
+	query('/api/getlogs?uuid=' + uuid + '&offset=' + offset + '&filter=' + filter + '&limit=' + limit + '&query=' + search, function(data) {
 		if (offset == 0) {
 			$('#playerinfo .log').html('');
 			var user = data[0].username;
@@ -279,9 +279,24 @@ $('#playerinfo .filters').on('click', 'a', function() {
 $('#playerinfo .log').on('click', '.more', function() {
 	var more = $('#playerinfo .log .more');
 	more.removeClass('more').text('Loading...');
-	addPlayerLogs($('#playerinfo').attr('data-uuid'), $('#playerinfo .log li').size() - 1, getFilters($('#playerinfo .filters')), function() {
+	addPlayerLogs($('#playerinfo').attr('data-uuid'), $('#playerinfo .log li').size() - 1, getFilters($('#playerinfo .filters')), $('#playerinfo .search input').val(), function() {
 		more.remove();
 	});
+});
+
+// Player logs search handler
+$('#playerinfo .search').submit(function(e) {
+	e.preventDefault();
+	resetPlayer($('#playerinfo').attr('data-uuid'));
+});
+
+var searchTimer = 0;
+$('#playerinfo .search input').keyup(function(e) {
+	var form = $(this).closest('form');
+	clearTimeout(searchTimer);
+	searchTimer = setTimeout(function() {
+		form.submit();
+	}, 500);
 });
 
 // Mask scroll handler

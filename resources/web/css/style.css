@@ -537,6 +537,13 @@ input[type="submit"]:hover, .btn:hover {
 /**
  * RESPONSIVE STYLING
  */
+@media screen and (max-width: 900px) {
+	#playerinfo .search input {
+		width:100%;
+		margin-bottom:9px;
+	}
+}
+
 @media screen and (max-width: 700px) {
 	.navbar .right {
 		border-right:none;
@@ -604,7 +611,7 @@ input[type="submit"]:hover, .btn:hover {
 	.dialog #skinpreview {
 		display:none;
 	}
- }
+}
  
 @media screen and (max-width:420px) {
 	h1 {
@@ -631,4 +638,4 @@ input[type="submit"]:hover, .btn:hover {
 	#players .search input {
 		font-size:16px;
 	}
- }
+}
