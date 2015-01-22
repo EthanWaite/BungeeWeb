@@ -256,7 +256,8 @@ function addPlayerLogs(uuid, offset, filter, search, cb) {
 		}
 
 		for (item in data) {
-			$('#playerinfo .log').append('<li>' + formatLog(data[item], false) + '</li>');
+			var d = new Date(data[item]['time'] * 1000);
+			$('#playerinfo .log').append('<li><div class="left">' + formatLog(data[item], false) + '</div> <div class="right fade">' + d.toLocaleString() + '</div></li>');
 			if (data[item].username != user) {
 				$('#playerinfo .log').append('<li>' + data[item].username + ' is now known as ' + user + '</li>');
 				user = data[item].username;
