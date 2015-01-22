@@ -534,7 +534,7 @@ var skinview = function(global, undefined) {
 	};
 	
 	skin.crossOrigin = 'anonymous';
-	skin.src = 'https://minotar.net/skin/char';
+	skin.src = 'https://crafatar.com/skins/char';
 	
 	var handleFiles = function (files) {
 		if(files.length > 0) {
@@ -590,7 +590,7 @@ var skinview = function(global, undefined) {
 	
 	return {
 		changeSkin: function (player) {
-			skin.src = 'https://minotar.net/skin/' + player;
+			skin.src = 'https://crafatar.com/skins/' + player;
 		},
 		changeCape: function (url) {
 			cape.src = url;

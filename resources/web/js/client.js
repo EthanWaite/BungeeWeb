@@ -28,7 +28,7 @@ $('.login form').submit(function(e) {
 				hide($('.login'), loadClient);
 			});
 		}else{
-			$('.login .error').slideDown(500);
+			$('.login .error').slideDown(200);
 		}
 	});
 });
@@ -157,7 +157,7 @@ function loadClient() {
 		}
 		
 		if (session.transitions) {
-			$('.navbar').slideDown(800);
+			$('.navbar').slideDown(300);
 		}else{
 			$('.navbar').show();
 		}
@@ -256,7 +256,8 @@ function addPlayerLogs(uuid, offset, filter, search, cb) {
 		}
 
 		for (item in data) {
-			$('#playerinfo .log').append('<li>' + formatLog(data[item], false) + '</li>');
+			var d = new Date(data[item]['time'] * 1000);
+			$('#playerinfo .log').append('<li><div class="left">' + formatLog(data[item], false) + '</div> <div class="right fade">' + d.toLocaleString() + '</div></li>');
 			if (data[item].username != user) {
 				$('#playerinfo .log').append('<li>' + data[item].username + ' is now known as ' + user + '</li>');
 				user = data[item].username;
@@ -309,7 +310,7 @@ $('.mask .logs').scroll(function() {
 // Show function
 function show(el, cb) {
 	if (session.transitions) {
-		el.fadeIn(300, cb);
+		el.fadeIn(100, cb);
 	}else{
 		el.show(0, cb);
 	}
@@ -318,7 +319,7 @@ function show(el, cb) {
 // Hide function
 function hide(el, cb) {
 	if (session.transitions) {
-		el.fadeOut(300, cb);
+		el.fadeOut(100, cb);
 	}else{
 		el.hide(0, cb);
 	}
@@ -370,5 +371,5 @@ function error(err) {
 	if (err === undefined) {
 		var err = lang.error.internal || 'An internal error occurred when processing your request.';
 	}
-	$('.errorbar').text(err).slideDown(800).delay(4000).slideUp(800);
+	$('.errorbar').text(err).slideDown(300).delay(4000).slideUp(300);
 }
