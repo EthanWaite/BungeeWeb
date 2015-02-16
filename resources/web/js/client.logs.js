@@ -1,5 +1,6 @@
 // Logs page
 pages.logs = (function() {
+	var searchQuery = '';
 	var searchTimer = 0;
 	
 	// When the whole client is loaded
@@ -26,8 +27,7 @@ pages.logs = (function() {
 	// Logs retrieval
 	function addLogs(offset, time, position, cb) {
 		var limit = 50;
-		var search = $('#logs .search input').val();
-		query('/api/getlogs?offset=' + offset + '&time=' + time + '&filter=' + getFilters($('#logs .filters')) + '&limit=' + limit + '&query=' + search, function(data) {
+		query('/api/getlogs?offset=' + offset + '&time=' + time + '&filter=' + getFilters($('#logs .filters')) + '&limit=' + limit + '&query=' + searchQuery, function(data) {
 			var entries = '';
 			for (item in data) {
 				var d = new Date(data[item]['time'] * 1000);
@@ -63,6 +63,7 @@ pages.logs = (function() {
 	// Logs search handler
 	$('#logs .search').submit(function(e) {
 		e.preventDefault();
+		searchQuery = $('#logs .search input').val();
 		resetLogs();
 	});
 	
