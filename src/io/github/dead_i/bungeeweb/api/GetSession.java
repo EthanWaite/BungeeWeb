@@ -32,6 +32,7 @@ public class GetSession extends APICommand {
             out.put("updatetime", BungeeWeb.getConfig().getInt("server.updatetime", 10));
             out.put("permissions", BungeeWeb.getGroupPermissions(group));
         }
+        out.put("autosearch", BungeeWeb.getConfig().getBoolean("server.autosearch"));
         out.put("transitions", !BungeeWeb.getConfig().getBoolean("server.disabletransitions"));
 
         res.getWriter().print(gson.toJson(out));

@@ -67,11 +67,13 @@ pages.logs = (function() {
 	});
 	
 	$('#logs .search input').keyup(function(e) {
-		var form = $(this).closest('form');
-		clearTimeout(searchTimer);
-		searchTimer = setTimeout(function() {
-			form.submit();
-		}, 500);
+		if (session.autosearch) {
+			var form = $(this).closest('form');
+			clearTimeout(searchTimer);
+			searchTimer = setTimeout(function() {
+				form.submit();
+			}, 500);
+		}
 	});
 	
 	// Window scroll handler
