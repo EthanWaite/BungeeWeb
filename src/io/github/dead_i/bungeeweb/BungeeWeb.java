@@ -1,6 +1,7 @@
 package io.github.dead_i.bungeeweb;
 
 import com.google.common.io.ByteStreams;
+import io.github.dead_i.bungeeweb.commands.*;
 import io.github.dead_i.bungeeweb.listeners.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -51,24 +52,7 @@ public class BungeeWeb extends Plugin {
         });
 
         // Get configuration
-        if (!getDataFolder().exists()) getDataFolder().mkdir();
-        ConfigurationProvider provider = ConfigurationProvider.getProvider(YamlConfiguration.class);
-        InputStream defaultStream = getResourceAsStream("config.yml");
-        File configFile = new File(getDataFolder(), "config.yml");
-        try {
-            if (!configFile.exists()) {
-                configFile.createNewFile();
-                ByteStreams.copy(defaultStream, new FileOutputStream(configFile));
-                getLogger().warning("A new configuration file has been created. Please edit config.yml and restart BungeeCord.");
-                return;
-            }
-            config = provider.load(configFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Get default configuration
-        defaultConfig = provider.load(new Scanner(defaultStream, "UTF-8").useDelimiter("\\A").next());
+        reloadConfig(this);
 
         // Setup locales
         setupDirectory("lang");
@@ -118,6 +102,9 @@ public class BungeeWeb extends Plugin {
         getProxy().getPluginManager().registerListener(this, new PostLoginListener(this));
         getProxy().getPluginManager().registerListener(this, new ServerConnectedListener(this));
         getProxy().getPluginManager().registerListener(this, new ServerKickListener(this));
+
+        // Register commands
+        getProxy().getPluginManager().registerCommand(this, new ReloadConfig(this));
 
         // Graph loops
         int inc = getConfig().getInt("server.statscheck");
@@ -189,6 +176,26 @@ public class BungeeWeb extends Plugin {
 
     public static Configuration getConfig() {
         return config;
+    }
+
+    public static void reloadConfig(Plugin plugin) {
+        if (!plugin.getDataFolder().exists()) plugin.getDataFolder().mkdir();
+        ConfigurationProvider provider = ConfigurationProvider.getProvider(YamlConfiguration.class);
+        InputStream defaultStream = plugin.getResourceAsStream("config.yml");
+        File configFile = new File(plugin.getDataFolder(), "config.yml");
+        try {
+            if (!configFile.exists()) {
+                configFile.createNewFile();
+                ByteStreams.copy(defaultStream, new FileOutputStream(configFile));
+                plugin.getLogger().warning("A new configuration file has been created. Please edit config.yml and restart BungeeCord.");
+                return;
+            }
+            config = provider.load(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        defaultConfig = provider.load(new Scanner(defaultStream, "UTF-8").useDelimiter("\\A").next());
     }
 
     public static Connection getDatabase() {
