@@ -1,0 +1,102 @@
+{
+	"name": "简体中文",
+	"language": {
+		"general": {
+			"username": "用户名",
+			"password": "密码",
+			"uuid": "UUID",
+			"group": "用户组",
+			"login": "登陆",
+			"logout": "注销"
+		},
+		
+		"groups": [
+			"用户",
+			"调解员",
+			"管理员",
+			"超级管理员"
+		],
+		
+		"dashboard": {
+			"title": "信息版",
+			"servers": "服务器",
+			"latestlogs": "最新日志",
+			"players": "玩家",
+			"playercount": "当前玩家",
+			"playerlimit": "玩家上限",
+			"loggeditems": "日志条数"
+		},
+		
+		"logs": {
+			"title": "日志",
+			"latestlogs": "最新日志",
+			"filter": "筛选",
+			"loading": "加载中...",
+			"1": {
+				"type": "聊天",
+				"entry": "{PLAYER}: {CONTENT}"
+			},
+			"2": {
+				"type": "指令",
+				"entry": "{PLAYER} ran the command {CONTENT}"
+			},
+			"3": {
+				"type": "登陆",
+				"entry": "{PLAYER} joined the proxy from {CONTENT}"
+			},
+			"4": {
+				"type": "退出",
+				"entry": "{PLAYER} disconnected from the proxy"
+			},
+			"5": {
+				"type": "强制下线",
+				"entry": "{PLAYER} was kicked from {CONTENT}"
+			},
+			"6": {
+				"type": "跳转服务器",
+				"entry": "{PLAYER} switched to {CONTENT}"
+			}
+		},
+		
+		"players": {
+			"title": "玩家",
+			"search": "查找",
+			"placeholder": "查找玩家记录..."
+		},
+		
+		"dropdown": {
+			"title": "账户"
+		},
+		
+		"settings": {
+			"title": "系统设置",
+			"manageusers": "管理用户",
+			"createuser": "添加新用户",
+			"edit": "编辑",
+			"submit": "提交用户",
+			"delete": "删除用户",
+			"cancel": "取消"
+		},
+		
+		"account": {
+			"title": "账户设置",
+			"changepassword": "修改密码",
+			"current": "当前密码",
+			"new": "新密码",
+			"confirm": "确认密码",
+			"submit": "修改密码"
+		},
+		
+		"error": {
+			"internal": "在处理你的请求时发生了内部错误.",
+			"auth": "无法验证提供的细节.",
+			"passwordmismatch": "请确保你输入的 \"确认密码\" 和 \"新密码\" 一致.",
+			"passwordincorrect": "你输入的当前密码不正确.",
+			"passwordsuccess": "你的密码已修改.",
+			"deleteerror": "删除该用户时发生了错误.",
+			"deletesuccess": "该用户已删除.",
+			"modifyerror": "更新用户资料时发生了一个错误.",
+			"modifysuccess": "该用户的资料已更新."
+		}
+	}
+}
