@@ -89,7 +89,7 @@
 		
 		"error": {
 			"internal": "在处理你的请求时发生了内部错误.",
-			"auth": "无法验证提供的细节.",
+			"auth": "登陆信息有误，请检查用户名和密码是否输入正确",
 			"passwordmismatch": "请确保你输入的 \"确认密码\" 和 \"新密码\" 一致.",
 			"passwordincorrect": "你输入的当前密码不正确.",
 			"passwordsuccess": "你的密码已修改.",
