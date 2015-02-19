@@ -3,7 +3,7 @@ pages.players = (function() {
 	// When the page is navigated to
 	function navigate() {
 		$('#players .row').remove();
-		query('/api/getservers', function(data) {
+		query('api/getservers', function(data) {
 			var i = 0;
 			for (server in data) {
 				if (i % 3 == 0) $('#players').append('<div class="row"></div>');
@@ -16,7 +16,7 @@ pages.players = (function() {
 	
 	// When the data needs to be updated
 	function update(lastUpdate) {
-		query('/api/getservers', updatePlayers);
+		query('api/getservers', updatePlayers);
 	}
 	
 	// Player update handler
@@ -33,7 +33,7 @@ pages.players = (function() {
 	
 	// Player search handler
 	$('#players .search').submit(function(e) {
-		query('/api/getuuid?username=' + $(this).find('input[name="player"]').val(), function(data) {
+		query('api/getuuid?username=' + $(this).find('input[name="player"]').val(), function(data) {
 			if (data) showPlayer(data.uuid);
 		});
 		e.preventDefault();

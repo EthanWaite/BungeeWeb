@@ -21,7 +21,7 @@ $(document).ready(function() {
 $('.login form').submit(function(e) {
 	e.preventDefault();
 	hide($('.login .error'));
-	$.post('/login/', $(this).serialize()).done(function(data) {
+	$.post('login', $(this).serialize()).done(function(data) {
 		var data = parse(data);
 		if (data.status == 1) {
 			updateSession(function() {
@@ -35,7 +35,7 @@ $('.login form').submit(function(e) {
 
 // Session updater
 function updateSession(cb) {
-	query('/api/getsession', function(data) {
+	query('api/getsession', function(data) {
 		session = data;
 		if (data.group > 0) {
 			updatePermissions();
@@ -48,7 +48,7 @@ function updateSession(cb) {
 
 // Language updater
 function updateLang(cb) {
-	query('/api/getlang', function(data) {
+	query('api/getlang', function(data) {
 		lang = data.language;
 		groups = lang.groups;
 		$('[data-lang]').each(function() {
@@ -192,7 +192,7 @@ function loadClient() {
 // Types loader
 var types = {};
 function loadTypes(cb) {
-	query('/api/gettypes', function(data) {
+	query('api/gettypes', function(data) {
 		for (id in data) {
 			if (id in lang.logs) {
 				types[id] = lang.logs[id].type;	
@@ -245,7 +245,7 @@ function resetPlayer(uuid) {
 // Player add logs
 function addPlayerLogs(uuid, offset, filter, search, cb) {
 	var limit = 30;
-	query('/api/getlogs?uuid=' + uuid + '&offset=' + offset + '&filter=' + filter + '&limit=' + limit + '&query=' + search, function(data) {
+	query('api/getlogs?uuid=' + uuid + '&offset=' + offset + '&filter=' + filter + '&limit=' + limit + '&query=' + search, function(data) {
 		if (offset == 0) {
 			$('#playerinfo .log').html('');
 			var user = data[0].username;

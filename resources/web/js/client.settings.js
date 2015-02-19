@@ -27,7 +27,7 @@ pages.settings = (function() {
 	// Settings list updater
 	function updateUsers() {
 		$('#settings .log').html('');
-		query('/api/getusers', function(data) {
+		query('api/getusers', function(data) {
 			for (item in data) {
 				$('#settings .log').append('<li data-user-id="' + item + '" data-group-id="' + data[item].group + '"><div class="left"><span class="user">' + strip(data[item].user) + '</span> <span class="fade">(' + groups[data[item].group] + ')</span></div><div class="right"></li>');
 				if (session.group >= 3 || (session.group > data[item].group && item != session.id)) $('#settings .log li .right').last().append('<a class="edit btn btnsm">Edit</a>');
@@ -71,7 +71,7 @@ pages.settings = (function() {
 	// User delete button handler
 	$('#settings .delete').click(function() {
 		if (window.confirm('Are you sure you wish to permanently delete this user? This action cannot be undone.')) {
-			query('/api/deleteuser?id=' + $('.useredit #id').val(), function(data) {
+			query('api/deleteuser?id=' + $('.useredit #id').val(), function(data) {
 				if (data.status == 1) {
 					updateUsers();
 					switchSettings('.userlist');
@@ -93,9 +93,9 @@ pages.settings = (function() {
 		e.preventDefault();
 		if ($(this).find('#id').val() > 0) {
 			if ($(this).find('#pass').val() == 'password') $(this).find('#pass').val('');
-			$.post('/api/edituser', $(this).serialize(), settingsHandler);
+			$.post('api/edituser', $(this).serialize(), settingsHandler);
 		}else{
-			$.post('/api/createuser', $(this).serialize(), settingsHandler);
+			$.post('api/createuser', $(this).serialize(), settingsHandler);
 		}
 	});
 	

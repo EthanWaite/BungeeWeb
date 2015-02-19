@@ -68,7 +68,7 @@ pages.dashboard = (function() {
 	function update(lastUpdate) {
 		// List of servers
 		var players = 0;
-		query('/api/listservers', function(data) {
+		query('api/listservers', function(data) {
 			var entries = '';
 			var i = 0;
 			for (server in data) {
@@ -83,7 +83,7 @@ pages.dashboard = (function() {
 
 			// Latest logs
 			if (i < 5) i = 5;
-			query('/api/getlogs?limit=' + i + '&time=' + lastUpdate, function(data) {
+			query('api/getlogs?limit=' + i + '&time=' + lastUpdate, function(data) {
 				var entries = '';
 				for (item in data) {
 					entries += '<li>' + formatLog(data[item], true) + '</li>';
@@ -114,7 +114,7 @@ pages.dashboard = (function() {
 	// Retrieve the statistics for the graph
 	function getStatsData(since, cb) {
 		if (hasPermission('stats')) {
-			query('/api/getstats?since=' + since, function(data) {
+			query('api/getstats?since=' + since, function(data) {
 				var out = [];
 				for (c in stats) {
 					out.push({

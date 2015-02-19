@@ -27,7 +27,7 @@ pages.logs = (function() {
 	// Logs retrieval
 	function addLogs(offset, time, position, cb) {
 		var limit = 50;
-		query('/api/getlogs?offset=' + offset + '&time=' + time + '&filter=' + getFilters($('#logs .filters')) + '&limit=' + limit + '&query=' + searchQuery, function(data) {
+		query('api/getlogs?offset=' + offset + '&time=' + time + '&filter=' + getFilters($('#logs .filters')) + '&limit=' + limit + '&query=' + searchQuery, function(data) {
 			var entries = '';
 			for (item in data) {
 				var d = new Date(data[item]['time'] * 1000);
