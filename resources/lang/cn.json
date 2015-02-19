@@ -38,23 +38,23 @@
 			},
 			"2": {
 				"type": "指令",
-				"entry": "{PLAYER} ran the command {CONTENT}"
+				"entry": "{PLAYER} 使用了该指令 {CONTENT}"
 			},
 			"3": {
 				"type": "登陆",
-				"entry": "{PLAYER} joined the proxy from {CONTENT}"
+				"entry": "{PLAYER} 登陆了代理, IP: {CONTENT}"
 			},
 			"4": {
 				"type": "退出",
-				"entry": "{PLAYER} disconnected from the proxy"
+				"entry": "{PLAYER} 退出了代理"
 			},
 			"5": {
 				"type": "强制下线",
-				"entry": "{PLAYER} was kicked from {CONTENT}"
+				"entry": "{PLAYER} 被踢出服务器 {CONTENT}"
 			},
 			"6": {
 				"type": "跳转服务器",
-				"entry": "{PLAYER} switched to {CONTENT}"
+				"entry": "{PLAYER} 进入了服务器 {CONTENT}"
 			}
 		},
 		
