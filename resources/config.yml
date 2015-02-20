@@ -10,10 +10,10 @@ server:
   # Set to -1 to disable all graphing
   statscheck: 60
 
-  # Default language to use, loaded from the "lang" directory.
+  # Default language to use, loaded from the "lang" directory
   language: en
 
-  # The name of the theme to use, excluding the file extension.
+  # The name of the theme to use, excluding the file extension
   # Set to "dark", "light", or the name of any theme in the "themes" directory
   theme: dark
   
@@ -26,6 +26,9 @@ server:
 
   # Amount of minutes between purges
   purge: 10
+
+  # Whether searches should be executed as you type on the log page
+  autosearch: false
 
   # Whether page transitions should be disabled
   disabletransitions: false

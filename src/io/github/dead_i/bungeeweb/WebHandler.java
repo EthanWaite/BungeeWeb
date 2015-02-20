@@ -47,7 +47,10 @@ public class WebHandler extends AbstractHandler {
         if (target.equals("/")) target = "/index.html";
         String[] path = target.split("/");
 
-        if (path.length > 2 && path[1].equalsIgnoreCase("api")) {
+        if (target.substring(target.length() - 1).equals("/")) {
+            res.sendRedirect(target.substring(0, target.length() - 1));
+            baseReq.setHandled(true);
+        }else if (path.length > 2 && path[1].equalsIgnoreCase("api")) {
             if (commands.containsKey(path[2])) {
                 try {
                     APICommand command = commands.get(path[2]);

@@ -24,14 +24,23 @@ public class GetUUID extends APICommand {
             return;
         }
 
-        PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "log` WHERE `username`=? ORDER BY `id` DESC LIMIT 1");
-        st.setString(1, user);
-        ResultSet rs = st.executeQuery();
+        ResultSet rs = getByUsername(user, false);
+        boolean matched = rs.next();
+        if (!matched) {
+            rs = getByUsername(user, true);
+            matched = rs.next();
+        }
 
-        if (rs.next()) {
+        if (matched) {
             res.getWriter().print("{ \"uuid\": \"" + rs.getString("uuid") + "\" }");
         }else{
             res.getWriter().print("{ \"error\": \"No such username exists in the database.\" }");
         }
+    }
+
+    private ResultSet getByUsername(String search, boolean partial) throws SQLException {
+        PreparedStatement st = BungeeWeb.getDatabase().prepareStatement("SELECT * FROM `" + BungeeWeb.getConfig().getString("database.prefix") + "log` WHERE `username` LIKE ? ORDER BY `id` DESC LIMIT 1");
+        st.setString(1, partial ? "%" + search + "%" : search);
+        return st.executeQuery();
     }
 }
