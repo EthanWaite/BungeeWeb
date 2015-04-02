@@ -216,7 +216,7 @@ public class BungeeWeb extends Plugin {
                     st.setInt(2, type);
                     st.setString(3, getUUID(player));
                     st.setString(4, player.getName());
-                    st.setString(5, content);
+                    st.setString(5, content.length() > 100 ? content.substring(0, 99) : content);
                     st.executeUpdate();
                     st.close();
                 } catch (SQLException e) {
