@@ -25,6 +25,7 @@ server:
   statsdays: 30
 
   # Amount of minutes between purges
+  # Set to -1 to disable all database purging
   purge: 10
 
   # Whether searches should be executed as you type on the log page
