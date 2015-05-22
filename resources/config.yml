@@ -21,6 +21,7 @@ server:
   updatetime: 10
 
   # Amount of days that records will be kept for
+  # Set to -1 to disable database purging of that type
   logsdays: 30
   statsdays: 30
 
