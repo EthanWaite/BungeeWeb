@@ -15,7 +15,7 @@ public class GetSession extends APICommand {
     private Gson gson = new Gson();
 
     public GetSession() {
-        super("getsession");
+        super("getsession", true);
     }
 
     @Override

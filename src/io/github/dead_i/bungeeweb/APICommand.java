@@ -31,7 +31,7 @@ public abstract class APICommand {
     }
 
     public boolean hasPermission(HttpServletRequest req) {
-        return !login || hasPermission(req, permission);
+        return login || hasPermission(req, permission);
     }
 
     public boolean hasPermission(HttpServletRequest req, String i) {
