@@ -138,6 +138,15 @@ input[type="submit"]:hover, .btn:hover {
 	text-align:center;
 }
 
+#toTop {
+	position: fixed;
+	right: 25px;
+	bottom: 25px;
+	color: #eee;
+	font-size: 2em;
+	font-weight: bold;
+}
+
 /**
  * LOGIN STYLING
  */
